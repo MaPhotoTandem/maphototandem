@@ -1,9 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
 
 const COOKIE_NAME = 'mpt-auth'
 const COOKIE_MAX_AGE = 60 * 60 * 8 // 8 heures
 
+// 5 tentatives maximum par IP par fenêtre de 15 minutes
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, '15 m'),
+  prefix: 'mpt:login',
+})
+
 export async function POST(req: NextRequest) {
+  // Vérifier la limite de tentatives par IP
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ?? '127.0.0.1'
+  const { success } = await ratelimit.limit(ip)
+
+  if (!success) {
+    return NextResponse.json(
+      { error: 'Trop de tentatives. Réessayez dans 15 minutes.' },
+      { status: 429 }
+    )
+  }
+
   const { role, password } = await req.json()
 
   let valid = false
