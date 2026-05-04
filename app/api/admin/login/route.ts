@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   if (role === 'gestion') {
     valid = password === process.env.MANAGER_PASSWORD
   } else if (role === 'photographe') {
-    valid = password === process.env.PHOTOGRAPHER_PASSWORD
+    valid = password === process.env.ADMIN_PASSWORD
   }
 
   if (!valid) {
