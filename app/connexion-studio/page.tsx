@@ -60,7 +60,9 @@ export default function ConnexionStudioPage() {
       body: JSON.stringify({ role: 'gestion', password: gestionPw }),
     })
     setGestionLoading(false)
+    if (res.status === 429) { setGestionError('Trop de tentatives. Réessayez dans 15 minutes.'); return }
     if (res.status === 401) { setGestionError('Mot de passe incorrect.'); return }
+    if (!res.ok) { setGestionError('Une erreur est survenue.'); return }
     setManagerSession(gestionPw)
     router.push('/admin/gestion')
   }
@@ -76,7 +78,9 @@ export default function ConnexionStudioPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ role: 'photographe', password }),
     })
+    if (res.status === 429) { setAuthError('Trop de tentatives. Réessayez dans 15 minutes.'); return }
     if (res.status === 401) { setAuthError('Mot de passe incorrect.'); return }
+    if (!res.ok) { setAuthError('Une erreur est survenue.'); return }
     setPhotographerSession({ password, location: location as 'rive-sud' | 'rive-nord' })
     router.push('/admin/photographe')
   }
