@@ -283,7 +283,7 @@ export default function HomePage() {
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="input-field text-base"
+              className="input-field text-base w-full"
               required
             />
           </div>
