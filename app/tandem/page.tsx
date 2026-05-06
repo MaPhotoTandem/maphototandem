@@ -166,14 +166,13 @@ function FlightFinder({ onClose }: { onClose: () => void }) {
           {noResult && step === 'name' && (
             <div className="pl-11">
               <p className="text-sm text-red-500">
-                Aucune envolée trouvée pour ce prénom. Vérifie la date et le centre, ou{' '}
-                <button
-                  onClick={() => { setStep('date'); setChatDate(''); setChatLoc(''); setFirstName(''); setNoResult(false) }}
+                Aucune envolée trouvée pour ce prénom. Vérifiez la date, le centre et le prénom. Essayez le nom de famille. Pour de l&apos;aide, contactez-nous à{' '}
+                <a
+                  href="mailto:maphototandem@parachutemontreal.com"
                   className="underline"
                 >
-                  recommence
-                </button>
-                .
+                  maphototandem@parachutemontreal.com
+                </a>
               </p>
             </div>
           )}
