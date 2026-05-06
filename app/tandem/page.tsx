@@ -307,6 +307,13 @@ export default function HomePage() {
             <p className="text-xs text-mid mt-1">
               Ce numéro vous a été communiqué au centre lors de votre saut.
             </p>
+            <button
+              type="button"
+              onClick={() => setShowFinder(true)}
+              className="mt-2 text-sm text-action font-medium hover:underline transition-colors"
+            >
+              Vous avez perdu votre numéro d&apos;envolée ?
+            </button>
           </div>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -319,14 +326,6 @@ export default function HomePage() {
           </button>
         </div>
       </form>
-
-      {/* Lien "j'ai perdu mon numéro" sous le formulaire */}
-      <button
-        onClick={() => setShowFinder(true)}
-        className="mt-4 text-sm text-mid hover:text-action transition-colors underline underline-offset-2"
-      >
-        Vous avez perdu votre numéro d&apos;envolée ?
-      </button>
 
       <p className="mt-4 text-sm text-mid text-center max-w-sm px-4">
         Les photos sont disponibles le soir même de votre saut et pendant 30 jours.
