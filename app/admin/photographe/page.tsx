@@ -702,36 +702,48 @@ export default function PhotographePage() {
       )}
 
       {/* Prénoms des sauteurs */}
-      <div className={`rounded-xl px-4 py-4 mb-6 border ${
-        passengers.trim()
-          ? 'bg-white border-gray-200'
-          : 'bg-amber-50 border-amber-300'
-      }`}>
-        <label className="block text-sm font-semibold text-navy mb-2">
-          {passengers.trim() ? '👥 Prénoms des sauteurs' : '⚠️ Prénoms des sauteurs — manquants'}
-        </label>
-        {!passengers.trim() && (
-          <p className="text-xs text-amber-700 mb-2">
-            Les clients ne pourront pas retrouver leur envolée sans cette information.
+      {passengersSaved && passengers.trim() ? (
+        <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-6 flex items-center justify-between gap-4">
+          <p className="text-sm font-semibold text-green-700">
+            ✓ Prénoms sauvegardés — {passengers}
           </p>
-        )}
-        <div className="flex gap-2">
-          <input
-            type="text"
-            placeholder="Ex: Sabrina, Jean, Mathieu, Paul"
-            value={passengers}
-            onChange={(e) => { setPassengers(e.target.value); setPassengersSaved(false) }}
-            className="input-field flex-1 text-sm"
-          />
           <button
-            onClick={savePassengers}
-            disabled={savingPassengers || !passengers.trim()}
-            className="btn-primary text-sm px-4 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+            onClick={() => setPassengersSaved(false)}
+            className="text-xs text-green-600 underline whitespace-nowrap"
           >
-            {savingPassengers ? '...' : passengersSaved ? '✓ Sauvegardé' : 'Sauvegarder'}
+            Modifier
           </button>
         </div>
-      </div>
+      ) : (
+        <div className={`rounded-xl px-4 py-4 mb-6 border ${
+          passengers.trim() ? 'bg-white border-gray-200' : 'bg-amber-50 border-amber-300'
+        }`}>
+          <label className="block text-sm font-semibold text-navy mb-2">
+            {passengers.trim() ? '👥 Prénoms des sauteurs' : '⚠️ Prénoms des sauteurs — manquants'}
+          </label>
+          {!passengers.trim() && (
+            <p className="text-xs text-amber-700 mb-2">
+              Les clients ne pourront pas retrouver leur envolée sans cette information.
+            </p>
+          )}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Ex: Sabrina, Jean, Mathieu, Paul"
+              value={passengers}
+              onChange={(e) => { setPassengers(e.target.value); setPassengersSaved(false) }}
+              className="input-field flex-1 text-sm"
+            />
+            <button
+              onClick={savePassengers}
+              disabled={savingPassengers || !passengers.trim()}
+              className="btn-primary text-sm px-4 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+            >
+              {savingPassengers ? '...' : 'Sauvegarder'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Grille de photos */}
       {loadingPhotos ? (
