@@ -95,7 +95,6 @@ function FlightFinder({ onClose }: { onClose: () => void }) {
                 value={chatDate}
                 onChange={(e) => setChatDate(e.target.value)}
                 className="input-field flex-1 text-base"
-                autoFocus
               />
               <button
                 onClick={() => chatDate && setStep('location')}
