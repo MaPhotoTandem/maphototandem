@@ -322,7 +322,7 @@ export default function GestionPage() {
   function logout() {
     clearManagerSession()
     clearPhotographerSession()
-    window.location.href = '/admin'
+    window.location.href = '/connexion-studio'
   }
 
   // ── Chargements ─────────────────────────────────────────────────────────────

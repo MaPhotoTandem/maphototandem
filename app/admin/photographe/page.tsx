@@ -160,7 +160,7 @@ export default function PhotographePage() {
   function logout() {
     clearPhotographerSession()
     clearManagerSession()
-    router.push('/admin')
+    router.push('/connexion-studio')
   }
 
   // ── Charger les envolées ──────────────────────────────────────────────────
@@ -407,12 +407,6 @@ export default function PhotographePage() {
             <p className="text-sm text-mid mt-1">Sélectionnez une date pour gérer les envolées.</p>
           </div>
           <div className="flex items-center gap-4">
-            <a
-              href="/admin/gestion"
-              className="text-sm font-semibold text-action hover:text-action/80 transition-colors"
-            >
-              Gestion →
-            </a>
             <button onClick={logout} className="text-sm text-mid hover:text-navy transition-colors">
               Déconnexion
             </button>
