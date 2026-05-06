@@ -235,6 +235,8 @@ export default function PhotographePage() {
     setNewEnvol('')
     setNewPassengers('')
     openFlight(newFlight, parsedPassengers)
+    // Si des prénoms ont été fournis, marquer comme déjà sauvegardé
+    if (parsedPassengers.length > 0) setPassengersSaved(true)
   }
 
   // ── Ouvrir une envolée ────────────────────────────────────────────────────
