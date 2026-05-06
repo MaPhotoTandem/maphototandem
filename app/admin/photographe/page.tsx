@@ -258,7 +258,9 @@ export default function PhotographePage() {
       )
       if (res.ok) {
         const data = await res.json()
-        setPassengers((data.passengers ?? []).join(', '))
+        const loaded = (data.passengers ?? []).join(', ')
+        setPassengers(loaded)
+        if (loaded) setPassengersSaved(true)
       }
     }
 
