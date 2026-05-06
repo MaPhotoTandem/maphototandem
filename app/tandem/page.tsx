@@ -279,13 +279,13 @@ export default function HomePage() {
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Date du saut
             </label>
-            <div className="w-full overflow-hidden">
+            <div className="w-full overflow-hidden border border-gray-300 rounded-lg bg-white focus-within:border-action transition-colors">
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="input-field text-base"
-                style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}
+                className="w-full px-4 py-3 text-black focus:outline-none text-base bg-transparent border-0"
+                style={{ maxWidth: '100%', minWidth: '0', boxSizing: 'border-box' }}
                 required
               />
             </div>
