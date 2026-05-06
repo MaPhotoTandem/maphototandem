@@ -153,8 +153,8 @@ export default function PhotographePage() {
       return
     }
 
-    // 3. Aucune session → retour à /admin pour login
-    router.replace('/admin')
+    // 3. Aucune session → retour à /connexion-studio
+    router.replace('/connexion-studio')
   }, [router])
 
   function logout() {
