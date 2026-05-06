@@ -279,14 +279,16 @@ export default function HomePage() {
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Date du saut
             </label>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="input-field text-base"
-              style={{ width: '100%', display: 'block' }}
-              required
-            />
+            <div className="w-full overflow-hidden">
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="input-field text-base"
+                style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}
+                required
+              />
+            </div>
           </div>
 
           {/* Numéro d'envolée */}
