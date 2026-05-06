@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     secure: true,        // HTTPS seulement
     sameSite: 'strict',  // Protège contre les attaques cross-site
     maxAge: COOKIE_MAX_AGE,
-    path: '/admin',
+    path: '/',
   })
 
   return res
