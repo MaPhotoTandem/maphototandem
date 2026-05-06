@@ -221,7 +221,7 @@ export default function PhotographePage() {
     // Sauvegarder les prénoms immédiatement si fournis
     const passengersInput = newPassengers.trim()
     const parsedPassengers = passengersInput
-      ? passengersInput.split(',').map((p) => p.trim()).filter(Boolean)
+      ? passengersInput.split(/,| et |&/i).map((p) => p.trim()).filter(Boolean)
       : []
 
     if (parsedPassengers.length > 0) {
@@ -288,7 +288,7 @@ export default function PhotographePage() {
   async function savePassengers() {
     if (!selectedFlight) return
     setSavingPassengers(true)
-    const parsed = passengers.split(',').map((p) => p.trim()).filter(Boolean)
+    const parsed = passengers.split(/,| et |&/i).map((p) => p.trim()).filter(Boolean)
     await fetch('/api/admin/flights/passengers', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
