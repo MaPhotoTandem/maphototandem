@@ -23,6 +23,9 @@
 
   .input-field {
     @apply bg-white border border-gray-300 rounded-lg px-4 py-3 text-black placeholder-mid focus:outline-none focus:border-action transition-colors w-full;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .card {
