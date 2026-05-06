@@ -17,8 +17,9 @@ export interface GalleryMetadata {
   location: string
   date: string
   envol: string
-  activatedAt?: string   // ISO — quand approuvée
-  expiresAt?: string     // ISO — activatedAt + 30j (mis à jour si prolongée)
+  activatedAt?: string    // ISO — quand approuvée
+  expiresAt?: string      // ISO — activatedAt + 30j (mis à jour si prolongée)
+  passengers?: string[]   // Prénoms des sauteurs (ex: ["Sabrina", "Jean", "Mathieu"])
 }
 
 // ── Structure du token de téléchargement (sauvegardé dans R2 sous tokens/{token}.json) ──

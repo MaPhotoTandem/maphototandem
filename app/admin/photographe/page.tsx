@@ -110,6 +110,8 @@ export default function PhotographePage() {
   const [loadingFlights, setLoadingFlights] = useState(false)
   const [flightsLoaded, setFlightsLoaded] = useState(false)
   const [newEnvol, setNewEnvol] = useState('')
+  const [newPassengers, setNewPassengers] = useState('')
+  const [missingPassengers, setMissingPassengers] = useState<Set<string>>(new Set())
 
   // Flight detail
   const [selectedFlight, setSelectedFlight] = useState<Flight | null>(null)
@@ -118,6 +120,9 @@ export default function PhotographePage() {
   const [deleting, setDeleting] = useState<string | null>(null)
   const [uploadFiles, setUploadFiles] = useState<UploadFile[]>([])
   const [uploading, setUploading] = useState(false)
+  const [passengers, setPassengers] = useState('')
+  const [savingPassengers, setSavingPassengers] = useState(false)
+  const [passengersSaved, setPassengersSaved] = useState(false)
 
   // Manager modal
   const [modal, setModal] = useState<{
@@ -170,6 +175,7 @@ export default function PhotographePage() {
     setLoadingFlights(true)
     setFlightsLoaded(false)
     setFlights([])
+    setMissingPassengers(new Set())
     const res = await fetch(
       `/api/admin/flights?location=${location}&date=${date}`,
       { headers: { 'x-admin-password': password } }
@@ -177,12 +183,30 @@ export default function PhotographePage() {
     const data = await res.json()
     setLoadingFlights(false)
     setFlightsLoaded(true)
-    if (res.ok) setFlights(data.flights ?? [])
+    if (res.ok) {
+      const loadedFlights: Flight[] = data.flights ?? []
+      setFlights(loadedFlights)
+      // Vérifier lesquelles n'ont pas de prénoms
+      const missing = new Set<string>()
+      await Promise.all(
+        loadedFlights.map(async (f) => {
+          const r = await fetch(
+            `/api/admin/flights/passengers?location=${location}&date=${date}&envol=${f.envol}`,
+            { headers: { 'x-admin-password': password } }
+          )
+          if (r.ok) {
+            const d = await r.json()
+            if (!d.passengers || d.passengers.length === 0) missing.add(f.envol)
+          }
+        })
+      )
+      setMissingPassengers(missing)
+    }
   }
 
   // ── Créer une nouvelle envolée ────────────────────────────────────────────
 
-  function handleCreateFlight(e: React.FormEvent) {
+  async function handleCreateFlight(e: React.FormEvent) {
     e.preventDefault()
     const num = newEnvol.trim()
     if (!num || isNaN(Number(num))) return
@@ -193,17 +217,49 @@ export default function PhotographePage() {
     const newFlight: Flight = { envol: num, photoCount: 0, published: false, isPending: true }
     const updated = [...flights, newFlight].sort((a, b) => Number(a.envol) - Number(b.envol))
     setFlights(updated)
+
+    // Sauvegarder les prénoms immédiatement si fournis
+    const passengersInput = newPassengers.trim()
+    const parsedPassengers = passengersInput
+      ? passengersInput.split(',').map((p) => p.trim()).filter(Boolean)
+      : []
+
+    if (parsedPassengers.length > 0) {
+      await fetch('/api/admin/flights/passengers', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
+        body: JSON.stringify({ location, date, envol: num, passengers: parsedPassengers }),
+      })
+    }
+
     setNewEnvol('')
-    openFlight(newFlight)
+    setNewPassengers('')
+    openFlight(newFlight, parsedPassengers)
   }
 
   // ── Ouvrir une envolée ────────────────────────────────────────────────────
 
-  async function openFlight(flight: Flight) {
+  async function openFlight(flight: Flight, initialPassengers?: string[]) {
     setSelectedFlight(flight)
     setPhotos([])
     setUploadFiles([])
+    setPassengersSaved(false)
     setView('flight')
+
+    // Charger les prénoms existants (sauf si déjà fournis lors de la création)
+    if (initialPassengers !== undefined) {
+      setPassengers(initialPassengers.join(', '))
+    } else {
+      const res = await fetch(
+        `/api/admin/flights/passengers?location=${location}&date=${date}&envol=${flight.envol}`,
+        { headers: { 'x-admin-password': password } }
+      )
+      if (res.ok) {
+        const data = await res.json()
+        setPassengers((data.passengers ?? []).join(', '))
+      }
+    }
+
     if (!flight.isPending) {
       setLoadingPhotos(true)
       const res = await fetch(
@@ -221,6 +277,24 @@ export default function PhotographePage() {
     setSelectedFlight(null)
     setPhotos([])
     setUploadFiles([])
+    setPassengers('')
+    setPassengersSaved(false)
+  }
+
+  // ── Sauvegarder les prénoms ───────────────────────────────────────────────
+
+  async function savePassengers() {
+    if (!selectedFlight) return
+    setSavingPassengers(true)
+    const parsed = passengers.split(',').map((p) => p.trim()).filter(Boolean)
+    await fetch('/api/admin/flights/passengers', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
+      body: JSON.stringify({ location, date, envol: selectedFlight.envol, passengers: parsed }),
+    })
+    setSavingPassengers(false)
+    setPassengersSaved(true)
+    setTimeout(() => setPassengersSaved(false), 3000)
   }
 
   // ── Supprimer une photo ───────────────────────────────────────────────────
@@ -503,6 +577,11 @@ export default function PhotographePage() {
                       ) : (
                         <span className="text-mid text-sm">{flight.photoCount} photo{flight.photoCount > 1 ? 's' : ''}</span>
                       )}
+                      {missingPassengers.has(flight.envol) && (
+                        <span className="text-xs font-semibold text-amber-600" title="Prénoms des sauteurs manquants">
+                          ⚠️ prénoms manquants
+                        </span>
+                      )}
                     </div>
                     <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
                       flight.published
@@ -519,18 +598,32 @@ export default function PhotographePage() {
             {/* Créer une nouvelle envolée */}
             <div className="border border-dashed border-action/30 rounded-2xl p-5">
               <h2 className="text-sm font-semibold text-navy mb-3">Créer une nouvelle envolée</h2>
-              <form onSubmit={handleCreateFlight} className="flex gap-3">
-                <input
-                  type="number"
-                  min="1"
-                  placeholder="N° d'envolée (ex: 4)"
-                  value={newEnvol}
-                  onChange={(e) => setNewEnvol(e.target.value)}
-                  className="input-field flex-1"
-                />
-                <button type="submit" className="btn-primary px-5">
-                  Créer →
-                </button>
+              <form onSubmit={handleCreateFlight} className="space-y-3">
+                <div className="flex gap-3">
+                  <input
+                    type="number"
+                    min="1"
+                    placeholder="N° d'envolée (ex: 4)"
+                    value={newEnvol}
+                    onChange={(e) => setNewEnvol(e.target.value)}
+                    className="input-field flex-1"
+                  />
+                  <button type="submit" className="btn-primary px-5">
+                    Créer →
+                  </button>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Prénoms des sauteurs (ex: Sabrina, Jean, Mathieu)"
+                    value={newPassengers}
+                    onChange={(e) => setNewPassengers(e.target.value)}
+                    className="input-field w-full"
+                  />
+                  <p className="text-xs text-amber-600 font-medium mt-1">
+                    ⚠️ Important — nécessaire pour que les clients retrouvent leur envolée.
+                  </p>
+                </div>
               </form>
             </div>
           </>
@@ -605,6 +698,38 @@ export default function PhotographePage() {
           ⏳ Brouillon — les clients ne voient pas encore ces photos.
         </div>
       )}
+
+      {/* Prénoms des sauteurs */}
+      <div className={`rounded-xl px-4 py-4 mb-6 border ${
+        passengers.trim()
+          ? 'bg-white border-gray-200'
+          : 'bg-amber-50 border-amber-300'
+      }`}>
+        <label className="block text-sm font-semibold text-navy mb-2">
+          {passengers.trim() ? '👥 Prénoms des sauteurs' : '⚠️ Prénoms des sauteurs — manquants'}
+        </label>
+        {!passengers.trim() && (
+          <p className="text-xs text-amber-700 mb-2">
+            Les clients ne pourront pas retrouver leur envolée sans cette information.
+          </p>
+        )}
+        <div className="flex gap-2">
+          <input
+            type="text"
+            placeholder="Ex: Sabrina, Jean, Mathieu, Paul"
+            value={passengers}
+            onChange={(e) => { setPassengers(e.target.value); setPassengersSaved(false) }}
+            className="input-field flex-1 text-sm"
+          />
+          <button
+            onClick={savePassengers}
+            disabled={savingPassengers || !passengers.trim()}
+            className="btn-primary text-sm px-4 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+          >
+            {savingPassengers ? '...' : passengersSaved ? '✓ Sauvegardé' : 'Sauvegarder'}
+          </button>
+        </div>
+      </div>
 
       {/* Grille de photos */}
       {loadingPhotos ? (
