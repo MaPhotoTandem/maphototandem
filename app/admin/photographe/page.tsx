@@ -473,6 +473,14 @@ export default function PhotographePage() {
   if (view === 'dashboard') {
     return (
       <div className="max-w-3xl mx-auto px-4 py-10">
+        {modal && (
+          <ManagerModal
+            title={modal.title}
+            description={modal.description}
+            onConfirm={modal.onConfirm}
+            onCancel={() => setModal(null)}
+          />
+        )}
 
         {/* En-tête */}
         <div className="flex items-center justify-between mb-8 flex-wrap gap-3">
