@@ -162,7 +162,7 @@ export default function ConnexionStudioPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute inset-y-0 right-3 flex items-center text-pale-blue/50 hover:text-pale-blue transition-colors"
+                className="absolute inset-y-0 right-3 flex items-center text-pale-blue/80 hover:text-white transition-colors"
                 tabIndex={-1}
                 aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
               >
@@ -199,7 +199,7 @@ export default function ConnexionStudioPage() {
               <button
                 type="button"
                 onClick={() => setShowGestionPw((v) => !v)}
-                className="absolute inset-y-0 right-3 flex items-center text-pale-blue/50 hover:text-pale-blue transition-colors"
+                className="absolute inset-y-0 right-3 flex items-center text-pale-blue/80 hover:text-white transition-colors"
                 tabIndex={-1}
                 aria-label={showGestionPw ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
               >
