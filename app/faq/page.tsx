@@ -40,6 +40,10 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     a: 'Absolument ! Le format JPEG haute résolution que tu reçois est parfaitement adapté à l\'impression. Nous ne fournissons pas de système d\'impression sur notre site.',
   },
   {
+    q: 'Puis-je obtenir un remboursement ?',
+    a: 'Non. Toutes les ventes sont finales. Dès que le lien de téléchargement t\'est envoyé, aucun échange, crédit ou remboursement n\'est possible. Si tu as un problème avec ta commande, contacte-nous via la page Contact et on fera notre possible pour t\'aider.',
+  },
+  {
     q: 'Mon lien est expiré et je n\'ai pas téléchargé mes photos. Que faire ?',
     a: 'Contacte-nous via le formulaire de contact ou par courriel à maphototandem@parachutemontreal.com en précisant ta date de saut, le centre et ton numéro d\'envolée. Bien que nous ne puissions pas garantir la disponibilité des photos après l\'expiration du lien, nous ferons tout notre possible pour réactiver ton accès.',
   },
