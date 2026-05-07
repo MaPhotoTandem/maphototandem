@@ -29,9 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 className="h-10 sm:h-12 w-auto"
               />
             </a>
-            <span className="text-white/60 text-xs sm:text-sm hidden sm:block">
-              Parachute Montréal · Rive-Sud & Rive-Nord
-            </span>
+            <nav className="flex items-center gap-4 sm:gap-6">
+              <a href="/faq" className="text-white/70 hover:text-white text-xs sm:text-sm transition-colors">FAQ</a>
+              <a href="/contact" className="text-white/70 hover:text-white text-xs sm:text-sm transition-colors">Contact</a>
+            </nav>
           </div>
         </header>
 

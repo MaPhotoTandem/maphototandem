@@ -199,7 +199,6 @@ export default function GalleryClient({
                 Sous-total {fmt(subtotalCents)} $ + taxes {fmt(taxCents)} $
               </p>
               <p className="text-white font-bold text-base">{fmt(totalCents)} $ CAD</p>
-              <p className="text-white/40 text-xs leading-tight mt-1">Vente finale — aucun remboursement après l&apos;envoi du lien.</p>
             </div>
             <button
               onClick={handleCheckout}
