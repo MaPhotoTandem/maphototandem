@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import HelpBubble from '@/components/HelpBubble'
 
 export default function ContactPage() {
   const [name, setName]       = useState('')
@@ -172,5 +173,6 @@ export default function ContactPage() {
       </div>
 
     </div>
+    <HelpBubble />
   )
 }
