@@ -141,14 +141,16 @@ export default function ContactPage() {
                 <span className="text-lg">📍</span>
                 <div>
                   <p className="font-semibold text-navy">Rive-Sud</p>
-                  <p className="text-mid">Farnham, Québec</p>
+                  <p className="text-mid">200 chemin Lebeau</p>
+                  <p className="text-mid">Farnham, QC J2N 0N5</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <span className="text-lg">📍</span>
                 <div>
                   <p className="font-semibold text-navy">Rive-Nord</p>
-                  <p className="text-mid">St-Esprit, Québec</p>
+                  <p className="text-mid">29 route 125</p>
+                  <p className="text-mid">Saint-Esprit, QC J0K 2L0</p>
                 </div>
               </div>
             </div>
@@ -156,7 +158,7 @@ export default function ContactPage() {
 
           <div className="bg-pale-blue rounded-2xl p-6">
             <h2 className="text-base font-bold text-navy mb-2">Délai de réponse</h2>
-            <p className="text-sm text-mid">On répond généralement dans la journée, en saison.</p>
+            <p className="text-sm text-mid">On répond le plus rapidement possible, généralement entre 24h et 48h. En juillet et en août, les délais peuvent être un peu plus longs en raison de la haute saison.</p>
           </div>
 
           <div className="bg-pale-blue rounded-2xl p-6">
