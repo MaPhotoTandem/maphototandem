@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import HelpBubble from '@/components/HelpBubble'
 
 const FAQ: { q: string; a: React.ReactNode }[] = [
