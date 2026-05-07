@@ -2,29 +2,6 @@
 
 import { useState } from 'react'
 
-const FAQ = [
-  {
-    q: 'Comment retrouver mon envolée ?',
-    a: 'Sur la page d\'accueil, clique sur "Retrouver mon envolée" et suis les étapes. Tu auras besoin de la date de ton saut, du centre visité et de ton prénom.',
-  },
-  {
-    q: 'Combien de temps mon lien de téléchargement est-il valide ?',
-    a: 'Ton lien est valide 72 heures après l\'achat. Assure-toi de télécharger tes photos avant l\'expiration. Tu peux aussi les partager avec tes proches via ce même lien.',
-  },
-  {
-    q: 'Puis-je acheter les photos de quelqu\'un d\'autre ?',
-    a: 'Oui ! Si tu connais la date du saut, le centre et le numéro d\'envolée, tu peux accéder à la galerie et acheter les photos pour offrir en cadeau.',
-  },
-  {
-    q: 'En quelle qualité sont les photos ?',
-    a: 'Les photos sont vendues en haute résolution, sans filigrane. Parfaites pour imprimer ou partager sur les réseaux sociaux.',
-  },
-  {
-    q: 'Mon lien est expiré, que faire ?',
-    a: 'Contacte-nous via le formulaire ci-dessus en précisant ta date de saut, le centre et ton numéro d\'envolée. On pourra réactiver ton accès.',
-  },
-]
-
 export default function ContactPage() {
   const [name, setName]       = useState('')
   const [email, setEmail]     = useState('')
@@ -33,7 +10,6 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError]     = useState('')
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -59,7 +35,6 @@ export default function ContactPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-10 sm:py-16">
 
-      {/* Titre */}
       <div className="mb-10">
         <h1 className="text-3xl sm:text-4xl font-bold text-navy mb-3">Nous contacter</h1>
         <p className="text-mid text-base">
@@ -67,7 +42,7 @@ export default function ContactPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-14">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
 
         {/* Formulaire */}
         <div className="md:col-span-3">
@@ -183,29 +158,14 @@ export default function ContactPage() {
             <h2 className="text-base font-bold text-navy mb-2">Délai de réponse</h2>
             <p className="text-sm text-mid">On répond généralement dans la journée, en saison.</p>
           </div>
-        </div>
-      </div>
 
-      {/* FAQ */}
-      <div>
-        <h2 className="text-2xl font-bold text-navy mb-6">Questions fréquentes</h2>
-        <div className="space-y-3">
-          {FAQ.map((item, i) => (
-            <div key={i} className="border border-gray-200 rounded-xl overflow-hidden">
-              <button
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
-              >
-                <span className="font-semibold text-navy text-sm pr-4">{item.q}</span>
-                <span className="text-mid text-lg flex-shrink-0">{openFaq === i ? '−' : '+'}</span>
-              </button>
-              {openFaq === i && (
-                <div className="px-5 pb-4 text-sm text-mid leading-relaxed">
-                  {item.a}
-                </div>
-              )}
-            </div>
-          ))}
+          <div className="bg-pale-blue rounded-2xl p-6">
+            <h2 className="text-base font-bold text-navy mb-2">Questions fréquentes</h2>
+            <p className="text-sm text-mid mb-3">Consulte la FAQ avant d'écrire, ta réponse s'y trouve peut-être !</p>
+            <a href="/faq" className="text-action text-sm font-semibold hover:underline">
+              Voir la FAQ →
+            </a>
+          </div>
         </div>
       </div>
 
