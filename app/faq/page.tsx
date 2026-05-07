@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-const FAQ = [
+const FAQ: { q: string; a: React.ReactNode }[] = [
   {
     q: 'Comment vais-je recevoir mes photos ?',
     a: 'Après ton achat, tu es automatiquement redirigé vers ton lien de téléchargement. Ce lien t\'est également envoyé par courriel afin de pouvoir y accéder à tout moment pendant les 72 heures suivant ton achat.',
@@ -12,12 +12,12 @@ const FAQ = [
     a: 'Non, tu peux télécharger les photos autant de fois que tu le veux pendant les 72 heures que ton lien est actif. Tu peux donc envoyer le lien à mami, papi et tous tes amis !',
   },
   {
-    q: 'Comment retrouver mon envolée ?',
+    q: 'Je ne connais pas mon numéro d\'envolée. Que faire ?',
     a: 'Sur la page d\'accueil, clique sur "J\'ai perdu mon numéro d\'envolée" et suis les étapes. Tu auras besoin de la date de ton saut, du centre visité et de ton prénom.',
   },
   {
     q: 'Mon prénom ne donne aucun résultat quand je recherche mon envolée. Que faire ?',
-    a: 'Après avoir vérifié la date et la succursale, essaie de rechercher avec ton nom de famille — il arrive que les deux aient été intervertis lors de l\'enregistrement. Si ça ne fonctionne pas, tente les variantes orthographiques courantes de ton prénom ; malgré notre vigilance, une erreur peut parfois se glisser. Si tu n\'arrives toujours pas à retrouver ton envolée, contacte-nous via la page Contact ou par courriel à maphototandem@parachutemontreal.com.',
+    a: <>Après avoir vérifié la date et la succursale, essaie de rechercher avec ton nom de famille. Il arrive que les deux aient été intervertis lors de l&apos;enregistrement. Si ça ne fonctionne pas, tente les variantes orthographiques courantes de ton prénom ; malgré notre vigilance, une erreur peut parfois se glisser. Si tu n&apos;arrives toujours pas à retrouver ton envolée, contacte-nous via la page <a href="/contact" className="text-action hover:underline">Contact</a> ou par courriel à maphototandem@parachutemontreal.com.</>,
   },
   {
     q: 'Combien de temps mon lien de téléchargement est-il valide ?',
@@ -37,7 +37,7 @@ const FAQ = [
   },
   {
     q: 'Puis-je imprimer les photos après les avoir reçues ?',
-    a: 'Absolument ! Le format JPEG haute résolution que tu reçois est parfaitement adapté à l\'impression, quelle que soit la taille souhaitée.',
+    a: 'Absolument ! Le format JPEG haute résolution que tu reçois est parfaitement adapté à l\'impression. Nous ne fournissons pas de système d\'impression sur notre site.',
   },
   {
     q: 'Mon lien est expiré et je n\'ai pas téléchargé mes photos. Que faire ?',
