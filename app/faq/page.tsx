@@ -95,7 +95,7 @@ export default function FaqPage() {
         ))}
       </div>
 
+      <HelpBubble />
     </div>
-    <HelpBubble />
   )
 }
