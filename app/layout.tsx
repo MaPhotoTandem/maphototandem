@@ -30,8 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               />
             </a>
             <nav className="flex items-center gap-4 sm:gap-6">
-              <a href="/faq" className="text-white/70 hover:text-white text-xs sm:text-sm transition-colors">FAQ</a>
-              <a href="/contact" className="text-white/70 hover:text-white text-xs sm:text-sm transition-colors">Contact</a>
+              <a href="/faq" className="text-white font-bold text-xs sm:text-sm transition-colors hover:text-white/80">FAQ</a>
+              <a href="/contact" className="text-white font-bold text-xs sm:text-sm transition-colors hover:text-white/80">Contact</a>
             </nav>
           </div>
         </header>

@@ -202,6 +202,7 @@ export default function HomePage() {
   const [envol, setEnvol]           = useState('')
   const [error, setError]           = useState('')
   const [showFinder, setShowFinder] = useState(false)
+  const [showHelpMenu, setShowHelpMenu] = useState(false)
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -332,15 +333,49 @@ export default function HomePage() {
         Les photos sont disponibles le soir même de votre saut et pendant 30 jours.
       </p>
 
-      {/* Bouton flottant */}
-      <button
-        onClick={() => setShowFinder(true)}
-        className="fixed bottom-6 right-6 bg-action text-white rounded-full shadow-lg px-4 py-3 text-sm font-semibold flex items-center gap-2 hover:bg-action/90 transition-colors z-40"
-        aria-label="Retrouver mon envolée"
-      >
-        <span>💬</span>
-        <span className="hidden sm:inline">Retrouver mon envolée</span>
-      </button>
+      {/* Bouton flottant + menu d'aide */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2">
+
+        {/* Menu */}
+        {showHelpMenu && (
+          <>
+            {/* Overlay invisible pour fermer en cliquant ailleurs */}
+            <div className="fixed inset-0 z-30" onClick={() => setShowHelpMenu(false)} />
+            <div className="relative z-40 bg-white rounded-2xl shadow-xl overflow-hidden w-52 border border-gray-100">
+              <button
+                onClick={() => { setShowHelpMenu(false); setShowFinder(true) }}
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy hover:bg-pale-blue transition-colors text-left"
+              >
+                <span>🔍</span> Retrouver mon envolée
+              </button>
+              <div className="border-t border-gray-100" />
+              <a
+                href="/faq"
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy hover:bg-pale-blue transition-colors"
+              >
+                <span>❓</span> Questions fréquentes
+              </a>
+              <div className="border-t border-gray-100" />
+              <a
+                href="/contact"
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy hover:bg-pale-blue transition-colors"
+              >
+                <span>✉️</span> Contactez-nous
+              </a>
+            </div>
+          </>
+        )}
+
+        {/* Bouton principal */}
+        <button
+          onClick={() => setShowHelpMenu(v => !v)}
+          className="bg-action text-white rounded-full shadow-lg px-4 py-3 text-sm font-semibold flex items-center gap-2 hover:bg-action/90 transition-colors"
+          aria-label="Besoin d'aide ?"
+        >
+          <span>💬</span>
+          <span className="hidden sm:inline">Besoin d&apos;aide ?</span>
+        </button>
+      </div>
     </div>
   )
 }
