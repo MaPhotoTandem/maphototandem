@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { listAllGalleries } from '@/lib/r2'
+import { listAllGalleries, getTotalStorageBytes } from '@/lib/r2'
 import { stripe } from '@/lib/stripe'
 
 function authManager(req: NextRequest) {
@@ -12,9 +12,10 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [galleries, sessions] = await Promise.all([
+    const [galleries, sessions, totalStorageBytes] = await Promise.all([
       listAllGalleries(),
       stripe.checkout.sessions.list({ status: 'complete', limit: 100 }),
+      getTotalStorageBytes(),
     ])
 
     // Compter les ventes par galerie (location + date + envol)
@@ -33,7 +34,7 @@ export async function GET(req: NextRequest) {
       salesCount: salesCount[`${g.location}/${g.date}/${g.envol}`] ?? 0,
     }))
 
-    return NextResponse.json({ galleries: enriched })
+    return NextResponse.json({ galleries: enriched, totalStorageBytes })
   } catch (err) {
     console.error('Erreur liste galeries:', err)
     return NextResponse.json({ error: 'Erreur serveur.' }, { status: 500 })

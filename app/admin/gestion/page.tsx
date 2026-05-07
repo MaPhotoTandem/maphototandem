@@ -358,7 +358,7 @@ export default function GestionPage() {
       const data = await res.json()
       const gals: Gallery[] = data.galleries ?? []
       setGalleries(gals)
-      setStorageBytes(gals.reduce((s, g) => s + g.storageBytes, 0))
+      setStorageBytes(data.totalStorageBytes ?? gals.reduce((s, g) => s + g.storageBytes, 0))
     }
   }
 
