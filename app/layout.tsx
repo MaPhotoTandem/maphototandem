@@ -39,6 +39,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <footer className="bg-navy text-white/50 px-4 py-4 text-center text-xs sm:text-sm">
           © {new Date().getFullYear()} Ma Photo Tandem · Parachute Montréal
+          {' · '}
+          <a href="/contact" className="hover:text-white/80 underline transition-colors">Contact</a>
         </footer>
 
       </body>
