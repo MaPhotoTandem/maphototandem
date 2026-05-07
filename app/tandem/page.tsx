@@ -313,7 +313,7 @@ export default function HomePage() {
               onClick={() => setShowFinder(true)}
               className="mt-2 text-sm text-action font-medium hover:underline transition-colors"
             >
-              Vous avez perdu votre numéro d&apos;envolée ?
+              J&apos;ai perdu mon numéro d&apos;envolée
             </button>
           </div>
 
