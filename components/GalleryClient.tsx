@@ -29,6 +29,7 @@ export default function GalleryClient({
   const [loading, setLoading]   = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [showCart, setShowCart] = useState(false)
+  const [cartZoomPhoto, setCartZoomPhoto] = useState<Photo | null>(null)
 
   const openLightbox  = (index: number) => setLightboxIndex(index)
   const closeLightbox = () => setLightboxIndex(null)
@@ -235,9 +236,19 @@ export default function GalleryClient({
               {photos
                 .filter((p) => selected.has(p.id))
                 .map((p) => (
-                  <div key={p.id} className="relative w-20 h-14 rounded-lg overflow-hidden border border-gray-200">
+                  <button
+                    key={p.id}
+                    onClick={() => setCartZoomPhoto(p)}
+                    className="relative w-20 h-14 rounded-lg overflow-hidden border border-gray-200 hover:border-action transition-colors focus:outline-none focus:ring-2 focus:ring-action"
+                    title="Agrandir"
+                  >
                     <Image src={p.url} alt={p.filename} fill className="object-cover" sizes="80px" />
-                  </div>
+                    <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <svg className="w-4 h-4 text-white opacity-0 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h6m0 0v6m0-6l-7 7M9 21H3m0 0v-6m0 6l7-7" />
+                      </svg>
+                    </div>
+                  </button>
                 ))}
             </div>
 
@@ -279,6 +290,37 @@ export default function GalleryClient({
               </a>
             </p>
           </div>
+        </div>
+      )}
+
+      {/* Zoom photo depuis la modale panier */}
+      {cartZoomPhoto && (
+        <div
+          className="fixed inset-0 bg-black/95 z-[110] flex flex-col items-center justify-center"
+          onClick={() => setCartZoomPhoto(null)}
+        >
+          <button
+            className="absolute top-4 right-4 text-white bg-black/50 p-3 rounded-full"
+            onClick={() => setCartZoomPhoto(null)}
+            aria-label="Fermer"
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <div
+            className="relative w-full h-full mx-8 my-16"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={cartZoomPhoto.url}
+              alt={cartZoomPhoto.filename}
+              fill
+              className="object-contain"
+              sizes="100vw"
+            />
+          </div>
+          <p className="absolute bottom-6 text-white/50 text-xs">Appuyer ailleurs pour fermer</p>
         </div>
       )}
 
