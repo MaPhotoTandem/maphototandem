@@ -199,6 +199,12 @@ export default function GalleryClient({
                 Sous-total {fmt(subtotalCents)} $ + taxes {fmt(taxCents)} $
               </p>
               <p className="text-white font-bold text-base">{fmt(totalCents)} $ CAD</p>
+              <p className="text-white/50 text-[10px] leading-tight mt-1">
+                En payant, vous acceptez nos{' '}
+                <a href="/conditions" className="underline hover:text-white/80" target="_blank" rel="noopener noreferrer">
+                  conditions d&apos;utilisation
+                </a>
+              </p>
             </div>
             <button
               onClick={handleCheckout}

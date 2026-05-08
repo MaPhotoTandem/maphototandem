@@ -44,6 +44,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <a href="/faq" className="hover:text-white/80 underline transition-colors">FAQ</a>
           {' · '}
           <a href="/contact" className="hover:text-white/80 underline transition-colors">Contact</a>
+          {' · '}
+          <a href="/conditions" className="hover:text-white/80 underline transition-colors">Conditions</a>
+          {' · '}
+          <a href="/confidentialite" className="hover:text-white/80 underline transition-colors">Confidentialité</a>
         </footer>
 
       </body>
