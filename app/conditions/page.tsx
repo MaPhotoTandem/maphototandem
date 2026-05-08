@@ -12,7 +12,7 @@ export default function ConditionsPage() {
         Conditions d&apos;utilisation
       </h1>
       <p className="text-mid text-sm mb-10">
-        Dernière mise à jour : mai 2025 · Ma Photo Tandem — Parachute Montréal
+        Dernière mise à jour : 7 mai 2026 · Ma Photo Tandem — Parachute Montréal
       </p>
 
       <section className="mb-10">

@@ -12,7 +12,7 @@ export default function ConfidentialitePage() {
         Politique de confidentialité
       </h1>
       <p className="text-mid text-sm mb-10">
-        Dernière mise à jour : mai 2025 · Ma Photo Tandem — Parachute Montréal
+        Dernière mise à jour : 7 mai 2026 · Ma Photo Tandem — Parachute Montréal
       </p>
 
       <section className="mb-10">
@@ -103,7 +103,7 @@ export default function ConfidentialitePage() {
           <li>Accéder aux informations personnelles que nous détenons sur vous</li>
           <li>Demander la rectification d&apos;informations inexactes</li>
           <li>Demander la suppression de vos informations personnelles</li>
-          <li>Retirer votre consentement à tout moment</li>
+          <li>Se désabonner de toute communication marketing, si applicable</li>
         </ul>
         <p className="text-gray-700 leading-relaxed mt-3">
           Pour exercer ces droits, contactez-nous à{' '}

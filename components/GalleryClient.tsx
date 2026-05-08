@@ -28,6 +28,7 @@ export default function GalleryClient({
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [loading, setLoading]   = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [showCart, setShowCart] = useState(false)
 
   const openLightbox  = (index: number) => setLightboxIndex(index)
   const closeLightbox = () => setLightboxIndex(null)
@@ -207,12 +208,76 @@ export default function GalleryClient({
               </p>
             </div>
             <button
-              onClick={handleCheckout}
+              onClick={() => setShowCart(true)}
               disabled={loading}
               className="btn-primary whitespace-nowrap flex-shrink-0 py-3 px-5 text-sm"
             >
+              Réviser ma commande →
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Modale de révision de commande */}
+      {showCart && (
+        <div
+          className="fixed inset-0 bg-black/60 z-[90] flex items-end sm:items-center justify-center"
+          onClick={() => setShowCart(false)}
+        >
+          <div
+            className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 max-h-[85vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-navy font-bold text-lg mb-4">Révision de ma commande</h2>
+
+            {/* Vignettes des photos sélectionnées */}
+            <div className="flex flex-wrap gap-2 mb-5">
+              {photos
+                .filter((p) => selected.has(p.id))
+                .map((p) => (
+                  <div key={p.id} className="relative w-20 h-14 rounded-lg overflow-hidden border border-gray-200">
+                    <Image src={p.url} alt={p.filename} fill className="object-cover" sizes="80px" />
+                  </div>
+                ))}
+            </div>
+
+            {/* Détail du prix */}
+            <div className="border-t border-gray-100 pt-4 space-y-2 text-sm mb-5">
+              <div className="flex justify-between text-gray-600">
+                <span>{selected.size} photo{selected.size > 1 ? 's' : ''}</span>
+                <span>{fmt(subtotalCents)} $</span>
+              </div>
+              <div className="flex justify-between text-gray-600">
+                <span>TPS 5 % + TVQ 9,975 %</span>
+                <span>{fmt(taxCents)} $</span>
+              </div>
+              <div className="flex justify-between text-navy font-bold text-base pt-2 border-t border-gray-100">
+                <span>Total</span>
+                <span>{fmt(totalCents)} $ CAD</span>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <button
+              onClick={handleCheckout}
+              disabled={loading}
+              className="btn-primary w-full mb-3"
+            >
               {loading ? 'Chargement...' : 'Payer →'}
             </button>
+            <button
+              onClick={() => setShowCart(false)}
+              className="btn-secondary w-full"
+            >
+              ← Continuer à magasiner
+            </button>
+
+            <p className="text-[10px] text-mid text-center mt-3">
+              En payant, vous acceptez nos{' '}
+              <a href="/conditions" className="underline" target="_blank" rel="noopener noreferrer">
+                conditions d&apos;utilisation
+              </a>
+            </p>
           </div>
         </div>
       )}
