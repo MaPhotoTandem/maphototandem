@@ -29,7 +29,7 @@ export default function GalleryClient({
   const [loading, setLoading]   = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [showCart, setShowCart] = useState(false)
-  const [cartZoomPhoto, setCartZoomPhoto] = useState<Photo | null>(null)
+  const [cartZoomIndex, setCartZoomIndex] = useState<number | null>(null)
 
   const openLightbox  = (index: number) => setLightboxIndex(index)
   const closeLightbox = () => setLightboxIndex(null)
@@ -102,10 +102,27 @@ export default function GalleryClient({
     }
   }
 
-  const subtotalCents = calculateSubtotal(selected.size)
-  const taxCents      = calculateTax(subtotalCents)
-  const totalCents    = subtotalCents + taxCents
+  const subtotalCents  = calculateSubtotal(selected.size)
+  const taxCents       = calculateTax(subtotalCents)
+  const totalCents     = subtotalCents + taxCents
   const fmt = (cents: number) => (cents / 100).toFixed(2)
+
+  // Photos sélectionnées dans l'ordre de la galerie (pour le lightbox du panier)
+  const selectedPhotos = photos.filter((p) => selected.has(p.id))
+
+  const cartTouchStartX = useRef<number | null>(null)
+  function handleCartTouchStart(e: React.TouchEvent) {
+    cartTouchStartX.current = e.touches[0].clientX
+  }
+  function handleCartTouchEnd(e: React.TouchEvent) {
+    if (cartTouchStartX.current === null || cartZoomIndex === null) return
+    const delta = e.changedTouches[0].clientX - cartTouchStartX.current
+    if (Math.abs(delta) > 50) {
+      if (delta < 0) setCartZoomIndex((i) => i !== null ? (i + 1) % selectedPhotos.length : null)
+      else           setCartZoomIndex((i) => i !== null ? (i - 1 + selectedPhotos.length) % selectedPhotos.length : null)
+    }
+    cartTouchStartX.current = null
+  }
 
   return (
     <>
@@ -233,23 +250,21 @@ export default function GalleryClient({
 
             {/* Vignettes des photos sélectionnées */}
             <div className="flex flex-wrap gap-2 mb-5">
-              {photos
-                .filter((p) => selected.has(p.id))
-                .map((p) => (
-                  <button
-                    key={p.id}
-                    onClick={() => setCartZoomPhoto(p)}
-                    className="relative w-20 h-14 rounded-lg overflow-hidden border border-gray-200 hover:border-action transition-colors focus:outline-none focus:ring-2 focus:ring-action"
-                    title="Agrandir"
-                  >
-                    <Image src={p.url} alt={p.filename} fill className="object-cover" sizes="80px" />
-                    <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors flex items-center justify-center">
-                      <svg className="w-4 h-4 text-white opacity-0 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h6m0 0v6m0-6l-7 7M9 21H3m0 0v-6m0 6l7-7" />
-                      </svg>
-                    </div>
-                  </button>
-                ))}
+              {selectedPhotos.map((p, idx) => (
+                <button
+                  key={p.id}
+                  onClick={() => setCartZoomIndex(idx)}
+                  className="group relative w-20 h-14 rounded-lg overflow-hidden border border-gray-200 hover:border-action transition-colors focus:outline-none focus:ring-2 focus:ring-action"
+                  title="Agrandir"
+                >
+                  <Image src={p.url} alt={p.filename} fill className="object-cover" sizes="80px" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h6m0 0v6m0-6l-7 7M9 21H3m0 0v-6m0 6l7-7" />
+                    </svg>
+                  </div>
+                </button>
+              ))}
             </div>
 
             {/* Détail du prix */}
@@ -293,36 +308,87 @@ export default function GalleryClient({
         </div>
       )}
 
-      {/* Zoom photo depuis la modale panier */}
-      {cartZoomPhoto && (
-        <div
-          className="fixed inset-0 bg-black/95 z-[110] flex flex-col items-center justify-center"
-          onClick={() => setCartZoomPhoto(null)}
-        >
-          <button
-            className="absolute top-4 right-4 text-white bg-black/50 p-3 rounded-full"
-            onClick={() => setCartZoomPhoto(null)}
-            aria-label="Fermer"
-          >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+      {/* Lightbox du panier — navigation complète avec swipe et flèches */}
+      {cartZoomIndex !== null && (() => {
+        const photo = selectedPhotos[cartZoomIndex]
+        return (
           <div
-            className="relative w-full h-full mx-8 my-16"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 bg-black/95 z-[110] flex flex-col"
+            onClick={() => setCartZoomIndex(null)}
+            onTouchStart={handleCartTouchStart}
+            onTouchEnd={handleCartTouchEnd}
           >
-            <Image
-              src={cartZoomPhoto.url}
-              alt={cartZoomPhoto.filename}
-              fill
-              className="object-contain"
-              sizes="100vw"
-            />
+            {/* Barre du haut */}
+            <div
+              className="flex-shrink-0 flex items-center justify-between px-4 pt-4 pb-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <p className="text-white/70 text-sm font-medium">
+                {cartZoomIndex + 1} / {selectedPhotos.length}
+              </p>
+              <button
+                className="text-white bg-black/50 p-3 rounded-full active:bg-black/80"
+                onClick={() => setCartZoomIndex(null)}
+                aria-label="Fermer"
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Zone image + flèches */}
+            <div className="flex-1 relative flex items-center justify-center min-h-0">
+              {/* Flèche gauche */}
+              {selectedPhotos.length > 1 && (
+                <button
+                  className="absolute left-2 sm:left-4 text-white bg-black/50 hover:bg-black/80 p-3 rounded-full z-10 transition-colors active:bg-black/80"
+                  onClick={(e) => { e.stopPropagation(); setCartZoomIndex((i) => i !== null ? (i - 1 + selectedPhotos.length) % selectedPhotos.length : null) }}
+                  aria-label="Photo précédente"
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Flèche droite */}
+              {selectedPhotos.length > 1 && (
+                <button
+                  className="absolute right-2 sm:right-4 text-white bg-black/50 hover:bg-black/80 p-3 rounded-full z-10 transition-colors active:bg-black/80"
+                  onClick={(e) => { e.stopPropagation(); setCartZoomIndex((i) => i !== null ? (i + 1) % selectedPhotos.length : null) }}
+                  aria-label="Photo suivante"
+                >
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Image */}
+              <div
+                className="relative w-full h-full mx-14 sm:mx-20"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Image
+                  src={photo.url}
+                  alt={photo.filename}
+                  fill
+                  className="object-contain"
+                  sizes="100vw"
+                />
+              </div>
+            </div>
+
+            {/* Bas */}
+            <div className="flex-shrink-0 pb-8 pt-3 text-center" onClick={(e) => e.stopPropagation()}>
+              <p className="text-white/30 text-xs">
+                {selectedPhotos.length > 1 ? 'Glisser pour naviguer · ' : ''}Appuyer ailleurs pour fermer
+              </p>
+            </div>
           </div>
-          <p className="absolute bottom-6 text-white/50 text-xs">Appuyer ailleurs pour fermer</p>
-        </div>
-      )}
+        )
+      })()}
 
       {/* Lightbox */}
       {lightboxIndex !== null && (() => {
