@@ -208,7 +208,11 @@ export default function GalleryClient({
 
       {/* Barre de panier — fixe en bas */}
       {selected.size > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 bg-navy px-4 py-3 z-50 safe-area-bottom">
+        <div
+          className="fixed bottom-0 left-0 right-0 bg-navy px-4 py-3 z-50 safe-area-bottom"
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchEnd={(e) => e.stopPropagation()}
+        >
           <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">
             <div className="min-w-0">
               <p className="text-white font-semibold text-sm leading-tight">
@@ -227,6 +231,7 @@ export default function GalleryClient({
             </div>
             <button
               onClick={() => setShowCart(true)}
+              onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); setShowCart(true) }}
               disabled={loading}
               className="btn-primary whitespace-nowrap flex-shrink-0 py-3 px-5 text-sm"
             >
