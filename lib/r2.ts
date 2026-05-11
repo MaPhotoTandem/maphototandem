@@ -132,6 +132,40 @@ export async function getUploadUrls(location: string, date: string, envol: strin
 }
 
 /**
+ * Génère des URLs de téléchargement (originaux) ET de prévisualisation (web/watermark).
+ * Utilisé sur la page de téléchargement pour afficher les photos et les télécharger.
+ */
+export async function getDownloadAndPreviewUrls(photoIds: string[]) {
+  const urls = await Promise.all(
+    photoIds.map(async (id) => {
+      const filename = id.split('/').pop() ?? id
+
+      // URL de téléchargement — original haute résolution
+      const downloadUrl = await getSignedUrl(
+        r2,
+        new GetObjectCommand({
+          Bucket: BUCKET,
+          Key: id,
+          ResponseContentDisposition: `attachment; filename="${filename}"`,
+        }),
+        { expiresIn: 14400 }
+      )
+
+      // URL de prévisualisation — version web (watermark, optimisée pour l'affichage)
+      const webKey = id.replace('/originals/', '/web/')
+      const previewUrl = await getSignedUrl(
+        r2,
+        new GetObjectCommand({ Bucket: BUCKET, Key: webKey }),
+        { expiresIn: 14400 }
+      )
+
+      return { id, downloadUrl, previewUrl, filename }
+    })
+  )
+  return urls
+}
+
+/**
  * Génère des URLs de téléchargement pour les originaux achetés.
  * Expire après 4 heures (les URLs sont régénérées à chaque chargement de page).
  */

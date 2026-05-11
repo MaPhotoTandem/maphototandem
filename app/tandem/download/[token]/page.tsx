@@ -1,6 +1,6 @@
 // Page de téléchargement — publique, accessible à quiconque a le token.
 // Le token est généré au moment du checkout et sauvegardé dans R2 par le webhook Stripe.
-import { getDownloadToken, getDownloadUrls } from '@/lib/r2'
+import { getDownloadToken, getDownloadAndPreviewUrls } from '@/lib/r2'
 import DownloadClient from './DownloadClient'
 import DownloadPending from './DownloadPending'
 
@@ -44,7 +44,7 @@ export default async function DownloadPage({ params }: Props) {
   }
 
   // Token valide — générer des URLs signées fraîches (valides 4 heures)
-  const downloads = await getDownloadUrls(tokenData.photoIds)
+  const downloads = await getDownloadAndPreviewUrls(tokenData.photoIds)
   const succursaleLabel = SUCCURSALES[tokenData.location] ?? tokenData.location
 
   return (

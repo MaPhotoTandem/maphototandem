@@ -1,11 +1,12 @@
 'use client'
 // Composant client pour la page de téléchargement.
-// Gère : "Copier le lien", "Tout télécharger", et le bouton individuel par photo.
+// Gère : affichage des photos, "Copier le lien", téléchargement ZIP, boutons individuels.
 import { useState } from 'react'
 
 interface DownloadItem {
   id: string
   downloadUrl: string
+  previewUrl: string
   filename: string
 }
 
@@ -27,13 +28,12 @@ export default function DownloadClient({
   expiresAt,
 }: Props) {
   const [copied, setCopied] = useState(false)
-  const [downloadingAll, setDownloadingAll] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const pageUrl = typeof window !== 'undefined'
     ? window.location.href
     : `${process.env.NEXT_PUBLIC_BASE_URL}/tandem/download/${token}`
 
-  // Formater la date d'expiration
   const expiresDate = new Date(expiresAt)
   const expiresFormatted = expiresDate.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit',
@@ -45,7 +45,6 @@ export default function DownloadClient({
       setCopied(true)
       setTimeout(() => setCopied(false), 3000)
     } catch {
-      // Fallback pour les navigateurs sans clipboard API
       const input = document.createElement('input')
       input.value = pageUrl
       document.body.appendChild(input)
@@ -57,29 +56,10 @@ export default function DownloadClient({
     }
   }
 
-  async function handleDownloadAll() {
-    setDownloadingAll(true)
-    // Ouvrir chaque lien avec un délai pour éviter le blocage du navigateur
-    for (let i = 0; i < downloads.length; i++) {
-      const a = document.createElement('a')
-      a.href = downloads[i].downloadUrl
-      a.download = downloads[i].filename
-      a.style.display = 'none'
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      // Délai entre chaque téléchargement
-      if (i < downloads.length - 1) {
-        await new Promise((res) => setTimeout(res, 800))
-      }
-    }
-    setDownloadingAll(false)
-  }
-
   return (
     <div className="max-w-2xl mx-auto px-4 py-10 sm:py-14">
 
-      {/* En-tête confirmation */}
+      {/* En-tête */}
       <div className="text-center mb-8">
         <div className="w-14 h-14 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg className="w-7 h-7 sm:w-8 sm:h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -94,40 +74,76 @@ export default function DownloadClient({
         </p>
       </div>
 
-      {/* Carte principale */}
+      {/* Instruction mobile — long press */}
+      <div className="sm:hidden bg-pale-blue border border-action/30 rounded-xl px-4 py-3 mb-5 flex gap-3 items-start">
+        <span className="text-xl mt-0.5">💡</span>
+        <p className="text-navy text-sm leading-snug">
+          <strong>Appuyez longuement sur une photo</strong> puis sélectionnez{' '}
+          <strong>«&nbsp;Enregistrer l&apos;image&nbsp;»</strong> pour l&apos;ajouter à votre pellicule.
+        </p>
+      </div>
+
+      {/* Grille de photos */}
+      <div className={`grid gap-3 mb-6 ${downloads.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+        {downloads.map((photo, idx) => (
+          <div key={photo.id} className="relative group rounded-xl overflow-hidden bg-gray-100 aspect-[3/2]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={photo.previewUrl}
+              alt={`Photo ${idx + 1}`}
+              className="w-full h-full object-cover"
+              loading={idx === 0 ? 'eager' : 'lazy'}
+            />
+
+            {/* Bouton agrandir — desktop uniquement */}
+            <button
+              onClick={() => setLightboxIndex(idx)}
+              className="hidden sm:flex absolute top-2 right-2 bg-black/60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center"
+              aria-label="Agrandir"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h6m0 0v6m0-6l-7 7M9 21H3m0 0v-6m0 6l7-7" />
+              </svg>
+            </button>
+
+            {/* Bouton télécharger individuel — desktop uniquement */}
+            <a
+              href={photo.downloadUrl}
+              download={photo.filename}
+              className="hidden sm:flex absolute bottom-2 right-2 bg-black/60 hover:bg-black/80 text-white text-xs font-medium px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity items-center gap-1.5"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Télécharger
+            </a>
+          </div>
+        ))}
+      </div>
+
+      {/* Carte actions */}
       <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 shadow-sm space-y-5">
 
-        {/* Bouton TOUT TÉLÉCHARGER */}
-        <button
-          onClick={handleDownloadAll}
-          disabled={downloadingAll}
-          className="w-full flex items-center justify-center gap-3 bg-action text-white rounded-xl px-4 py-5 font-bold text-lg hover:opacity-90 active:opacity-80 transition-opacity disabled:opacity-60 shadow-md"
+        {/* Bouton ZIP */}
+        <a
+          href={`/api/download-zip/${token}`}
+          className="w-full flex items-center justify-center gap-3 bg-action text-white rounded-xl px-4 py-5 font-bold text-lg hover:opacity-90 active:opacity-80 transition-opacity shadow-md"
         >
-          {downloadingAll ? (
-            <>
-              <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-              </svg>
-              Téléchargement en cours...
-            </>
-          ) : (
-            <>
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              TOUT TÉLÉCHARGER ({downloads.length} {downloads.length === 1 ? 'photo' : 'photos'})
-            </>
-          )}
-        </button>
+          <svg className="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span>
+            TÉLÉCHARGER TOUT EN ZIP
+            <span className="block text-sm font-normal opacity-80">
+              {downloads.length} {downloads.length === 1 ? 'photo' : 'photos'} · idéal sur ordinateur
+            </span>
+          </span>
+        </a>
 
-        {/* Avertissement expiration — sous le bouton Tout télécharger */}
+        {/* Avertissement expiration */}
         <div className="bg-pale-blue border border-action rounded-xl px-4 py-3 text-center">
-          <p className="text-navy font-bold text-base">
-            ⏰ ATTENTION ⏰
-          </p>
+          <p className="text-navy font-bold text-base">⏰ ATTENTION ⏰</p>
           <p className="text-navy font-semibold text-sm mt-0.5">
             Ce lien est valide pendant 72 heures.{' '}
             <span className="font-normal text-mid">(jusqu&apos;au {expiresFormatted})</span>
@@ -150,9 +166,7 @@ export default function DownloadClient({
             <button
               onClick={handleCopyLink}
               className={`flex-shrink-0 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-                copied
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-action text-white hover:opacity-90'
+                copied ? 'bg-green-100 text-green-700' : 'bg-action text-white hover:opacity-90'
               }`}
             >
               {copied ? '✓ Copié !' : 'Copier'}
@@ -165,6 +179,57 @@ export default function DownloadClient({
       <p className="text-center text-sm text-mid mt-8">
         Merci d&apos;avoir choisi l&apos;équipe de Ma Photo Tandem ! 🪂 🫶
       </p>
+
+      {/* Lightbox desktop */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
+          onClick={() => setLightboxIndex(null)}
+        >
+          <button
+            className="absolute top-4 right-4 text-white bg-black/50 p-3 rounded-full"
+            onClick={() => setLightboxIndex(null)}
+            aria-label="Fermer"
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {lightboxIndex > 0 && (
+            <button
+              className="absolute left-4 text-white bg-black/50 p-3 rounded-full"
+              onClick={(e) => { e.stopPropagation(); setLightboxIndex(lightboxIndex - 1) }}
+              aria-label="Précédent"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
+
+          {lightboxIndex < downloads.length - 1 && (
+            <button
+              className="absolute right-4 text-white bg-black/50 p-3 rounded-full"
+              onClick={(e) => { e.stopPropagation(); setLightboxIndex(lightboxIndex + 1) }}
+              aria-label="Suivant"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
+
+          <div className="max-w-4xl max-h-[90vh] px-16" onClick={(e) => e.stopPropagation()}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={downloads[lightboxIndex].previewUrl}
+              alt={`Photo ${lightboxIndex + 1}`}
+              className="max-w-full max-h-[90vh] object-contain rounded-lg"
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
