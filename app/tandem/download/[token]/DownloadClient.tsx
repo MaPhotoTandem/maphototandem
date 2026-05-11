@@ -79,7 +79,9 @@ export default function DownloadClient({
         <span className="text-xl mt-0.5">💡</span>
         <p className="text-navy text-sm leading-snug">
           <strong>Appuyez longuement sur une photo</strong> puis sélectionnez{' '}
-          <strong>«&nbsp;Enregistrer l&apos;image&nbsp;»</strong> pour l&apos;ajouter à votre pellicule.
+          <strong>«&nbsp;Enregistrer dans Photos&nbsp;»</strong> (iPhone) ou{' '}
+          <strong>«&nbsp;Enregistrer l&apos;image&nbsp;»</strong> (Android).<br />
+          <span className="text-mid">iPhone : vos photos se trouveront dans votre pellicule · Android : dans vos Téléchargements.</span>
         </p>
       </div>
 
