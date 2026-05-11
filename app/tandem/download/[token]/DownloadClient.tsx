@@ -6,7 +6,7 @@ import { useState } from 'react'
 interface DownloadItem {
   id: string
   downloadUrl: string
-  previewUrl: string
+  displayUrl: string
   filename: string
 }
 
@@ -89,7 +89,7 @@ export default function DownloadClient({
           <div key={photo.id} className="relative group rounded-xl overflow-hidden bg-gray-100 aspect-[3/2]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={photo.previewUrl}
+              src={photo.displayUrl}
               alt={`Photo ${idx + 1}`}
               className="w-full h-full object-cover"
               loading={idx === 0 ? 'eager' : 'lazy'}
@@ -223,7 +223,7 @@ export default function DownloadClient({
           <div className="max-w-4xl max-h-[90vh] px-16" onClick={(e) => e.stopPropagation()}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={downloads[lightboxIndex].previewUrl}
+              src={downloads[lightboxIndex].displayUrl}
               alt={`Photo ${lightboxIndex + 1}`}
               className="max-w-full max-h-[90vh] object-contain rounded-lg"
             />

@@ -151,15 +151,14 @@ export async function getDownloadAndPreviewUrls(photoIds: string[]) {
         { expiresIn: 14400 }
       )
 
-      // URL de prévisualisation — version web (watermark, optimisée pour l'affichage)
-      const webKey = id.replace('/originals/', '/web/')
-      const previewUrl = await getSignedUrl(
+      // URL d'affichage — original sans watermark, sans entête attachment (pour <img> et long-press)
+      const displayUrl = await getSignedUrl(
         r2,
-        new GetObjectCommand({ Bucket: BUCKET, Key: webKey }),
+        new GetObjectCommand({ Bucket: BUCKET, Key: id }),
         { expiresIn: 14400 }
       )
 
-      return { id, downloadUrl, previewUrl, filename }
+      return { id, downloadUrl, displayUrl, filename }
     })
   )
   return urls
