@@ -159,7 +159,7 @@ export default function GalleryClient({
               key={photo.id}
               className={`group relative aspect-[3/2] rounded-lg overflow-hidden cursor-pointer border-2 transition-all duration-200 ${
                 isSelected
-                  ? 'border-action shadow-md shadow-action/20'
+                  ? 'border-gris-mid shadow-md shadow-gris-mid/20'
                   : 'border-transparent'
               }`}
               onClick={() => togglePhoto(photo.id)}
@@ -174,7 +174,7 @@ export default function GalleryClient({
 
               {/* Coche de sélection */}
               {isSelected && (
-                <div className="absolute inset-0 bg-action/20 flex items-start justify-end p-2">
+                <div className="absolute inset-0 bg-gris-mid/15 flex items-start justify-end p-2">
                   <div className="bg-action rounded-full w-7 h-7 flex items-center justify-center shadow">
                     <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
