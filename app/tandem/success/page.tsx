@@ -19,8 +19,16 @@ export default async function SuccessPage({ searchParams }: Props) {
 
   if (session.payment_status !== 'paid') {
     return (
-      <div className="max-w-xl mx-auto px-4 py-16 text-center">
-        <p className="text-yellow-600">Paiement en attente de confirmation...</p>
+      <div className="min-h-[60vh] flex items-center justify-center px-4">
+        <div className="text-center">
+          <div className="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-6 h-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <p className="text-noir font-medium">Paiement en cours de confirmation…</p>
+          <p className="text-dore text-sm mt-1">Cette page se met à jour automatiquement.</p>
+        </div>
       </div>
     )
   }
@@ -31,54 +39,75 @@ export default async function SuccessPage({ searchParams }: Props) {
   const downloads = await getDownloadUrls(photoIds)
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10 sm:py-14">
+    <div className="min-h-[80vh] bg-creme px-4 py-10 sm:py-16">
+      <div className="max-w-xl mx-auto">
 
-      {/* Confirmation */}
-      <div className="text-center mb-8">
-        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-7 h-7 sm:w-8 sm:h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        {/* Confirmation */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-rouge/10 rounded-full flex items-center justify-center mx-auto mb-5">
+            <svg className="w-8 h-8 text-rouge" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-noir mb-2">
+            Paiement réussi !
+          </h1>
+          <p className="text-dore text-sm sm:text-base">
+            Envolée {envol} · {date} · {downloads.length} photo{downloads.length > 1 ? 's' : ''}
+          </p>
+        </div>
+
+        {/* Avis courriel */}
+        <div className="bg-white border border-dore/20 rounded-2xl p-4 mb-4 flex gap-3">
+          <svg className="w-5 h-5 text-dore flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
+          <div>
+            <p className="text-sm text-noir font-medium">Un courriel vous a été envoyé</p>
+            <p className="text-sm text-dore mt-0.5">
+              Il contient vos liens de téléchargement.{' '}
+              <span className="text-rouge font-medium">Vérifiez vos courriels indésirables</span>{' '}
+              si vous ne le trouvez pas dans votre boîte principale.
+            </p>
+          </div>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-navy">Paiement réussi !</h1>
-        <p className="text-mid text-sm sm:text-base">
-          Envolée {envol} du {date} · {downloads.length} photo{downloads.length > 1 ? 's' : ''}
-        </p>
-      </div>
 
-      {/* Téléchargements */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 shadow-sm">
-        <h2 className="font-semibold mb-2 text-navy text-lg">Télécharger vos photos</h2>
-        <p className="text-sm text-mid mb-5">
-          Les liens sont valides pendant <strong>24 heures</strong>. Sauvegardez vos photos maintenant.
-        </p>
+        {/* Téléchargements */}
+        <div className="bg-white border border-dore/20 rounded-2xl p-5 sm:p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold text-noir text-lg">Télécharger vos photos</h2>
+            <span className="text-xs text-dore bg-creme px-2.5 py-1 rounded-full border border-dore/20">
+              Valide 72 h
+            </span>
+          </div>
 
-        <div className="space-y-2">
-          {downloads.map((dl, i) => (
-            <a
-              key={dl.id}
-              href={dl.downloadUrl}
-              download={dl.filename}
-              /* min-h-[52px] pour une cible de tap confortable sur mobile */
-              className="flex items-center justify-between bg-gray-50 hover:bg-pale-blue active:bg-pale-blue border border-gray-200 rounded-xl px-4 py-3 min-h-[52px] transition-colors"
-            >
-              <span className="text-sm text-gray-700 truncate flex-1 mr-2">
-                Photo {i + 1}
-              </span>
-              <span className="text-action text-sm font-semibold flex items-center gap-1 flex-shrink-0">
-                Télécharger
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-              </span>
-            </a>
-          ))}
+          <div className="space-y-2">
+            {downloads.map((dl, i) => (
+              <a
+                key={dl.id}
+                href={dl.downloadUrl}
+                download={dl.filename}
+                className="flex items-center justify-between bg-creme hover:bg-rouge/5 active:bg-rouge/10 border border-dore/20 rounded-xl px-4 py-3 min-h-[52px] transition-colors group"
+              >
+                <span className="text-sm text-noir truncate flex-1 mr-2">
+                  Photo {i + 1}
+                </span>
+                <span className="text-rouge text-sm font-semibold flex items-center gap-1.5 flex-shrink-0 group-hover:gap-2 transition-all">
+                  Télécharger
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </span>
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <p className="text-center text-sm text-mid mt-8">
-        Merci d&apos;avoir sauté avec Parachute Montréal ! 🪂
-      </p>
+        <p className="text-center text-sm text-dore mt-8">
+          Merci d&apos;avoir sauté avec Parachute Montréal !
+        </p>
+
+      </div>
     </div>
   )
 }
