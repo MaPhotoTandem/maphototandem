@@ -32,17 +32,17 @@ function FlightList({ onSelect, flights, setFlights }: {
     <div className="max-w-3xl mx-auto px-4 py-10">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-navy">Gestion des galeries</h1>
-          <p className="text-sm text-mid mt-1">Démo — Rive-Sud · 15 avril 2026</p>
+          <h1 className="text-2xl font-bold text-noir">Gestion des galeries</h1>
+          <p className="text-sm text-gris-mid mt-1">Démo — Rive-Sud · 15 avril 2026</p>
         </div>
         <span className="text-xs bg-amber-100 text-amber-700 font-semibold px-3 py-1 rounded-full">Mode démo</span>
       </div>
 
       {/* Sélecteur (affiché mais non fonctionnel en démo) */}
-      <div className="bg-pale-blue rounded-2xl p-6 mb-6">
+      <div className="bg-gris-pale rounded-2xl p-6 mb-6">
         <div className="grid grid-cols-2 gap-3 mb-4">
-          <button className="py-3 rounded-lg text-sm font-semibold bg-action text-white">Rive-Sud</button>
-          <button className="py-3 rounded-lg text-sm font-semibold bg-white text-navy">Rive-Nord</button>
+          <button className="py-3 rounded-lg text-sm font-semibold bg-rouge text-white">Rive-Sud</button>
+          <button className="py-3 rounded-lg text-sm font-semibold bg-white text-noir">Rive-Nord</button>
         </div>
         <div className="flex gap-3">
           <input
@@ -56,18 +56,18 @@ function FlightList({ onSelect, flights, setFlights }: {
       </div>
 
       {/* Barre de progression */}
-      <div className={`rounded-2xl p-5 mb-6 border ${allDone ? 'bg-green-50 border-green-200' : 'bg-white border-pale-blue'}`}>
+      <div className={`rounded-2xl p-5 mb-6 border ${allDone ? 'bg-green-50 border-green-200' : 'bg-white border-gris-pale'}`}>
         <div className="flex items-center justify-between mb-3">
           <div>
-            <span className="text-lg font-bold text-navy">{published} / {total}</span>
-            <span className="text-sm text-mid ml-2">envolées publiées</span>
+            <span className="text-lg font-bold text-noir">{published} / {total}</span>
+            <span className="text-sm text-gris-mid ml-2">envolées publiées</span>
           </div>
           {!allDone && (
             <button
               onClick={() => {
                 setFlights((prev) => prev.map((f) => ({ ...f, published: true })))
               }}
-              className="text-sm font-semibold text-white bg-action px-4 py-2 rounded-lg hover:bg-action/90 transition-colors whitespace-nowrap"
+              className="text-sm font-semibold text-white bg-rouge px-4 py-2 rounded-lg hover:bg-rouge/90 transition-colors whitespace-nowrap"
             >
               ✓ Tout publier
             </button>
@@ -78,9 +78,9 @@ function FlightList({ onSelect, flights, setFlights }: {
         </div>
 
         {/* Barre */}
-        <div className="w-full bg-pale-blue rounded-full h-3 overflow-hidden">
+        <div className="w-full bg-gris-pale rounded-full h-3 overflow-hidden">
           <div
-            className={`h-3 rounded-full transition-all duration-700 ${allDone ? 'bg-green-500' : 'bg-action'}`}
+            className={`h-3 rounded-full transition-all duration-700 ${allDone ? 'bg-green-500' : 'bg-rouge'}`}
             style={{ width: `${percent}%` }}
           />
         </div>
@@ -88,8 +88,8 @@ function FlightList({ onSelect, flights, setFlights }: {
         <div className="flex justify-between mt-2">
           {flights.map((f) => (
             <div key={f.envol} className="flex flex-col items-center gap-1">
-              <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${f.published ? (allDone ? 'bg-green-500' : 'bg-action') : 'bg-pale-blue border border-mid/30'}`} />
-              <span className="text-xs text-mid">{f.envol}</span>
+              <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${f.published ? (allDone ? 'bg-green-500' : 'bg-rouge') : 'bg-gris-pale border border-gris-mid/30'}`} />
+              <span className="text-xs text-gris-mid">{f.envol}</span>
             </div>
           ))}
         </div>
@@ -97,16 +97,16 @@ function FlightList({ onSelect, flights, setFlights }: {
 
       {/* Liste des envolées */}
       <div className="space-y-3">
-        <p className="text-sm text-mid mb-2">{flights.length} envolées trouvées</p>
+        <p className="text-sm text-gris-mid mb-2">{flights.length} envolées trouvées</p>
         {flights.map((flight) => (
           <button
             key={flight.envol}
             onClick={() => onSelect(flight)}
-            className="w-full flex items-center justify-between bg-white border border-pale-blue rounded-xl px-5 py-4 hover:border-action transition-colors text-left"
+            className="w-full flex items-center justify-between bg-white border border-gris-pale rounded-xl px-5 py-4 hover:border-rouge transition-colors text-left"
           >
             <div>
-              <span className="font-semibold text-navy">Envolée {flight.envol}</span>
-              <span className="text-mid text-sm ml-3">{flight.photoCount} photos</span>
+              <span className="font-semibold text-noir">Envolée {flight.envol}</span>
+              <span className="text-gris-mid text-sm ml-3">{flight.photoCount} photos</span>
             </div>
             <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
               flight.published
@@ -150,13 +150,13 @@ function FlightDetail({
       {/* En-tête */}
       <div className="flex items-start justify-between mb-6 gap-4 flex-wrap">
         <div>
-          <button onClick={onBack} className="text-sm text-mid hover:text-action mb-2 inline-block transition-colors">
+          <button onClick={onBack} className="text-sm text-gris-mid hover:text-rouge mb-2 inline-block transition-colors">
             ← Retour
           </button>
-          <h1 className="text-2xl font-bold text-navy">
+          <h1 className="text-2xl font-bold text-noir">
             Envolée {flight.envol} — Rive-Sud
           </h1>
-          <p className="text-mid text-sm mt-1">15 avril 2026 · {photos.length} photo{photos.length !== 1 ? 's' : ''}</p>
+          <p className="text-gris-mid text-sm mt-1">15 avril 2026 · {photos.length} photo{photos.length !== 1 ? 's' : ''}</p>
         </div>
 
         {/* Statut + approbation */}
@@ -169,7 +169,7 @@ function FlightDetail({
           {flight.published ? (
             <button
               onClick={() => onPublishChange(flight.envol, false)}
-              className="text-sm text-mid hover:text-red-500 transition-colors"
+              className="text-sm text-gris-mid hover:text-red-500 transition-colors"
             >
               Retirer la publication
             </button>
@@ -198,7 +198,7 @@ function FlightDetail({
 
       {/* Grille de photos */}
       {photos.length === 0 ? (
-        <div className="text-center py-12 bg-pale-blue rounded-2xl text-mid mb-6">
+        <div className="text-center py-12 bg-gris-pale rounded-2xl text-gris-mid mb-6">
           Toutes les photos ont été supprimées.
         </div>
       ) : (
@@ -206,7 +206,7 @@ function FlightDetail({
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className={`relative group rounded-xl overflow-hidden bg-pale-blue aspect-square transition-opacity ${
+              className={`relative group rounded-xl overflow-hidden bg-gris-pale aspect-square transition-opacity ${
                 deletedId === photo.id ? 'opacity-30' : 'opacity-100'
               }`}
             >
@@ -217,7 +217,7 @@ function FlightDetail({
                 className="w-full h-full object-cover"
               />
               {/* Overlay au survol */}
-              <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/20 transition-colors" />
+              <div className="absolute inset-0 bg-noir/0 group-hover:bg-noir/20 transition-colors" />
               {/* Bouton supprimer */}
               <button
                 onClick={() => handleDelete(photo.id, photo.filename)}
@@ -227,7 +227,7 @@ function FlightDetail({
                 ✕
               </button>
               {/* Nom au survol */}
-              <div className="absolute bottom-0 left-0 right-0 bg-navy/70 text-white text-xs px-2 py-1 translate-y-full group-hover:translate-y-0 transition-transform truncate">
+              <div className="absolute bottom-0 left-0 right-0 bg-noir/70 text-white text-xs px-2 py-1 translate-y-full group-hover:translate-y-0 transition-transform truncate">
                 {photo.filename}
               </div>
             </div>
@@ -236,18 +236,18 @@ function FlightDetail({
       )}
 
       {/* Zone d'ajout */}
-      <div className="border-2 border-dashed border-action/30 rounded-2xl p-6">
-        <h2 className="text-sm font-semibold text-navy mb-4">Ajouter des photos</h2>
-        <div className="border-2 border-dashed border-pale-blue rounded-xl p-8 text-center cursor-pointer hover:border-action transition-colors">
-          <p className="text-mid text-sm">
+      <div className="border-2 border-dashed border-rouge/30 rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-noir mb-4">Ajouter des photos</h2>
+        <div className="border-2 border-dashed border-gris-pale rounded-xl p-8 text-center cursor-pointer hover:border-rouge transition-colors">
+          <p className="text-gris-mid text-sm">
             Glissez des photos ou{' '}
-            <span className="text-action font-medium">cliquez pour sélectionner</span>
+            <span className="text-rouge font-medium">cliquez pour sélectionner</span>
           </p>
-          <p className="text-xs text-mid mt-1">JPG, PNG, WebP · Watermark appliqué automatiquement</p>
+          <p className="text-xs text-gris-mid mt-1">JPG, PNG, WebP · Watermark appliqué automatiquement</p>
         </div>
       </div>
 
-      <p className="text-xs text-mid text-center mt-8">Mode démo — aucune donnée réelle</p>
+      <p className="text-xs text-gris-mid text-center mt-8">Mode démo — aucune donnée réelle</p>
     </div>
   )
 }

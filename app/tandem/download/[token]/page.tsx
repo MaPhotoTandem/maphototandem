@@ -34,8 +34,8 @@ export default async function DownloadPage({ params }: Props) {
               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h1 className="text-xl font-bold text-navy mb-2">Ce lien a expiré</h1>
-        <p className="text-mid text-sm">
+        <h1 className="text-xl font-bold text-noir mb-2">Ce lien a expiré</h1>
+        <p className="text-gris-mid text-sm">
           Le lien de téléchargement était valide 72 heures.<br />
           Pour obtenir de l&apos;aide, contactez-nous.
         </p>

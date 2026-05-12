@@ -18,7 +18,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: 'Mon prénom ne donne aucun résultat quand je recherche mon envolée. Que faire ?',
-    a: <>Après avoir vérifié la date et la succursale, essaie de rechercher avec ton nom de famille. Il arrive que les deux aient été intervertis lors de l&apos;enregistrement. Si ça ne fonctionne pas, tente les variantes orthographiques courantes de ton prénom ; malgré notre vigilance, une erreur peut parfois se glisser. Si tu n&apos;arrives toujours pas à retrouver ton envolée, contacte-nous via la page <a href="/contact" className="text-action hover:underline">Contact</a> ou par courriel à maphototandem@parachutemontreal.com.</>,
+    a: <>Après avoir vérifié la date et la succursale, essaie de rechercher avec ton nom de famille. Il arrive que les deux aient été intervertis lors de l&apos;enregistrement. Si ça ne fonctionne pas, tente les variantes orthographiques courantes de ton prénom ; malgré notre vigilance, une erreur peut parfois se glisser. Si tu n&apos;arrives toujours pas à retrouver ton envolée, contacte-nous via la page <a href="/contact" className="text-rouge hover:underline">Contact</a> ou par courriel à maphototandem@parachutemontreal.com.</>,
   },
   {
     q: 'Combien de temps mon lien de téléchargement est-il valide ?',
@@ -69,10 +69,10 @@ export default function FaqPage() {
     <div className="max-w-2xl mx-auto px-4 py-10 sm:py-16">
 
       <div className="mb-10">
-        <h1 className="text-3xl sm:text-4xl font-bold text-navy mb-3">Questions fréquentes</h1>
-        <p className="text-mid text-base">
+        <h1 className="text-3xl sm:text-4xl font-bold text-noir mb-3">Questions fréquentes</h1>
+        <p className="text-gris-mid text-base">
           Tu ne trouves pas ta réponse ?{' '}
-          <a href="/contact" className="text-action hover:underline">Contacte-nous</a>.
+          <a href="/contact" className="text-rouge hover:underline">Contacte-nous</a>.
         </p>
       </div>
 
@@ -83,11 +83,11 @@ export default function FaqPage() {
               onClick={() => setOpenFaq(openFaq === i ? null : i)}
               className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
             >
-              <span className="font-semibold text-navy text-sm pr-4">{item.q}</span>
-              <span className="text-mid text-lg flex-shrink-0">{openFaq === i ? '−' : '+'}</span>
+              <span className="font-semibold text-noir text-sm pr-4">{item.q}</span>
+              <span className="text-gris-mid text-lg flex-shrink-0">{openFaq === i ? '−' : '+'}</span>
             </button>
             {openFaq === i && (
-              <div className="px-5 pb-4 text-sm text-mid leading-relaxed">
+              <div className="px-5 pb-4 text-sm text-gris-mid leading-relaxed">
                 {item.a}
               </div>
             )}

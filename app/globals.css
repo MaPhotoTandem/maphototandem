@@ -14,7 +14,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-action hover:bg-gris-mid active:bg-gris-mid/80 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-rouge hover:bg-gris-mid active:bg-gris-mid/80 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {
@@ -22,7 +22,7 @@
   }
 
   .input-field {
-    @apply bg-white border border-gray-300 rounded-lg px-4 py-3 text-black placeholder-mid focus:outline-none focus:border-action transition-colors w-full;
+    @apply bg-white border border-gray-300 rounded-lg px-4 py-3 text-black placeholder-gris-mid focus:outline-none focus:border-rouge transition-colors w-full;
     max-width: 100%;
     min-width: 0;
     box-sizing: border-box;

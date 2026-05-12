@@ -66,22 +66,22 @@ export default function DownloadClient({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-navy">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-noir">
           {downloads.length === 1 ? 'Votre photo est prête !' : 'Vos photos sont prêtes !'}
         </h1>
-        <p className="text-mid text-sm sm:text-base">
+        <p className="text-gris-mid text-sm sm:text-base">
           Envolée {envol} · {date} · {succursaleLabel}
         </p>
       </div>
 
       {/* Instruction mobile — long press */}
-      <div className="sm:hidden bg-pale-blue border border-action/30 rounded-xl px-4 py-3 mb-5 flex gap-3 items-start">
+      <div className="sm:hidden bg-gris-pale border border-rouge/30 rounded-xl px-4 py-3 mb-5 flex gap-3 items-start">
         <span className="text-xl mt-0.5">💡</span>
-        <p className="text-navy text-sm leading-snug">
+        <p className="text-noir text-sm leading-snug">
           <strong>Appuyez longuement sur une photo</strong> puis sélectionnez{' '}
           <strong>«&nbsp;Enregistrer dans Photos&nbsp;»</strong> (iPhone) ou{' '}
           <strong>«&nbsp;Enregistrer l&apos;image&nbsp;»</strong> (Android).<br />
-          <span className="text-mid">iPhone : vos photos se trouveront dans votre pellicule · Android : dans vos Téléchargements.</span>
+          <span className="text-gris-mid">iPhone : vos photos se trouveront dans votre pellicule · Android : dans vos Téléchargements.</span>
         </p>
       </div>
 
@@ -129,7 +129,7 @@ export default function DownloadClient({
         {/* Bouton ZIP */}
         <a
           href={`/api/download-zip/${token}`}
-          className="w-full flex items-center justify-center gap-3 bg-action text-white rounded-xl px-4 py-5 font-bold text-lg hover:opacity-90 active:opacity-80 transition-opacity shadow-md"
+          className="w-full flex items-center justify-center gap-3 bg-rouge text-white rounded-xl px-4 py-5 font-bold text-lg hover:opacity-90 active:opacity-80 transition-opacity shadow-md"
         >
           <svg className="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -144,11 +144,11 @@ export default function DownloadClient({
         </a>
 
         {/* Avertissement expiration */}
-        <div className="bg-pale-blue border border-action rounded-xl px-4 py-3 text-center">
-          <p className="text-navy font-bold text-base">⏰ ATTENTION ⏰</p>
-          <p className="text-navy font-semibold text-sm mt-0.5">
+        <div className="bg-gris-pale border border-rouge rounded-xl px-4 py-3 text-center">
+          <p className="text-noir font-bold text-base">⏰ ATTENTION ⏰</p>
+          <p className="text-noir font-semibold text-sm mt-0.5">
             Ce lien est valide pendant 72 heures.{' '}
-            <span className="font-normal text-mid">(jusqu&apos;au {expiresFormatted})</span>
+            <span className="font-normal text-gris-mid">(jusqu&apos;au {expiresFormatted})</span>
           </p>
         </div>
 
@@ -156,7 +156,7 @@ export default function DownloadClient({
 
         {/* Copier le lien */}
         <div>
-          <p className="text-sm text-mid mb-2">
+          <p className="text-sm text-gris-mid mb-2">
             Partagez ce lien avec vos proches pour qu&apos;ils téléchargent les photos aussi :
           </p>
           <div className="flex gap-2">
@@ -168,7 +168,7 @@ export default function DownloadClient({
             <button
               onClick={handleCopyLink}
               className={`flex-shrink-0 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-                copied ? 'bg-green-100 text-green-700' : 'bg-action text-white hover:opacity-90'
+                copied ? 'bg-green-100 text-green-700' : 'bg-rouge text-white hover:opacity-90'
               }`}
             >
               {copied ? '✓ Copié !' : 'Copier'}
@@ -178,7 +178,7 @@ export default function DownloadClient({
 
       </div>
 
-      <p className="text-center text-sm text-mid mt-8">
+      <p className="text-center text-sm text-gris-mid mt-8">
         Merci d&apos;avoir choisi l&apos;équipe de Ma Photo Tandem ! 🪂 🫶
       </p>
 

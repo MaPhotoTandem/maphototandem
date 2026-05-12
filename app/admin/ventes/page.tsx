@@ -134,10 +134,10 @@ export default function VentesPage() {
       <div className="flex items-center justify-center min-h-[80vh] px-4">
         <form
           onSubmit={handleLogin}
-          className="bg-navy border border-action/30 rounded-2xl p-8 w-full max-w-sm"
+          className="bg-noir border border-rouge/30 rounded-2xl p-8 w-full max-w-sm"
         >
           <h1 className="text-xl font-bold mb-1 text-white text-center">Gestion des ventes</h1>
-          <p className="text-sm text-pale-blue/70 text-center mb-6">Ma Photo Tandem</p>
+          <p className="text-sm text-gris-pale/70 text-center mb-6">Ma Photo Tandem</p>
           <div className="space-y-4">
             <input
               type="password"
@@ -159,13 +159,13 @@ export default function VentesPage() {
             <div className="flex gap-2 pt-1">
               <a
                 href="/admin/gestion"
-                className="flex-1 text-center text-sm text-pale-blue/60 hover:text-pale-blue transition-colors"
+                className="flex-1 text-center text-sm text-gris-pale/60 hover:text-gris-pale transition-colors"
               >
                 ← Rive-Sud
               </a>
               <a
                 href="/admin/gestion"
-                className="flex-1 text-center text-sm text-pale-blue/60 hover:text-pale-blue transition-colors"
+                className="flex-1 text-center text-sm text-gris-pale/60 hover:text-gris-pale transition-colors"
               >
                 ← Rive-Nord
               </a>
@@ -184,21 +184,21 @@ export default function VentesPage() {
       {/* En-tête */}
       <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-navy">Gestion des ventes</h1>
-          <p className="text-sm text-mid mt-1">
+          <h1 className="text-2xl font-bold text-noir">Gestion des ventes</h1>
+          <p className="text-sm text-gris-mid mt-1">
             {sales.length} vente{sales.length !== 1 ? 's' : ''} au total
           </p>
         </div>
         <div className="flex items-center gap-3">
           <a
             href="/admin/gestion"
-            className="text-sm font-semibold bg-pale-blue text-navy px-3 py-1.5 rounded-lg hover:bg-action hover:text-white transition-colors whitespace-nowrap"
+            className="text-sm font-semibold bg-gris-pale text-noir px-3 py-1.5 rounded-lg hover:bg-rouge hover:text-white transition-colors whitespace-nowrap"
           >
             📷 Rive-Sud
           </a>
           <a
             href="/admin/gestion"
-            className="text-sm font-semibold bg-pale-blue text-navy px-3 py-1.5 rounded-lg hover:bg-action hover:text-white transition-colors whitespace-nowrap"
+            className="text-sm font-semibold bg-gris-pale text-noir px-3 py-1.5 rounded-lg hover:bg-rouge hover:text-white transition-colors whitespace-nowrap"
           >
             📷 Rive-Nord
           </a>
@@ -208,7 +208,7 @@ export default function VentesPage() {
               clearPhotographerSession()
               window.location.href = '/admin'
             }}
-            className="text-sm text-mid hover:text-navy transition-colors"
+            className="text-sm text-gris-mid hover:text-noir transition-colors"
           >
             Déconnexion
           </button>
@@ -223,8 +223,8 @@ export default function VentesPage() {
             onClick={() => setFilter(f)}
             className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
               filter === f
-                ? 'bg-action text-white'
-                : 'bg-pale-blue text-navy hover:opacity-80'
+                ? 'bg-rouge text-white'
+                : 'bg-gris-pale text-noir hover:opacity-80'
             }`}
           >
             {f === 'all' ? 'Toutes les succursales' : SUCCURSALES[f]}
@@ -234,18 +234,18 @@ export default function VentesPage() {
 
       {/* Contenu */}
       {loadingData ? (
-        <div className="text-center py-16 text-mid">Chargement des ventes...</div>
+        <div className="text-center py-16 text-gris-mid">Chargement des ventes...</div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-16 bg-pale-blue rounded-2xl text-mid">
+        <div className="text-center py-16 bg-gris-pale rounded-2xl text-gris-mid">
           Aucune vente trouvée.
         </div>
       ) : (
         <>
           {/* Tableau */}
-          <div className="overflow-x-auto rounded-2xl border border-pale-blue mb-6">
+          <div className="overflow-x-auto rounded-2xl border border-gris-pale mb-6">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-pale-blue text-navy">
+                <tr className="bg-gris-pale text-noir">
                   <th className="text-left px-4 py-3 font-semibold whitespace-nowrap">Date d'achat</th>
                   <th className="text-left px-4 py-3 font-semibold">Nom</th>
                   <th className="text-left px-4 py-3 font-semibold whitespace-nowrap">Succursale</th>
@@ -259,27 +259,27 @@ export default function VentesPage() {
                 {filtered.map((sale, i) => (
                   <tr
                     key={sale.sessionId}
-                    className={i % 2 === 0 ? 'bg-white' : 'bg-pale-blue/30'}
+                    className={i % 2 === 0 ? 'bg-white' : 'bg-gris-pale/30'}
                   >
-                    <td className="px-4 py-3 text-navy whitespace-nowrap">
+                    <td className="px-4 py-3 text-noir whitespace-nowrap">
                       {formatDate(sale.createdAt)}
                     </td>
                     <td className="px-4 py-3">
-                      <div className="text-navy font-medium">{sale.customerName ?? '—'}</div>
+                      <div className="text-noir font-medium">{sale.customerName ?? '—'}</div>
                       {sale.customerEmail && (
-                        <div className="text-xs text-mid">{sale.customerEmail}</div>
+                        <div className="text-xs text-gris-mid">{sale.customerEmail}</div>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-mid whitespace-nowrap">
+                    <td className="px-4 py-3 text-gris-mid whitespace-nowrap">
                       {sale.location ? (SUCCURSALES[sale.location] ?? sale.location) : '—'}
                     </td>
-                    <td className="px-4 py-3 text-mid whitespace-nowrap">
+                    <td className="px-4 py-3 text-gris-mid whitespace-nowrap">
                       {sale.date || '—'}
                     </td>
-                    <td className="px-4 py-3 text-mid text-center">
+                    <td className="px-4 py-3 text-gris-mid text-center">
                       {sale.envol || '—'}
                     </td>
-                    <td className="px-4 py-3 text-navy font-semibold text-right whitespace-nowrap">
+                    <td className="px-4 py-3 text-noir font-semibold text-right whitespace-nowrap">
                       {formatAmount(sale.amount)}
                     </td>
                     <td className="px-4 py-3">
@@ -289,7 +289,7 @@ export default function VentesPage() {
                             href={sale.downloadUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-action font-medium hover:underline"
+                            className="text-rouge font-medium hover:underline"
                           >
                             Actif →
                           </a>
@@ -299,7 +299,7 @@ export default function VentesPage() {
                             <button
                               onClick={() => reactivate(sale.downloadToken)}
                               disabled={reactivating === sale.downloadToken}
-                              className="text-xs bg-pale-blue text-navy px-2 py-1 rounded-md hover:bg-action hover:text-white transition-colors disabled:opacity-40 whitespace-nowrap"
+                              className="text-xs bg-gris-pale text-noir px-2 py-1 rounded-md hover:bg-rouge hover:text-white transition-colors disabled:opacity-40 whitespace-nowrap"
                             >
                               {reactivating === sale.downloadToken ? '...' : 'Réactiver'}
                             </button>
@@ -315,11 +315,11 @@ export default function VentesPage() {
 
           {/* Total */}
           <div className="flex justify-end">
-            <div className="bg-pale-blue rounded-xl px-6 py-3 text-right">
-              <p className="text-sm text-mid">
+            <div className="bg-gris-pale rounded-xl px-6 py-3 text-right">
+              <p className="text-sm text-gris-mid">
                 Total — {filtered.length} vente{filtered.length !== 1 ? 's' : ''}
               </p>
-              <p className="text-xl font-bold text-navy">{formatAmount(totalFiltered)}</p>
+              <p className="text-xl font-bold text-noir">{formatAmount(totalFiltered)}</p>
             </div>
           </div>
         </>

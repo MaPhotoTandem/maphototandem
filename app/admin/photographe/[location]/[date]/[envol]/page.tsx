@@ -173,7 +173,7 @@ export default function GestionEnvolee() {
   // ── Rendu ────────────────────────────────────────────────────────────────
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-mid">
+      <div className="max-w-4xl mx-auto px-4 py-16 text-center text-gris-mid">
         Chargement...
       </div>
     )
@@ -194,13 +194,13 @@ export default function GestionEnvolee() {
       {/* En-tête */}
       <div className="flex items-start justify-between mb-6 gap-4 flex-wrap">
         <div>
-          <button onClick={() => router.back()} className="text-sm text-mid hover:text-action mb-2 inline-block">
+          <button onClick={() => router.back()} className="text-sm text-gris-mid hover:text-rouge mb-2 inline-block">
             ← Retour
           </button>
-          <h1 className="text-2xl font-bold text-navy">
+          <h1 className="text-2xl font-bold text-noir">
             Envolée {envol} — {succursaleLabel}
           </h1>
-          <p className="text-mid text-sm mt-1">{date} · {photos.length} photo{photos.length > 1 ? 's' : ''}</p>
+          <p className="text-gris-mid text-sm mt-1">{date} · {photos.length} photo{photos.length > 1 ? 's' : ''}</p>
         </div>
 
         {/* Statut + bouton d'approbation */}
@@ -214,7 +214,7 @@ export default function GestionEnvolee() {
             <button
               onClick={() => handlePublish(false)}
               disabled={publishing}
-              className="text-sm text-mid hover:text-red-500 transition-colors disabled:opacity-40"
+              className="text-sm text-gris-mid hover:text-red-500 transition-colors disabled:opacity-40"
             >
               {publishing ? '...' : 'Retirer la publication'}
             </button>
@@ -232,13 +232,13 @@ export default function GestionEnvolee() {
 
       {/* Grille de photos */}
       {photos.length === 0 ? (
-        <div className="text-center py-12 bg-pale-blue rounded-2xl text-mid mb-6">
+        <div className="text-center py-12 bg-gris-pale rounded-2xl text-gris-mid mb-6">
           Aucune photo dans cette envolée.
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-8">
           {photos.map((photo) => (
-            <div key={photo.id} className="relative group rounded-xl overflow-hidden bg-pale-blue aspect-square">
+            <div key={photo.id} className="relative group rounded-xl overflow-hidden bg-gris-pale aspect-square">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photo.url}
@@ -264,15 +264,15 @@ export default function GestionEnvolee() {
       )}
 
       {/* Ajouter des photos */}
-      <div className="border border-dashed border-action/40 rounded-2xl p-6">
-        <h2 className="text-sm font-semibold text-navy mb-4">Ajouter des photos</h2>
+      <div className="border border-dashed border-rouge/40 rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-noir mb-4">Ajouter des photos</h2>
         <div
-          className="border-2 border-dashed border-pale-blue rounded-xl p-8 text-center cursor-pointer hover:border-action transition-colors mb-4"
+          className="border-2 border-dashed border-gris-pale rounded-xl p-8 text-center cursor-pointer hover:border-rouge transition-colors mb-4"
           onClick={() => fileInputRef.current?.click()}
         >
-          <p className="text-mid text-sm">
+          <p className="text-gris-mid text-sm">
             Glissez des photos ou{' '}
-            <span className="text-action font-medium">cliquez pour sélectionner</span>
+            <span className="text-rouge font-medium">cliquez pour sélectionner</span>
           </p>
           <input
             ref={fileInputRef}
@@ -288,13 +288,13 @@ export default function GestionEnvolee() {
           <>
             <div className="space-y-2 mb-4 max-h-48 overflow-y-auto">
               {uploadFiles.map((f, i) => (
-                <div key={i} className="flex items-center justify-between bg-pale-blue rounded-lg px-4 py-2">
-                  <span className="text-sm text-navy truncate flex-1 mr-2">{f.file.name}</span>
+                <div key={i} className="flex items-center justify-between bg-gris-pale rounded-lg px-4 py-2">
+                  <span className="text-sm text-noir truncate flex-1 mr-2">{f.file.name}</span>
                   <span className={`text-xs font-medium ${
                     f.status === 'done' ? 'text-green-600'
                     : f.status === 'error' ? 'text-red-500'
-                    : f.status === 'uploading' ? 'text-action'
-                    : 'text-mid'
+                    : f.status === 'uploading' ? 'text-rouge'
+                    : 'text-gris-mid'
                   }`}>
                     {f.status === 'done' ? '✓ Envoyée'
                     : f.status === 'error' ? '✗ Erreur'
@@ -309,7 +309,7 @@ export default function GestionEnvolee() {
                 Envoyer {uploadFiles.filter((f) => f.status === 'pending').length} photo{uploadFiles.filter((f) => f.status === 'pending').length > 1 ? 's' : ''} →
               </button>
             )}
-            {uploading && <p className="text-action text-sm text-center">Envoi en cours...</p>}
+            {uploading && <p className="text-rouge text-sm text-center">Envoi en cours...</p>}
             {uploadFiles.every((f) => f.status === 'done') && (
               <button onClick={() => setUploadFiles([])} className="btn-secondary w-full text-sm">
                 Prêt pour d&apos;autres photos

@@ -91,7 +91,7 @@ export default function ConnexionStudioPage() {
 
   if (!authReady) {
     return (
-      <div className="flex items-center justify-center min-h-[80vh] text-mid text-sm">
+      <div className="flex items-center justify-center min-h-[80vh] text-gris-mid text-sm">
         Chargement...
       </div>
     )
@@ -101,9 +101,9 @@ export default function ConnexionStudioPage() {
 
   return (
     <div className="flex items-center justify-center min-h-[80vh] px-4">
-      <div className="bg-navy border border-action/30 rounded-2xl p-8 w-full max-w-sm">
+      <div className="bg-noir border border-rouge/30 rounded-2xl p-8 w-full max-w-sm">
         <h1 className="text-xl font-bold mb-1 text-white text-center">Ma Photo Tandem</h1>
-        <p className="text-sm text-pale-blue/70 text-center mb-6">Espace administration</p>
+        <p className="text-sm text-gris-pale/70 text-center mb-6">Espace administration</p>
 
         {/* Sélecteur de rôle */}
         <div className="grid grid-cols-2 gap-2 mb-6">
@@ -111,7 +111,7 @@ export default function ConnexionStudioPage() {
             type="button"
             onClick={() => { setRole('photographe'); setAuthError(''); setGestionError('') }}
             className={`py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-              role === 'photographe' ? 'bg-action text-white' : 'bg-pale-blue/20 text-pale-blue hover:bg-pale-blue/30'
+              role === 'photographe' ? 'bg-rouge text-white' : 'bg-gris-pale/20 text-gris-pale hover:bg-gris-pale/30'
             }`}
           >
             📷 Photographe
@@ -120,7 +120,7 @@ export default function ConnexionStudioPage() {
             type="button"
             onClick={() => { setRole('gestion'); setAuthError(''); setGestionError('') }}
             className={`py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-              role === 'gestion' ? 'bg-action text-white' : 'bg-pale-blue/20 text-pale-blue hover:bg-pale-blue/30'
+              role === 'gestion' ? 'bg-rouge text-white' : 'bg-gris-pale/20 text-gris-pale hover:bg-gris-pale/30'
             }`}
           >
             📊 Gestion
@@ -135,7 +135,7 @@ export default function ConnexionStudioPage() {
                 type="button"
                 onClick={() => setLocation('rive-sud')}
                 className={`py-2 rounded-lg text-sm font-semibold transition-colors ${
-                  location === 'rive-sud' ? 'bg-action text-white' : 'bg-pale-blue text-navy hover:opacity-80'
+                  location === 'rive-sud' ? 'bg-rouge text-white' : 'bg-gris-pale text-noir hover:opacity-80'
                 }`}
               >
                 Rive-Sud
@@ -144,7 +144,7 @@ export default function ConnexionStudioPage() {
                 type="button"
                 onClick={() => setLocation('rive-nord')}
                 className={`py-2 rounded-lg text-sm font-semibold transition-colors ${
-                  location === 'rive-nord' ? 'bg-action text-white' : 'bg-pale-blue text-navy hover:opacity-80'
+                  location === 'rive-nord' ? 'bg-rouge text-white' : 'bg-gris-pale text-noir hover:opacity-80'
                 }`}
               >
                 Rive-Nord
@@ -227,7 +227,7 @@ export default function ConnexionStudioPage() {
         )}
 
         {role === '' && (
-          <p className="text-center text-pale-blue/50 text-sm">Sélectionnez un rôle pour continuer.</p>
+          <p className="text-center text-gris-pale/50 text-sm">Sélectionnez un rôle pour continuer.</p>
         )}
       </div>
     </div>

@@ -20,8 +20,8 @@ export default function DemoPage() {
     <div className="max-w-6xl mx-auto px-4 py-8">
 
       {/* Bannière démo */}
-      <div className="bg-pale-blue border border-action/30 rounded-xl px-4 py-3 mb-6 flex items-center gap-3">
-        <span className="text-action font-bold text-sm">MODE DÉMO</span>
+      <div className="bg-gris-pale border border-rouge/30 rounded-xl px-4 py-3 mb-6 flex items-center gap-3">
+        <span className="text-rouge font-bold text-sm">MODE DÉMO</span>
         <span className="text-gray-600 text-sm">
           Photos fictives · Le paiement ne sera pas traité
         </span>
@@ -29,23 +29,23 @@ export default function DemoPage() {
 
       {/* En-tête identique à la vraie galerie */}
       <div className="mb-8">
-        <a href="/tandem" className="text-sm text-mid hover:text-action transition-colors mb-4 inline-block">
+        <a href="/tandem" className="text-sm text-gris-mid hover:text-rouge transition-colors mb-4 inline-block">
           ← Retour
         </a>
-        <h1 className="text-2xl font-bold text-navy">
+        <h1 className="text-2xl font-bold text-noir">
           Envolée 3 — 11 avril 2026
         </h1>
-        <p className="text-mid mt-1">
+        <p className="text-gris-mid mt-1">
           Rive-Sud · Farnham · Sélectionnez les photos que vous souhaitez acheter.
         </p>
         <div className="mt-3 inline-flex flex-wrap gap-3">
-          <span className="bg-pale-blue text-navy text-sm font-semibold px-3 py-1.5 rounded-lg">
+          <span className="bg-gris-pale text-noir text-sm font-semibold px-3 py-1.5 rounded-lg">
             1re photo : {(FIRST_PHOTO_PRICE_CENTS / 100).toFixed(0)} $
           </span>
-          <span className="bg-pale-blue text-navy text-sm font-semibold px-3 py-1.5 rounded-lg">
+          <span className="bg-gris-pale text-noir text-sm font-semibold px-3 py-1.5 rounded-lg">
             Photos supplémentaires : {(ADDITIONAL_PHOTO_PRICE_CENTS / 100).toFixed(0)} $ chacune
           </span>
-          <span className="bg-gray-100 text-mid text-sm px-3 py-1.5 rounded-lg">
+          <span className="bg-gray-100 text-gris-mid text-sm px-3 py-1.5 rounded-lg">
             + TPS &amp; TVQ
           </span>
         </div>

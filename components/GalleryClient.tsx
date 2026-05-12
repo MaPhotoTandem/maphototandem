@@ -132,20 +132,20 @@ export default function GalleryClient({
           {/* Cibles de tap généreuses (min 44px) */}
           <button
             onClick={selectAll}
-            className="text-sm text-action font-medium py-2"
+            className="text-sm text-rouge font-medium py-2"
           >
             Tout sélectionner
           </button>
           {selected.size > 0 && (
             <button
               onClick={clearAll}
-              className="text-sm text-mid py-2"
+              className="text-sm text-gris-mid py-2"
             >
               Désélectionner
             </button>
           )}
         </div>
-        <span className="text-sm text-mid">
+        <span className="text-sm text-gris-mid">
           {photos.length} photo{photos.length > 1 ? 's' : ''}
         </span>
       </div>
@@ -175,7 +175,7 @@ export default function GalleryClient({
               {/* Coche de sélection */}
               {isSelected && (
                 <div className="absolute inset-0 bg-gris-mid/15 flex items-start justify-end p-2">
-                  <div className="bg-action rounded-full w-7 h-7 flex items-center justify-center shadow">
+                  <div className="bg-rouge rounded-full w-7 h-7 flex items-center justify-center shadow">
                     <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
@@ -209,7 +209,7 @@ export default function GalleryClient({
       {/* Barre de panier — fixe en bas */}
       {selected.size > 0 && (
         <div
-          className="fixed bottom-0 left-0 right-0 bg-navy px-4 py-3 z-50 safe-area-bottom"
+          className="fixed bottom-0 left-0 right-0 bg-noir px-4 py-3 z-50 safe-area-bottom"
           onTouchStart={(e) => e.stopPropagation()}
           onTouchEnd={(e) => e.stopPropagation()}
         >
@@ -251,7 +251,7 @@ export default function GalleryClient({
             className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl p-6 max-h-[85vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-navy font-bold text-lg mb-4">Révision de ma commande</h2>
+            <h2 className="text-noir font-bold text-lg mb-4">Révision de ma commande</h2>
 
             {/* Vignettes des photos sélectionnées */}
             <div className="flex flex-wrap gap-2 mb-5">
@@ -259,7 +259,7 @@ export default function GalleryClient({
                 <button
                   key={p.id}
                   onClick={() => setCartZoomIndex(idx)}
-                  className="group relative w-20 h-14 rounded-lg overflow-hidden border border-gray-200 hover:border-action transition-colors focus:outline-none focus:ring-2 focus:ring-action"
+                  className="group relative w-20 h-14 rounded-lg overflow-hidden border border-gray-200 hover:border-rouge transition-colors focus:outline-none focus:ring-2 focus:ring-rouge"
                   title="Agrandir"
                 >
                   <Image src={p.url} alt={p.filename} fill className="object-cover" sizes="80px" />
@@ -282,7 +282,7 @@ export default function GalleryClient({
                 <span>TPS 5 % + TVQ 9,975 %</span>
                 <span>{fmt(taxCents)} $</span>
               </div>
-              <div className="flex justify-between text-navy font-bold text-base pt-2 border-t border-gray-100">
+              <div className="flex justify-between text-noir font-bold text-base pt-2 border-t border-gray-100">
                 <span>Total</span>
                 <span>{fmt(totalCents)} $ CAD</span>
               </div>
@@ -303,7 +303,7 @@ export default function GalleryClient({
               ← Continuer à magasiner
             </button>
 
-            <p className="text-[10px] text-mid text-center mt-3">
+            <p className="text-[10px] text-gris-mid text-center mt-3">
               En payant, vous acceptez nos{' '}
               <a href="/conditions" className="underline" target="_blank" rel="noopener noreferrer">
                 conditions d&apos;utilisation
@@ -480,7 +480,7 @@ export default function GalleryClient({
                 className={`w-full max-w-sm min-h-[56px] rounded-2xl font-semibold text-base flex items-center justify-center gap-2 transition-colors active:opacity-80 ${
                   isCurrentSelected
                     ? 'bg-green-500 text-white'
-                    : 'bg-action text-white'
+                    : 'bg-rouge text-white'
                 }`}
               >
                 {isCurrentSelected ? (

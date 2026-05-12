@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col bg-white">
 
         {/* Header navy — compact sur mobile */}
-        <header className="bg-navy px-4 sm:px-6 py-3 sm:py-4">
+        <header className="bg-noir px-4 sm:px-6 py-3 sm:py-4">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <a href="/" className="flex items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <main className="flex-1">{children}</main>
 
-        <footer className="bg-navy text-white/50 px-4 py-4 text-center text-xs sm:text-sm">
+        <footer className="bg-noir text-white/50 px-4 py-4 text-center text-xs sm:text-sm">
           © {new Date().getFullYear()} Ma Photo Tandem · Parachute Montréal
           {' · '}
           <a href="/faq" className="hover:text-white/80 underline transition-colors">FAQ</a>

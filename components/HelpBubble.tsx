@@ -14,21 +14,21 @@ export default function HelpBubble() {
           <div className="relative z-40 bg-white rounded-2xl shadow-xl overflow-hidden w-52 border border-gray-100">
             <a
               href="/tandem"
-              className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy hover:bg-pale-blue transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-noir hover:bg-gris-pale transition-colors"
             >
               <span>🔍</span> Retrouver mon envolée
             </a>
             <div className="border-t border-gray-100" />
             <a
               href="/faq"
-              className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy hover:bg-pale-blue transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-noir hover:bg-gris-pale transition-colors"
             >
               <span>❓</span> Questions fréquentes
             </a>
             <div className="border-t border-gray-100" />
             <a
               href="/contact"
-              className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy hover:bg-pale-blue transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-noir hover:bg-gris-pale transition-colors"
             >
               <span>✉️</span> Contactez-nous
             </a>
@@ -38,7 +38,7 @@ export default function HelpBubble() {
 
       <button
         onClick={() => setOpen(v => !v)}
-        className="bg-action text-white rounded-full shadow-lg px-4 py-3 text-sm font-semibold flex items-center gap-2 hover:bg-action/90 transition-colors"
+        className="bg-rouge text-white rounded-full shadow-lg px-4 py-3 text-sm font-semibold flex items-center gap-2 hover:bg-rouge/90 transition-colors"
         aria-label="Besoin d'aide ?"
       >
         <span>💬</span>

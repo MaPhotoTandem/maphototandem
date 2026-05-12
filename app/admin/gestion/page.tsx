@@ -92,13 +92,13 @@ function DateRangePicker({
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(o => !o)}
-        className={`input-field text-xs py-1.5 px-3 flex items-center gap-2 ${from || to ? 'text-navy font-medium' : 'text-mid'}`}
+        className={`input-field text-xs py-1.5 px-3 flex items-center gap-2 ${from || to ? 'text-noir font-medium' : 'text-gris-mid'}`}
       >
         <span>📅</span>
         <span>{label}</span>
         {(from || to) && (
           <span
-            className="ml-1 text-mid hover:text-navy"
+            className="ml-1 text-gris-mid hover:text-noir"
             onClick={(e) => { e.stopPropagation(); onChange('', ''); }}
           >✕</span>
         )}
@@ -108,15 +108,15 @@ function DateRangePicker({
         <div className="absolute z-50 mt-1 right-0 bg-white border border-gray-200 rounded-xl shadow-lg p-3 w-72">
           {/* Navigation mois */}
           <div className="flex items-center justify-between mb-2">
-            <button onClick={prevMonth} className="text-mid hover:text-navy px-2 py-1 rounded">‹</button>
-            <span className="text-sm font-semibold text-navy">{MONTHS_FR[viewMonth]} {viewYear}</span>
-            <button onClick={nextMonth} className="text-mid hover:text-navy px-2 py-1 rounded">›</button>
+            <button onClick={prevMonth} className="text-gris-mid hover:text-noir px-2 py-1 rounded">‹</button>
+            <span className="text-sm font-semibold text-noir">{MONTHS_FR[viewMonth]} {viewYear}</span>
+            <button onClick={nextMonth} className="text-gris-mid hover:text-noir px-2 py-1 rounded">›</button>
           </div>
 
           {/* En-têtes jours */}
           <div className="grid grid-cols-7 mb-1">
             {DAYS_FR.map(d => (
-              <div key={d} className="text-center text-xs text-mid font-medium py-1">{d}</div>
+              <div key={d} className="text-center text-xs text-gris-mid font-medium py-1">{d}</div>
             ))}
           </div>
 
@@ -137,8 +137,8 @@ function DateRangePicker({
                   className={[
                     'text-xs py-1 rounded text-center transition-colors',
                     disabled ? 'text-gray-300 cursor-not-allowed' : 'cursor-pointer',
-                    state === 'selected' ? 'bg-navy text-white font-bold' : '',
-                    state === 'inrange' ? 'bg-blue-100 text-navy' : '',
+                    state === 'selected' ? 'bg-noir text-white font-bold' : '',
+                    state === 'inrange' ? 'bg-blue-100 text-noir' : '',
                     state === 'none' && !disabled ? 'hover:bg-gray-100 text-gray-700' : '',
                   ].join(' ')}
                 >
@@ -149,7 +149,7 @@ function DateRangePicker({
           </div>
 
           {from && !to && (
-            <p className="text-xs text-mid text-center mt-2">Clique sur la date de fin</p>
+            <p className="text-xs text-gris-mid text-center mt-2">Clique sur la date de fin</p>
           )}
         </div>
       )}
@@ -560,10 +560,10 @@ export default function GestionPage() {
       <div className="flex items-center justify-center min-h-[80vh] px-4">
         <form
           onSubmit={handleLogin}
-          className="bg-navy border border-action/30 rounded-2xl p-8 w-full max-w-sm"
+          className="bg-noir border border-rouge/30 rounded-2xl p-8 w-full max-w-sm"
         >
           <h1 className="text-xl font-bold mb-1 text-white text-center">Gestion</h1>
-          <p className="text-sm text-pale-blue/70 text-center mb-6">Ma Photo Tandem</p>
+          <p className="text-sm text-gris-pale/70 text-center mb-6">Ma Photo Tandem</p>
           <div className="space-y-4">
             <input
               type="password"
@@ -584,7 +584,7 @@ export default function GestionPage() {
             </button>
             <a
               href="/admin"
-              className="block text-center text-sm text-pale-blue/60 hover:text-pale-blue transition-colors pt-1"
+              className="block text-center text-sm text-gris-pale/60 hover:text-gris-pale transition-colors pt-1"
             >
               ← Retour
             </a>
@@ -641,17 +641,17 @@ export default function GestionPage() {
 
       {/* En-tête */}
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-        <h1 className="text-2xl font-bold text-navy">Gestion</h1>
+        <h1 className="text-2xl font-bold text-noir">Gestion</h1>
         <div className="flex items-center gap-4">
           <a
             href="/admin?role=photographe"
-            className="text-sm text-mid hover:text-navy transition-colors"
+            className="text-sm text-gris-mid hover:text-noir transition-colors"
           >
             📷 Photographe
           </a>
           <button
             onClick={logout}
-            className="text-sm text-mid hover:text-navy transition-colors"
+            className="text-sm text-gris-mid hover:text-noir transition-colors"
           >
             Déconnexion
           </button>
@@ -659,13 +659,13 @@ export default function GestionPage() {
       </div>
 
       {/* Onglets */}
-      <div className="flex gap-1 bg-pale-blue rounded-xl p-1 mb-8 w-fit">
+      <div className="flex gap-1 bg-gris-pale rounded-xl p-1 mb-8 w-fit">
         {(['dashboard', 'ventes', 'galeries'] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => switchTab(t)}
             className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors capitalize ${
-              tab === t ? 'bg-white text-navy shadow-sm' : 'text-mid hover:text-navy'
+              tab === t ? 'bg-white text-noir shadow-sm' : 'text-gris-mid hover:text-noir'
             }`}
           >
             {t === 'dashboard' ? '📊 Dashboard' : t === 'ventes' ? '💳 Ventes' : '🖼 Galeries'}
@@ -677,7 +677,7 @@ export default function GestionPage() {
       {tab === 'dashboard' && (
         <div>
           {dashboardLoading ? (
-            <p className="text-mid text-center py-12">Chargement...</p>
+            <p className="text-gris-mid text-center py-12">Chargement...</p>
           ) : dashboard ? (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <StatCard label="Ventes aujourd'hui" value={String(dashboard.salesToday)} sub={formatAmount(dashboard.revenueTodayCents)} />
@@ -692,11 +692,11 @@ export default function GestionPage() {
               <StatCard label="En attente" value={String(pendingGalleries.length)} accent={pendingGalleries.length > 0} />
             </div>
           ) : (
-            <p className="text-mid text-center py-12">Aucune donnée.</p>
+            <p className="text-gris-mid text-center py-12">Aucune donnée.</p>
           )}
           <button
             onClick={() => loadDashboard(managerPassword)}
-            className="mt-6 text-sm text-mid hover:text-navy transition-colors"
+            className="mt-6 text-sm text-gris-mid hover:text-noir transition-colors"
           >
             ↻ Actualiser
           </button>
@@ -713,7 +713,7 @@ export default function GestionPage() {
                   key={f}
                   onClick={() => { setSalesFilter(f); setSalesVisibleCount(15) }}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                    salesFilter === f ? 'bg-action text-white' : 'bg-pale-blue text-navy hover:opacity-80'
+                    salesFilter === f ? 'bg-rouge text-white' : 'bg-gris-pale text-noir hover:opacity-80'
                   }`}
                 >
                   {f === 'all' ? 'Toutes' : SUCCURSALES[f]}
@@ -722,7 +722,7 @@ export default function GestionPage() {
             </div>
             <button
               onClick={() => loadSales(managerPassword)}
-              className="text-sm text-mid hover:text-navy transition-colors"
+              className="text-sm text-gris-mid hover:text-noir transition-colors"
             >
               ↻ Actualiser
             </button>
@@ -730,7 +730,7 @@ export default function GestionPage() {
 
           {/* Barre de recherche */}
           <div className="relative mb-4">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-mid text-sm">🔍</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gris-mid text-sm">🔍</span>
             <input
               type="text"
               placeholder="Nom ou courriel..."
@@ -741,7 +741,7 @@ export default function GestionPage() {
             {salesSearch && (
               <button
                 onClick={() => setSalesSearch('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-mid hover:text-navy text-sm"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gris-mid hover:text-noir text-sm"
               >
                 ✕
               </button>
@@ -749,15 +749,15 @@ export default function GestionPage() {
           </div>
 
           {salesLoading ? (
-            <p className="text-mid text-center py-12">Chargement des ventes...</p>
+            <p className="text-gris-mid text-center py-12">Chargement des ventes...</p>
           ) : filteredSales.length === 0 ? (
-            <div className="text-center py-16 bg-pale-blue rounded-2xl text-mid text-sm">Aucune vente trouvée.</div>
+            <div className="text-center py-16 bg-gris-pale rounded-2xl text-gris-mid text-sm">Aucune vente trouvée.</div>
           ) : (
             <>
-              <div className="rounded-2xl border border-pale-blue overflow-hidden">
+              <div className="rounded-2xl border border-gris-pale overflow-hidden">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="bg-pale-blue text-navy">
+                    <tr className="bg-gris-pale text-noir">
                       <th className="text-left px-3 py-2 font-semibold">Statut</th>
                       <th className="text-left px-3 py-2 font-semibold whitespace-nowrap">Achat</th>
                       <th className="text-left px-3 py-2 font-semibold">Client</th>
@@ -771,23 +771,23 @@ export default function GestionPage() {
                     {visibleSales.map((sale, i) => {
                       const status = tokenStatus(sale)
                       return (
-                        <tr key={sale.sessionId} className={i % 2 === 0 ? 'bg-white' : 'bg-pale-blue/30'}>
+                        <tr key={sale.sessionId} className={i % 2 === 0 ? 'bg-white' : 'bg-gris-pale/30'}>
                           <td className="px-3 py-2">
                             <TokenStatusBadge status={status} />
                           </td>
-                          <td className="px-3 py-2 text-mid whitespace-nowrap">{formatDate(sale.createdAt)}</td>
+                          <td className="px-3 py-2 text-gris-mid whitespace-nowrap">{formatDate(sale.createdAt)}</td>
                           <td className="px-3 py-2">
-                            <div className="text-navy font-medium leading-tight">{sale.customerName ?? '—'}</div>
-                            {sale.customerEmail && <div className="text-mid truncate max-w-[160px]">{sale.customerEmail}</div>}
+                            <div className="text-noir font-medium leading-tight">{sale.customerName ?? '—'}</div>
+                            {sale.customerEmail && <div className="text-gris-mid truncate max-w-[160px]">{sale.customerEmail}</div>}
                           </td>
-                          <td className="px-3 py-2 text-mid whitespace-nowrap">
+                          <td className="px-3 py-2 text-gris-mid whitespace-nowrap">
                             <div>{SUCCURSALES[sale.location] ?? (sale.location || '—')}</div>
-                            <div className="text-mid">{formatDateShort(sale.date)} · Env.{sale.envol || '—'}</div>
+                            <div className="text-gris-mid">{formatDateShort(sale.date)} · Env.{sale.envol || '—'}</div>
                           </td>
-                          <td className="px-3 py-2 text-navy font-semibold text-right whitespace-nowrap">
+                          <td className="px-3 py-2 text-noir font-semibold text-right whitespace-nowrap">
                             {formatAmount(sale.amount)}
                           </td>
-                          <td className="px-3 py-2 text-mid whitespace-nowrap">
+                          <td className="px-3 py-2 text-gris-mid whitespace-nowrap">
                             {sale.expiresAt ? formatDateTime(sale.expiresAt) : '—'}
                           </td>
                           <td className="px-3 py-2">
@@ -795,7 +795,7 @@ export default function GestionPage() {
                               {/* Voir photos — toujours disponible */}
                               <button
                                 onClick={() => openPhotoPopup(sale)}
-                                className="text-xs font-semibold bg-pale-blue text-navy px-2 py-1 rounded-lg hover:bg-action hover:text-white transition-colors whitespace-nowrap"
+                                className="text-xs font-semibold bg-gris-pale text-noir px-2 py-1 rounded-lg hover:bg-rouge hover:text-white transition-colors whitespace-nowrap"
                               >
                                 🖼 Voir photos
                               </button>
@@ -804,14 +804,14 @@ export default function GestionPage() {
                                 <>
                                   <button
                                     onClick={() => copyLink(sale.downloadUrl, sale.downloadToken)}
-                                    className="text-xs font-semibold bg-pale-blue text-navy px-2 py-1 rounded-lg hover:bg-action hover:text-white transition-colors whitespace-nowrap"
+                                    className="text-xs font-semibold bg-gris-pale text-noir px-2 py-1 rounded-lg hover:bg-rouge hover:text-white transition-colors whitespace-nowrap"
                                   >
                                     {copied === sale.downloadToken ? '✓ Copié !' : '🔗 Copier le lien'}
                                   </button>
                                   <button
                                     onClick={() => resendEmail(sale)}
                                     disabled={resending === sale.downloadToken || !sale.customerEmail}
-                                    className="text-xs font-semibold bg-pale-blue text-navy px-2 py-1 rounded-lg hover:bg-action hover:text-white transition-colors disabled:opacity-40 whitespace-nowrap"
+                                    className="text-xs font-semibold bg-gris-pale text-noir px-2 py-1 rounded-lg hover:bg-rouge hover:text-white transition-colors disabled:opacity-40 whitespace-nowrap"
                                     title={!sale.customerEmail ? 'Aucun courriel associé' : ''}
                                   >
                                     {resending === sale.downloadToken
@@ -852,12 +852,12 @@ export default function GestionPage() {
 
               {/* Pagination */}
               <div className="flex items-center justify-between mt-3">
-                <p className="text-xs text-mid">{Math.min(salesVisibleCount, filteredSales.length)} / {filteredSales.length} ventes</p>
+                <p className="text-xs text-gris-mid">{Math.min(salesVisibleCount, filteredSales.length)} / {filteredSales.length} ventes</p>
                 <div className="flex gap-3">
                   {filteredSales.length > salesVisibleCount && (
                     <button
                       onClick={() => setSalesVisibleCount((n) => n + 15)}
-                      className="text-xs font-semibold text-action hover:underline"
+                      className="text-xs font-semibold text-rouge hover:underline"
                     >
                       Voir plus ({filteredSales.length - salesVisibleCount} restantes)
                     </button>
@@ -865,7 +865,7 @@ export default function GestionPage() {
                   {salesVisibleCount > 15 && (
                     <button
                       onClick={() => setSalesVisibleCount(15)}
-                      className="text-xs font-semibold text-mid hover:text-navy hover:underline"
+                      className="text-xs font-semibold text-gris-mid hover:text-noir hover:underline"
                     >
                       Voir moins
                     </button>
@@ -891,19 +891,19 @@ export default function GestionPage() {
       {tab === 'galeries' && (
         <div>
           {/* Stockage */}
-          <div className="bg-pale-blue rounded-xl px-5 py-3 mb-6 flex items-center justify-between flex-wrap gap-2">
-            <span className="text-sm font-semibold text-navy">Stockage R2 utilisé</span>
-            <span className="text-lg font-bold text-navy">{formatBytes(storageBytes)}</span>
+          <div className="bg-gris-pale rounded-xl px-5 py-3 mb-6 flex items-center justify-between flex-wrap gap-2">
+            <span className="text-sm font-semibold text-noir">Stockage R2 utilisé</span>
+            <span className="text-lg font-bold text-noir">{formatBytes(storageBytes)}</span>
           </div>
 
           {galleriesLoading ? (
-            <p className="text-mid text-center py-12">Chargement des galeries...</p>
+            <p className="text-gris-mid text-center py-12">Chargement des galeries...</p>
           ) : (
             <>
               {/* Section A — Pending */}
               <section className="mb-10">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold text-navy">
+                  <h2 className="text-lg font-bold text-noir">
                     En attente d'approbation
                     {pendingGalleries.length > 0 && (
                       <span className="ml-2 text-sm font-semibold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
@@ -915,7 +915,7 @@ export default function GestionPage() {
                     <button
                       onClick={() => approveAll(pendingGalleries)}
                       disabled={actionLoading === 'approve-all'}
-                      className="text-sm font-semibold bg-action text-white px-4 py-2 rounded-lg hover:bg-action/90 transition-colors disabled:opacity-40"
+                      className="text-sm font-semibold bg-rouge text-white px-4 py-2 rounded-lg hover:bg-rouge/90 transition-colors disabled:opacity-40"
                     >
                       {actionLoading === 'approve-all' ? '...' : `✓ Tout publier (${pendingGalleries.length})`}
                     </button>
@@ -923,7 +923,7 @@ export default function GestionPage() {
                 </div>
 
                 {pendingGalleries.length === 0 ? (
-                  <div className="text-center py-8 bg-pale-blue/50 rounded-xl text-mid text-sm">
+                  <div className="text-center py-8 bg-gris-pale/50 rounded-xl text-gris-mid text-sm">
                     Aucune galerie en attente.
                   </div>
                 ) : (
@@ -951,7 +951,7 @@ export default function GestionPage() {
               {/* Section B — Active */}
               <section className="mb-10">
                 <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
-                  <h2 className="text-lg font-bold text-navy">
+                  <h2 className="text-lg font-bold text-noir">
                     Galeries actives
                     {activeGalleries.length > 0 && (
                       <span className="ml-2 text-sm font-semibold bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
@@ -965,7 +965,7 @@ export default function GestionPage() {
                         key={f}
                         onClick={() => { setActiveFilterLoc(f); setActiveVisibleCount(15); setSelectedGalleries(new Set()) }}
                         className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                          activeFilterLoc === f ? 'bg-action text-white' : 'bg-pale-blue text-navy hover:opacity-80'
+                          activeFilterLoc === f ? 'bg-rouge text-white' : 'bg-gris-pale text-noir hover:opacity-80'
                         }`}
                       >
                         {f === 'all' ? 'Toutes' : SUCCURSALES[f]}
@@ -989,14 +989,14 @@ export default function GestionPage() {
                       {(activeDateFrom || activeDateTo) && filteredActiveGalleries.length > selectedGalleries.size && (
                         <button
                           onClick={() => setSelectedGalleries(new Set(filteredActiveGalleries.map(galleryKey)))}
-                          className="text-xs font-semibold bg-pale-blue text-navy px-3 py-1.5 rounded-lg hover:opacity-80 transition-colors whitespace-nowrap"
+                          className="text-xs font-semibold bg-gris-pale text-noir px-3 py-1.5 rounded-lg hover:opacity-80 transition-colors whitespace-nowrap"
                         >
                           Tout sélectionner ({filteredActiveGalleries.length})
                         </button>
                       )}
                       <button
                         onClick={() => setSelectedGalleries(new Set())}
-                        className="text-xs font-semibold bg-pale-blue text-mid px-3 py-1.5 rounded-lg hover:opacity-80 transition-colors whitespace-nowrap"
+                        className="text-xs font-semibold bg-gris-pale text-gris-mid px-3 py-1.5 rounded-lg hover:opacity-80 transition-colors whitespace-nowrap"
                       >
                         Désélectionner
                       </button>
@@ -1016,7 +1016,7 @@ export default function GestionPage() {
                   <div className="mb-3">
                     <button
                       onClick={() => setSelectedGalleries(new Set(filteredActiveGalleries.map(galleryKey)))}
-                      className="text-xs font-semibold text-action hover:underline"
+                      className="text-xs font-semibold text-rouge hover:underline"
                     >
                       Tout sélectionner pour cette période ({filteredActiveGalleries.length})
                     </button>
@@ -1024,19 +1024,19 @@ export default function GestionPage() {
                 )}
 
                 {activeGalleries.length === 0 ? (
-                  <div className="text-center py-8 bg-pale-blue/50 rounded-xl text-mid text-sm">
+                  <div className="text-center py-8 bg-gris-pale/50 rounded-xl text-gris-mid text-sm">
                     Aucune galerie active.
                   </div>
                 ) : filteredActiveGalleries.length === 0 ? (
-                  <div className="text-center py-8 bg-pale-blue/50 rounded-xl text-mid text-sm">
+                  <div className="text-center py-8 bg-gris-pale/50 rounded-xl text-gris-mid text-sm">
                     Aucun résultat pour ces filtres.
                   </div>
                 ) : (
                   <>
-                    <div className="overflow-x-auto rounded-2xl border border-pale-blue">
+                    <div className="overflow-x-auto rounded-2xl border border-gris-pale">
                       <table className="w-full text-sm">
                         <thead>
-                          <tr className="bg-pale-blue text-navy">
+                          <tr className="bg-gris-pale text-noir">
                             <th className="px-4 py-3 w-8">
                               <input
                                 type="checkbox"
@@ -1076,7 +1076,7 @@ export default function GestionPage() {
                             return (
                               <tr
                                 key={key}
-                                className={`transition-colors ${isSelected ? 'bg-action/10' : i % 2 === 0 ? 'bg-white' : 'bg-pale-blue/30'}`}
+                                className={`transition-colors ${isSelected ? 'bg-rouge/10' : i % 2 === 0 ? 'bg-white' : 'bg-gris-pale/30'}`}
                               >
                                 <td className="px-4 py-3">
                                   <input
@@ -1093,19 +1093,19 @@ export default function GestionPage() {
                                     className="cursor-pointer"
                                   />
                                 </td>
-                                <td className="px-4 py-3 font-semibold text-navy">
+                                <td className="px-4 py-3 font-semibold text-noir">
                                   <button
                                     onClick={() => window.open(`/admin/photographe/${g.location}/${g.date}/${g.envol}`, '_blank')}
-                                    className="hover:text-action hover:underline transition-colors text-left"
+                                    className="hover:text-rouge hover:underline transition-colors text-left"
                                   >
                                     {formatDateShort(g.date)} · Env. {g.envol} ↗
                                   </button>
                                 </td>
-                                <td className="px-4 py-3 text-mid">{SUCCURSALES[g.location] ?? g.location}</td>
-                                <td className="px-4 py-3 text-mid text-center">{g.photoCount}</td>
-                                <td className="px-4 py-3 text-mid text-right">{formatBytes(g.storageBytes)}</td>
-                                <td className="px-4 py-3 text-mid text-center">{g.salesCount}</td>
-                                <td className={`px-4 py-3 whitespace-nowrap text-sm ${isExpiringSoon ? 'text-amber-600 font-semibold' : 'text-mid'}`}>
+                                <td className="px-4 py-3 text-gris-mid">{SUCCURSALES[g.location] ?? g.location}</td>
+                                <td className="px-4 py-3 text-gris-mid text-center">{g.photoCount}</td>
+                                <td className="px-4 py-3 text-gris-mid text-right">{formatBytes(g.storageBytes)}</td>
+                                <td className="px-4 py-3 text-gris-mid text-center">{g.salesCount}</td>
+                                <td className={`px-4 py-3 whitespace-nowrap text-sm ${isExpiringSoon ? 'text-amber-600 font-semibold' : 'text-gris-mid'}`}>
                                   {g.expiresAt ? formatDateTime(g.expiresAt) : '—'}
                                   {isExpiringSoon && <span className="ml-1 text-xs">⚠️</span>}
                                 </td>
@@ -1114,14 +1114,14 @@ export default function GestionPage() {
                                     <button
                                       onClick={() => extendGallery(g)}
                                       disabled={actionLoading === key + '-extend'}
-                                      className="text-xs font-semibold bg-pale-blue text-navy px-3 py-1.5 rounded-lg hover:bg-action hover:text-white transition-colors disabled:opacity-40 whitespace-nowrap"
+                                      className="text-xs font-semibold bg-gris-pale text-noir px-3 py-1.5 rounded-lg hover:bg-rouge hover:text-white transition-colors disabled:opacity-40 whitespace-nowrap"
                                     >
                                       {actionLoading === key + '-extend' ? '...' : 'Prolonger'}
                                     </button>
                                     <button
                                       onClick={() => deactivateGallery(g)}
                                       disabled={actionLoading === key + '-deactivate'}
-                                      className="text-xs font-semibold bg-pale-blue text-mid px-3 py-1.5 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors disabled:opacity-40 whitespace-nowrap"
+                                      className="text-xs font-semibold bg-gris-pale text-gris-mid px-3 py-1.5 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors disabled:opacity-40 whitespace-nowrap"
                                     >
                                       {actionLoading === key + '-deactivate' ? '...' : 'Désactiver'}
                                     </button>
@@ -1136,12 +1136,12 @@ export default function GestionPage() {
 
                     {/* Pagination */}
                     <div className="flex items-center justify-between mt-3">
-                      <p className="text-xs text-mid">{Math.min(activeVisibleCount, filteredActiveGalleries.length)} / {filteredActiveGalleries.length} galeries</p>
+                      <p className="text-xs text-gris-mid">{Math.min(activeVisibleCount, filteredActiveGalleries.length)} / {filteredActiveGalleries.length} galeries</p>
                       <div className="flex gap-3">
                         {filteredActiveGalleries.length > activeVisibleCount && (
                           <button
                             onClick={() => setActiveVisibleCount((n) => n + 15)}
-                            className="text-xs font-semibold text-action hover:underline"
+                            className="text-xs font-semibold text-rouge hover:underline"
                           >
                             Voir plus ({filteredActiveGalleries.length - activeVisibleCount} restantes)
                           </button>
@@ -1149,7 +1149,7 @@ export default function GestionPage() {
                         {activeVisibleCount > 15 && (
                           <button
                             onClick={() => setActiveVisibleCount(15)}
-                            className="text-xs font-semibold text-mid hover:text-navy hover:underline"
+                            className="text-xs font-semibold text-gris-mid hover:text-noir hover:underline"
                           >
                             Voir moins
                           </button>
@@ -1162,7 +1162,7 @@ export default function GestionPage() {
 
               {/* Section C — Expired */}
               <section>
-                <h2 className="text-lg font-bold text-navy mb-4">
+                <h2 className="text-lg font-bold text-noir mb-4">
                   Galeries expirées
                   {expiredGalleries.length > 0 && (
                     <span className="ml-2 text-sm font-semibold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
@@ -1172,14 +1172,14 @@ export default function GestionPage() {
                 </h2>
 
                 {expiredGalleries.length === 0 ? (
-                  <div className="text-center py-8 bg-pale-blue/50 rounded-xl text-mid text-sm">
+                  <div className="text-center py-8 bg-gris-pale/50 rounded-xl text-gris-mid text-sm">
                     Aucune galerie expirée.
                   </div>
                 ) : (
-                  <div className="overflow-x-auto rounded-2xl border border-pale-blue">
+                  <div className="overflow-x-auto rounded-2xl border border-gris-pale">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="bg-pale-blue text-navy">
+                        <tr className="bg-gris-pale text-noir">
                           <th className="text-left px-4 py-3 font-semibold">Galerie</th>
                           <th className="text-left px-4 py-3 font-semibold">Succursale</th>
                           <th className="text-center px-4 py-3 font-semibold">Photos</th>
@@ -1193,15 +1193,15 @@ export default function GestionPage() {
                         {expiredGalleries.map((g, i) => {
                           const key = galleryKey(g)
                           return (
-                            <tr key={key} className={i % 2 === 0 ? 'bg-white' : 'bg-pale-blue/30'}>
-                              <td className="px-4 py-3 font-semibold text-navy">
+                            <tr key={key} className={i % 2 === 0 ? 'bg-white' : 'bg-gris-pale/30'}>
+                              <td className="px-4 py-3 font-semibold text-noir">
                                 {formatDateShort(g.date)} · Env. {g.envol}
                               </td>
-                              <td className="px-4 py-3 text-mid">{SUCCURSALES[g.location] ?? g.location}</td>
-                              <td className="px-4 py-3 text-mid text-center">{g.photoCount}</td>
-                              <td className="px-4 py-3 text-mid text-right">{formatBytes(g.storageBytes)}</td>
-                              <td className="px-4 py-3 text-mid text-center">{g.salesCount}</td>
-                              <td className="px-4 py-3 text-mid whitespace-nowrap">
+                              <td className="px-4 py-3 text-gris-mid">{SUCCURSALES[g.location] ?? g.location}</td>
+                              <td className="px-4 py-3 text-gris-mid text-center">{g.photoCount}</td>
+                              <td className="px-4 py-3 text-gris-mid text-right">{formatBytes(g.storageBytes)}</td>
+                              <td className="px-4 py-3 text-gris-mid text-center">{g.salesCount}</td>
+                              <td className="px-4 py-3 text-gris-mid whitespace-nowrap">
                                 {g.expiresAt ? formatDateTime(g.expiresAt) : '—'}
                               </td>
                               <td className="px-4 py-3">
@@ -1224,7 +1224,7 @@ export default function GestionPage() {
 
               <button
                 onClick={() => loadGalleries(managerPassword)}
-                className="mt-6 text-sm text-mid hover:text-navy transition-colors"
+                className="mt-6 text-sm text-gris-mid hover:text-noir transition-colors"
               >
                 ↻ Actualiser
               </button>
@@ -1240,10 +1240,10 @@ export default function GestionPage() {
 
 function StatCard({ label, value, sub, accent }: { label: string; value: string; sub?: string; accent?: boolean }) {
   return (
-    <div className={`rounded-2xl p-5 border ${accent ? 'bg-amber-50 border-amber-200' : 'bg-white border-pale-blue'}`}>
-      <p className="text-sm text-mid mb-1">{label}</p>
-      <p className="text-2xl font-bold text-navy">{value}</p>
-      {sub && <p className="text-sm text-mid mt-0.5">{sub}</p>}
+    <div className={`rounded-2xl p-5 border ${accent ? 'bg-amber-50 border-amber-200' : 'bg-white border-gris-pale'}`}>
+      <p className="text-sm text-gris-mid mb-1">{label}</p>
+      <p className="text-2xl font-bold text-noir">{value}</p>
+      {sub && <p className="text-sm text-gris-mid mt-0.5">{sub}</p>}
     </div>
   )
 }
@@ -1283,9 +1283,9 @@ function PendingColumn({
 
   return (
     <div>
-      <h3 className="text-base font-bold text-navy mb-3">{title}</h3>
+      <h3 className="text-base font-bold text-noir mb-3">{title}</h3>
       {galleries.length === 0 ? (
-        <div className="text-center py-6 bg-pale-blue/40 rounded-xl text-mid text-xs">
+        <div className="text-center py-6 bg-gris-pale/40 rounded-xl text-gris-mid text-xs">
           Aucune galerie.
         </div>
       ) : (
@@ -1293,11 +1293,11 @@ function PendingColumn({
           {galleries.map((g) => {
             const key = galleryKey(g)
             return (
-              <div key={key} className="bg-white border border-pale-blue rounded-xl p-4">
+              <div key={key} className="bg-white border border-gris-pale rounded-xl p-4">
                 <div className="flex items-start justify-between mb-3 gap-2">
                   <div>
-                    <p className="font-semibold text-navy">Envolée {g.envol} · {g.photoCount} photo{g.photoCount !== 1 ? 's' : ''}</p>
-                    <p className="text-sm text-mid">{formatDateShort(g.date)}</p>
+                    <p className="font-semibold text-noir">Envolée {g.envol} · {g.photoCount} photo{g.photoCount !== 1 ? 's' : ''}</p>
+                    <p className="text-sm text-gris-mid">{formatDateShort(g.date)}</p>
                   </div>
                   <span className="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
                     ⏳ Pending
@@ -1306,7 +1306,7 @@ function PendingColumn({
                 <div className="flex gap-2 flex-wrap">
                   <button
                     onClick={() => onEdit(g)}
-                    className="text-xs font-semibold bg-pale-blue text-navy px-3 py-1.5 rounded-lg hover:bg-action hover:text-white transition-colors whitespace-nowrap"
+                    className="text-xs font-semibold bg-gris-pale text-noir px-3 py-1.5 rounded-lg hover:bg-rouge hover:text-white transition-colors whitespace-nowrap"
                   >
                     Modifier / Prévisualiser
                   </button>
@@ -1458,13 +1458,13 @@ function GalleryEditor({
       {/* En-tête */}
       <div className="flex items-start justify-between mb-6 gap-4 flex-wrap">
         <div>
-          <button onClick={onBack} className="text-sm text-mid hover:text-action mb-2 inline-block transition-colors">
+          <button onClick={onBack} className="text-sm text-gris-mid hover:text-rouge mb-2 inline-block transition-colors">
             ← Retour
           </button>
-          <h1 className="text-2xl font-bold text-navy">
+          <h1 className="text-2xl font-bold text-noir">
             Envolée {gallery.envol} — {SUCCURSALES[gallery.location] ?? gallery.location}
           </h1>
-          <p className="text-mid text-sm mt-1">{formatDateShort(gallery.date)} · {photos.length} photo{photos.length !== 1 ? 's' : ''}</p>
+          <p className="text-gris-mid text-sm mt-1">{formatDateShort(gallery.date)} · {photos.length} photo{photos.length !== 1 ? 's' : ''}</p>
         </div>
 
         <div className="flex flex-col items-end gap-2">
@@ -1485,9 +1485,9 @@ function GalleryEditor({
 
       {/* Grille de photos */}
       {loading ? (
-        <div className="text-center py-12 text-mid">Chargement des photos...</div>
+        <div className="text-center py-12 text-gris-mid">Chargement des photos...</div>
       ) : photos.length === 0 ? (
-        <div className="text-center py-12 bg-pale-blue rounded-2xl text-mid mb-6">
+        <div className="text-center py-12 bg-gris-pale rounded-2xl text-gris-mid mb-6">
           Aucune photo dans cette envolée. Ajoutez-en ci-dessous.
         </div>
       ) : (
@@ -1495,13 +1495,13 @@ function GalleryEditor({
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className={`relative group rounded-xl overflow-hidden bg-pale-blue aspect-square transition-opacity ${
+              className={`relative group rounded-xl overflow-hidden bg-gris-pale aspect-square transition-opacity ${
                 deleting === photo.filename ? 'opacity-30' : 'opacity-100'
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={photo.url} alt={photo.filename} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/20 transition-colors" />
+              <div className="absolute inset-0 bg-noir/0 group-hover:bg-noir/20 transition-colors" />
               <button
                 onClick={() => handleDelete(photo.filename)}
                 disabled={deleting === photo.filename}
@@ -1510,7 +1510,7 @@ function GalleryEditor({
               >
                 ✕
               </button>
-              <div className="absolute bottom-0 left-0 right-0 bg-navy/70 text-white text-xs px-2 py-1 translate-y-full group-hover:translate-y-0 transition-transform truncate">
+              <div className="absolute bottom-0 left-0 right-0 bg-noir/70 text-white text-xs px-2 py-1 translate-y-full group-hover:translate-y-0 transition-transform truncate">
                 {photo.filename}
               </div>
             </div>
@@ -1519,19 +1519,19 @@ function GalleryEditor({
       )}
 
       {/* Zone d'upload */}
-      <div className="border-2 border-dashed border-action/30 rounded-2xl p-6">
-        <h2 className="text-sm font-semibold text-navy mb-4">Ajouter des photos</h2>
+      <div className="border-2 border-dashed border-rouge/30 rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-noir mb-4">Ajouter des photos</h2>
         <div
-          className="border-2 border-dashed border-pale-blue rounded-xl p-8 text-center cursor-pointer hover:border-action transition-colors mb-4"
+          className="border-2 border-dashed border-gris-pale rounded-xl p-8 text-center cursor-pointer hover:border-rouge transition-colors mb-4"
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => { e.preventDefault(); addFiles(e.dataTransfer.files) }}
         >
-          <p className="text-mid text-sm">
+          <p className="text-gris-mid text-sm">
             Glissez des photos ou{' '}
-            <span className="text-action font-medium">cliquez pour sélectionner</span>
+            <span className="text-rouge font-medium">cliquez pour sélectionner</span>
           </p>
-          <p className="text-xs text-mid mt-1">JPG, PNG, WebP · Watermark appliqué automatiquement</p>
+          <p className="text-xs text-gris-mid mt-1">JPG, PNG, WebP · Watermark appliqué automatiquement</p>
           <input
             ref={fileInputRef}
             type="file"
@@ -1546,13 +1546,13 @@ function GalleryEditor({
           <>
             <div className="space-y-2 mb-4 max-h-48 overflow-y-auto">
               {uploadFiles.map((f, i) => (
-                <div key={i} className="flex items-center justify-between bg-pale-blue rounded-lg px-4 py-2">
-                  <span className="text-sm text-navy truncate flex-1 mr-2">{f.file.name}</span>
+                <div key={i} className="flex items-center justify-between bg-gris-pale rounded-lg px-4 py-2">
+                  <span className="text-sm text-noir truncate flex-1 mr-2">{f.file.name}</span>
                   <span className={`text-xs font-semibold ${
                     f.status === 'done' ? 'text-green-600'
                     : f.status === 'error' ? 'text-red-500'
-                    : f.status === 'uploading' ? 'text-action'
-                    : 'text-mid'
+                    : f.status === 'uploading' ? 'text-rouge'
+                    : 'text-gris-mid'
                   }`}>
                     {f.status === 'done' ? '✓ Envoyée'
                     : f.status === 'error' ? '✗ Erreur'
@@ -1567,7 +1567,7 @@ function GalleryEditor({
                 Envoyer {uploadFiles.filter((f) => f.status === 'pending').length} photo{uploadFiles.filter((f) => f.status === 'pending').length > 1 ? 's' : ''} →
               </button>
             )}
-            {uploading && <p className="text-action text-sm text-center">Envoi en cours...</p>}
+            {uploading && <p className="text-rouge text-sm text-center">Envoi en cours...</p>}
             {uploadFiles.every((f) => f.status === 'done') && (
               <button onClick={() => setUploadFiles([])} className="btn-secondary w-full text-sm">
                 Prêt pour d&apos;autres photos
@@ -1603,22 +1603,22 @@ function PhotoPopupModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-navy/60 backdrop-blur-sm px-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-noir/60 backdrop-blur-sm px-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
         {/* En-tête */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-pale-blue shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gris-pale shrink-0">
           <div>
-            <p className="text-sm font-bold text-navy">{sale.customerName ?? '—'}</p>
-            <p className="text-xs text-mid">
+            <p className="text-sm font-bold text-noir">{sale.customerName ?? '—'}</p>
+            <p className="text-xs text-gris-mid">
               {SUCCURSALES[sale.location] ?? sale.location} · {formatDateShort(sale.date)} · Env. {sale.envol}
               {sale.customerEmail && <span className="ml-2">· {sale.customerEmail}</span>}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="text-mid hover:text-navy text-xl leading-none px-2"
+            className="text-gris-mid hover:text-noir text-xl leading-none px-2"
             title="Fermer"
           >
             ✕
@@ -1628,16 +1628,16 @@ function PhotoPopupModal({
         {/* Contenu */}
         <div className="overflow-y-auto flex-1 p-5">
           {loading ? (
-            <p className="text-center text-mid py-12">Chargement des photos...</p>
+            <p className="text-center text-gris-mid py-12">Chargement des photos...</p>
           ) : photos.length === 0 ? (
-            <p className="text-center text-mid py-12 text-sm">Aucune photo trouvée pour cette galerie.</p>
+            <p className="text-center text-gris-mid py-12 text-sm">Aucune photo trouvée pour cette galerie.</p>
           ) : (
             <>
-              <p className="text-xs text-mid mb-4">{photos.length} photo{photos.length > 1 ? 's' : ''}</p>
+              <p className="text-xs text-gris-mid mb-4">{photos.length} photo{photos.length > 1 ? 's' : ''}</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {photos.map((photo) => (
-                  <div key={photo.id} className="rounded-xl overflow-hidden bg-pale-blue">
-                    <p className="text-xs font-mono text-mid px-2 pt-2 pb-1 truncate">
+                  <div key={photo.id} className="rounded-xl overflow-hidden bg-gris-pale">
+                    <p className="text-xs font-mono text-gris-mid px-2 pt-2 pb-1 truncate">
                       {photo.filename.replace(/\.[^.]+$/, '')}
                     </p>
                     <div className="aspect-square">

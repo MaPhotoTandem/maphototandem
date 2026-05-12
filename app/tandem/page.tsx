@@ -56,18 +56,18 @@ function FlightFinder({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-navy/60 flex items-end sm:items-center justify-center z-50 px-0 sm:px-4">
+    <div className="fixed inset-0 bg-noir/60 flex items-end sm:items-center justify-center z-50 px-0 sm:px-4">
       <div className="bg-white rounded-t-3xl sm:rounded-2xl w-full sm:max-w-md shadow-2xl overflow-hidden">
 
         {/* En-tête */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <div className="flex items-center gap-2">
             <span className="text-lg">💬</span>
-            <span className="font-semibold text-navy text-sm">Retrouver mon envolée</span>
+            <span className="font-semibold text-noir text-sm">Retrouver mon envolée</span>
           </div>
           <button
             onClick={onClose}
-            className="text-mid hover:text-navy transition-colors text-xl leading-none"
+            className="text-gris-mid hover:text-noir transition-colors text-xl leading-none"
             aria-label="Fermer"
           >
             ✕
@@ -79,10 +79,10 @@ function FlightFinder({ onClose }: { onClose: () => void }) {
 
           {/* Message robot */}
           <div className="flex gap-3">
-            <div className="w-8 h-8 rounded-full bg-pale-blue flex items-center justify-center text-sm flex-shrink-0">
+            <div className="w-8 h-8 rounded-full bg-gris-pale flex items-center justify-center text-sm flex-shrink-0">
               📷
             </div>
-            <div className="bg-pale-blue rounded-2xl rounded-tl-none px-4 py-3 text-sm text-navy font-medium max-w-[80%]">
+            <div className="bg-gris-pale rounded-2xl rounded-tl-none px-4 py-3 text-sm text-noir font-medium max-w-[80%]">
               {messages[step]}
             </div>
           </div>
@@ -113,10 +113,10 @@ function FlightFinder({ onClose }: { onClose: () => void }) {
                 <button
                   key={s.id}
                   onClick={() => { setChatLoc(s.id); setStep('name') }}
-                  className="rounded-xl border-2 border-gray-200 hover:border-action active:border-action p-3 text-left transition-all"
+                  className="rounded-xl border-2 border-gray-200 hover:border-rouge active:border-rouge p-3 text-left transition-all"
                 >
-                  <p className="font-bold text-sm text-navy">{s.label}</p>
-                  <p className="text-xs text-mid">{s.ville}</p>
+                  <p className="font-bold text-sm text-noir">{s.label}</p>
+                  <p className="text-xs text-gris-mid">{s.ville}</p>
                 </button>
               ))}
             </div>
@@ -152,10 +152,10 @@ function FlightFinder({ onClose }: { onClose: () => void }) {
                 <button
                   key={envol}
                   onClick={() => goToGallery(envol)}
-                  className="w-full flex items-center justify-between bg-pale-blue hover:bg-action/10 border border-action/20 rounded-xl px-4 py-3 transition-colors"
+                  className="w-full flex items-center justify-between bg-gris-pale hover:bg-rouge/10 border border-rouge/20 rounded-xl px-4 py-3 transition-colors"
                 >
-                  <span className="font-semibold text-navy text-sm">Envolée {envol}</span>
-                  <span className="text-action text-sm font-medium">Voir mes photos →</span>
+                  <span className="font-semibold text-noir text-sm">Envolée {envol}</span>
+                  <span className="text-rouge text-sm font-medium">Voir mes photos →</span>
                 </button>
               ))}
             </div>
@@ -182,7 +182,7 @@ function FlightFinder({ onClose }: { onClose: () => void }) {
           <div className="px-5 pb-5 pt-0">
             <button
               onClick={() => { setStep('date'); setChatDate(''); setChatLoc(''); setFirstName(''); setMatches([]); setNoResult(false) }}
-              className="text-xs text-mid hover:text-navy underline transition-colors"
+              className="text-xs text-gris-mid hover:text-noir underline transition-colors"
             >
               ← Recommencer
             </button>
@@ -231,11 +231,11 @@ export default function HomePage() {
 
       {/* Hero */}
       <div className="text-center mb-8 max-w-md w-full">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-3 leading-tight text-navy">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-3 leading-tight text-noir">
           Vous avez sauté.<br />
-          <span className="text-action">On a tout capturé.</span>
+          <span className="text-rouge">On a tout capturé.</span>
         </h1>
-        <p className="text-mid text-base sm:text-lg">
+        <p className="text-gris-mid text-base sm:text-lg">
           Choisissez votre centre, entrez la date et votre numéro d&apos;envolée pour retrouver vos photos.
         </p>
       </div>
@@ -260,14 +260,14 @@ export default function HomePage() {
                   onClick={() => setSuccursale(s.id)}
                   className={`rounded-xl border-2 p-4 text-left transition-all duration-200 min-h-[72px] ${
                     succursale === s.id
-                      ? 'border-action bg-pale-blue'
-                      : 'border-gray-200 hover:border-gray-400 active:border-action bg-white'
+                      ? 'border-rouge bg-gris-pale'
+                      : 'border-gray-200 hover:border-gray-400 active:border-rouge bg-white'
                   }`}
                 >
-                  <p className={`font-bold text-sm leading-tight ${succursale === s.id ? 'text-action' : 'text-navy'}`}>
+                  <p className={`font-bold text-sm leading-tight ${succursale === s.id ? 'text-rouge' : 'text-noir'}`}>
                     {s.label}
                   </p>
-                  <p className="text-xs text-mid mt-1">{s.ville}</p>
+                  <p className="text-xs text-gris-mid mt-1">{s.ville}</p>
                 </button>
               ))}
             </div>
@@ -278,7 +278,7 @@ export default function HomePage() {
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Date du saut
             </label>
-            <div className="w-full overflow-hidden border border-gray-300 rounded-lg bg-white focus-within:border-action transition-colors">
+            <div className="w-full overflow-hidden border border-gray-300 rounded-lg bg-white focus-within:border-rouge transition-colors">
               <input
                 type="date"
                 value={date}
@@ -306,13 +306,13 @@ export default function HomePage() {
               className="input-field text-base"
               required
             />
-            <p className="text-xs text-mid mt-1">
+            <p className="text-xs text-gris-mid mt-1">
               Ce numéro vous a été communiqué au centre lors de votre saut.
             </p>
             <button
               type="button"
               onClick={() => setShowFinder(true)}
-              className="mt-2 text-sm text-action font-medium hover:underline transition-colors"
+              className="mt-2 text-sm text-rouge font-medium hover:underline transition-colors"
             >
               J&apos;ai perdu mon numéro d&apos;envolée
             </button>
@@ -329,7 +329,7 @@ export default function HomePage() {
         </div>
       </form>
 
-      <p className="mt-4 text-sm text-mid text-center max-w-sm px-4">
+      <p className="mt-4 text-sm text-gris-mid text-center max-w-sm px-4">
         Les photos sont disponibles le soir même de votre saut et pendant 30 jours.
       </p>
 
@@ -344,21 +344,21 @@ export default function HomePage() {
             <div className="relative z-40 bg-white rounded-2xl shadow-xl overflow-hidden w-52 border border-gray-100">
               <button
                 onClick={() => { setShowHelpMenu(false); setShowFinder(true) }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy hover:bg-pale-blue transition-colors text-left"
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-noir hover:bg-gris-pale transition-colors text-left"
               >
                 <span>🔍</span> Retrouver mon envolée
               </button>
               <div className="border-t border-gray-100" />
               <a
                 href="/faq"
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy hover:bg-pale-blue transition-colors"
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-noir hover:bg-gris-pale transition-colors"
               >
                 <span>❓</span> Questions fréquentes
               </a>
               <div className="border-t border-gray-100" />
               <a
                 href="/contact"
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-navy hover:bg-pale-blue transition-colors"
+                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-noir hover:bg-gris-pale transition-colors"
               >
                 <span>✉️</span> Contactez-nous
               </a>
@@ -369,7 +369,7 @@ export default function HomePage() {
         {/* Bouton principal */}
         <button
           onClick={() => setShowHelpMenu(v => !v)}
-          className="bg-action text-white rounded-full shadow-lg px-4 py-3 text-sm font-semibold flex items-center gap-2 hover:bg-action/90 transition-colors"
+          className="bg-rouge text-white rounded-full shadow-lg px-4 py-3 text-sm font-semibold flex items-center gap-2 hover:bg-rouge/90 transition-colors"
           aria-label="Besoin d'aide ?"
         >
           <span>💬</span>

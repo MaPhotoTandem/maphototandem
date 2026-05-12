@@ -64,10 +64,10 @@ function ManagerModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-navy/70 flex items-center justify-center z-50 px-4">
+    <div className="fixed inset-0 bg-noir/70 flex items-center justify-center z-50 px-4">
       <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl">
-        <h2 className="text-lg font-bold text-navy mb-1">{title}</h2>
-        <p className="text-sm text-mid mb-5">{description}</p>
+        <h2 className="text-lg font-bold text-noir mb-1">{title}</h2>
+        <p className="text-sm text-gris-mid mb-5">{description}</p>
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
             type="password"
@@ -459,7 +459,7 @@ export default function PhotographePage() {
 
   if (!authReady) {
     return (
-      <div className="flex items-center justify-center min-h-[80vh] text-mid text-sm">
+      <div className="flex items-center justify-center min-h-[80vh] text-gris-mid text-sm">
         Chargement...
       </div>
     )
@@ -487,21 +487,21 @@ export default function PhotographePage() {
         {/* En-tête */}
         <div className="flex items-center justify-between mb-8 flex-wrap gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-navy">
+            <h1 className="text-2xl font-bold text-noir">
               {SUCCURSALES[location] ?? location}
             </h1>
-            <p className="text-sm text-mid mt-1">Sélectionnez une date pour gérer les envolées.</p>
+            <p className="text-sm text-gris-mid mt-1">Sélectionnez une date pour gérer les envolées.</p>
           </div>
           <div className="flex items-center gap-4">
-            <button onClick={logout} className="text-sm text-mid hover:text-navy transition-colors">
+            <button onClick={logout} className="text-sm text-gris-mid hover:text-noir transition-colors">
               Déconnexion
             </button>
           </div>
         </div>
 
         {/* Sélecteur de date */}
-        <div className="bg-pale-blue rounded-2xl p-6 mb-6">
-          <label className="block text-sm font-semibold text-navy mb-2">Date</label>
+        <div className="bg-gris-pale rounded-2xl p-6 mb-6">
+          <label className="block text-sm font-semibold text-noir mb-2">Date</label>
           <div className="flex gap-3">
             <input
               type="date"
@@ -532,17 +532,17 @@ export default function PhotographePage() {
             {totalCount > 0 && (
               <div className="mb-5">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-semibold text-navy">
+                  <span className="text-sm font-semibold text-noir">
                     Envolées publiées
                   </span>
-                  <span className="text-sm text-mid">
+                  <span className="text-sm text-gris-mid">
                     {publishedCount} / {totalCount}
                   </span>
                 </div>
-                <div className="w-full h-2.5 bg-pale-blue rounded-full overflow-hidden">
+                <div className="w-full h-2.5 bg-gris-pale rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
-                      publishedCount === totalCount ? 'bg-green-500' : 'bg-action'
+                      publishedCount === totalCount ? 'bg-green-500' : 'bg-rouge'
                     }`}
                     style={{ width: `${(publishedCount / totalCount) * 100}%` }}
                   />
@@ -561,7 +561,7 @@ export default function PhotographePage() {
                 </p>
                 <button
                   onClick={() => askPublish(unpublishedFlights.map((f) => f.envol), true)}
-                  className="text-sm font-semibold text-white bg-action px-4 py-2 rounded-lg hover:bg-action/90 transition-colors whitespace-nowrap"
+                  className="text-sm font-semibold text-white bg-rouge px-4 py-2 rounded-lg hover:bg-rouge/90 transition-colors whitespace-nowrap"
                 >
                   ✓ Tout publier
                 </button>
@@ -570,24 +570,24 @@ export default function PhotographePage() {
 
             {/* Liste des envolées */}
             {flights.length === 0 ? (
-              <p className="text-center text-mid py-8">Aucune envolée pour cette date.</p>
+              <p className="text-center text-gris-mid py-8">Aucune envolée pour cette date.</p>
             ) : (
               <div className="space-y-2 mb-6">
-                <p className="text-sm text-mid mb-3">
+                <p className="text-sm text-gris-mid mb-3">
                   {flights.length} envolée{flights.length > 1 ? 's' : ''}
                 </p>
                 {flights.map((flight) => (
                   <button
                     key={flight.envol}
                     onClick={() => openFlight(flight)}
-                    className="w-full flex items-center justify-between bg-white border border-pale-blue rounded-xl px-5 py-4 hover:border-action transition-colors text-left"
+                    className="w-full flex items-center justify-between bg-white border border-gris-pale rounded-xl px-5 py-4 hover:border-rouge transition-colors text-left"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="font-semibold text-navy">Envolée {flight.envol}</span>
+                      <span className="font-semibold text-noir">Envolée {flight.envol}</span>
                       {flight.isPending ? (
-                        <span className="text-xs text-mid italic">nouvelle — aucune photo</span>
+                        <span className="text-xs text-gris-mid italic">nouvelle — aucune photo</span>
                       ) : (
-                        <span className="text-mid text-sm">{flight.photoCount} photo{flight.photoCount > 1 ? 's' : ''}</span>
+                        <span className="text-gris-mid text-sm">{flight.photoCount} photo{flight.photoCount > 1 ? 's' : ''}</span>
                       )}
                       {missingPassengers.has(flight.envol) && (
                         <span className="text-xs font-semibold text-amber-600" title="Prénoms des sauteurs manquants">
@@ -608,8 +608,8 @@ export default function PhotographePage() {
             )}
 
             {/* Créer une nouvelle envolée */}
-            <div className="border border-dashed border-action/30 rounded-2xl p-5">
-              <h2 className="text-sm font-semibold text-navy mb-3">Créer une nouvelle envolée</h2>
+            <div className="border border-dashed border-rouge/30 rounded-2xl p-5">
+              <h2 className="text-sm font-semibold text-noir mb-3">Créer une nouvelle envolée</h2>
               <form onSubmit={handleCreateFlight} className="space-y-3">
                 <div className="flex gap-3">
                   <input
@@ -663,13 +663,13 @@ export default function PhotographePage() {
       {/* En-tête */}
       <div className="flex items-start justify-between mb-6 gap-4 flex-wrap">
         <div>
-          <button onClick={backToDashboard} className="text-sm text-mid hover:text-action mb-2 inline-block transition-colors">
+          <button onClick={backToDashboard} className="text-sm text-gris-mid hover:text-rouge mb-2 inline-block transition-colors">
             ← Retour
           </button>
-          <h1 className="text-2xl font-bold text-navy">
+          <h1 className="text-2xl font-bold text-noir">
             Envolée {selectedFlight?.envol}
           </h1>
-          <p className="text-mid text-sm mt-1">
+          <p className="text-gris-mid text-sm mt-1">
             {SUCCURSALES[location] ?? location} · {date && formatDate(date)} · {photos.length} photo{photos.length !== 1 ? 's' : ''}
           </p>
         </div>
@@ -684,7 +684,7 @@ export default function PhotographePage() {
           {selectedFlight?.published ? (
             <button
               onClick={() => askPublish([selectedFlight.envol], false)}
-              className="text-sm text-mid hover:text-red-500 transition-colors"
+              className="text-sm text-gris-mid hover:text-red-500 transition-colors"
             >
               Retirer la publication
             </button>
@@ -728,7 +728,7 @@ export default function PhotographePage() {
         <div className={`rounded-xl px-4 py-4 mb-6 border ${
           passengers.trim() ? 'bg-white border-gray-200' : 'bg-amber-50 border-amber-300'
         }`}>
-          <label className="block text-sm font-semibold text-navy mb-2">
+          <label className="block text-sm font-semibold text-noir mb-2">
             {passengers.trim() ? '👥 Prénoms des sauteurs' : '⚠️ Prénoms des sauteurs — manquants'}
           </label>
           {!passengers.trim() && (
@@ -757,9 +757,9 @@ export default function PhotographePage() {
 
       {/* Grille de photos */}
       {loadingPhotos ? (
-        <div className="text-center py-12 text-mid">Chargement des photos...</div>
+        <div className="text-center py-12 text-gris-mid">Chargement des photos...</div>
       ) : photos.length === 0 ? (
-        <div className="text-center py-12 bg-pale-blue rounded-2xl text-mid mb-6">
+        <div className="text-center py-12 bg-gris-pale rounded-2xl text-gris-mid mb-6">
           Aucune photo — ajoutez-en ci-dessous.
         </div>
       ) : (
@@ -767,13 +767,13 @@ export default function PhotographePage() {
           {photos.map((photo) => (
             <div
               key={photo.id}
-              className={`relative group rounded-xl overflow-hidden bg-pale-blue aspect-square transition-opacity ${
+              className={`relative group rounded-xl overflow-hidden bg-gris-pale aspect-square transition-opacity ${
                 deleting === photo.filename ? 'opacity-30' : 'opacity-100'
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={photo.url} alt={photo.filename} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/20 transition-colors" />
+              <div className="absolute inset-0 bg-noir/0 group-hover:bg-noir/20 transition-colors" />
               <button
                 onClick={() => handleDelete(photo.filename)}
                 className="absolute top-2 right-2 bg-red-600 text-white text-xs rounded-full w-7 h-7 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 shadow"
@@ -781,7 +781,7 @@ export default function PhotographePage() {
               >
                 ✕
               </button>
-              <div className="absolute bottom-0 left-0 right-0 bg-navy/70 text-white text-xs px-2 py-1 translate-y-full group-hover:translate-y-0 transition-transform truncate">
+              <div className="absolute bottom-0 left-0 right-0 bg-noir/70 text-white text-xs px-2 py-1 translate-y-full group-hover:translate-y-0 transition-transform truncate">
                 {photo.filename}
               </div>
             </div>
@@ -790,20 +790,20 @@ export default function PhotographePage() {
       )}
 
       {/* Zone d'upload */}
-      <div className="border-2 border-dashed border-action/30 rounded-2xl p-6">
-        <h2 className="text-sm font-semibold text-navy mb-4">Ajouter des photos</h2>
+      <div className="border-2 border-dashed border-rouge/30 rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-noir mb-4">Ajouter des photos</h2>
 
         <div
-          className="border-2 border-dashed border-pale-blue rounded-xl p-8 text-center cursor-pointer hover:border-action transition-colors mb-4"
+          className="border-2 border-dashed border-gris-pale rounded-xl p-8 text-center cursor-pointer hover:border-rouge transition-colors mb-4"
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => { e.preventDefault(); addFiles(e.dataTransfer.files) }}
         >
-          <p className="text-mid text-sm">
+          <p className="text-gris-mid text-sm">
             Glissez des photos ou{' '}
-            <span className="text-action font-medium">cliquez pour sélectionner</span>
+            <span className="text-rouge font-medium">cliquez pour sélectionner</span>
           </p>
-          <p className="text-xs text-mid mt-1">JPG, PNG, WebP · Watermark appliqué automatiquement</p>
+          <p className="text-xs text-gris-mid mt-1">JPG, PNG, WebP · Watermark appliqué automatiquement</p>
           <input
             ref={fileInputRef}
             type="file"
@@ -819,14 +819,14 @@ export default function PhotographePage() {
             <div className="space-y-2 mb-4 max-h-48 overflow-y-auto">
               {uploadFiles.map((f, i) => (
                 <div key={i} className={`flex items-center justify-between rounded-lg px-4 py-2 ${
-                  f.status === 'done' ? 'bg-green-50 border border-green-200' : 'bg-pale-blue'
+                  f.status === 'done' ? 'bg-green-50 border border-green-200' : 'bg-gris-pale'
                 }`}>
-                  <span className="text-sm text-navy truncate flex-1 mr-2">{f.file.name}</span>
+                  <span className="text-sm text-noir truncate flex-1 mr-2">{f.file.name}</span>
                   <span className={`text-xs font-semibold ${
                     f.status === 'done' ? 'text-green-600'
                     : f.status === 'error' ? 'text-red-500'
-                    : f.status === 'uploading' ? 'text-action'
-                    : 'text-mid'
+                    : f.status === 'uploading' ? 'text-rouge'
+                    : 'text-gris-mid'
                   }`}>
                     {f.status === 'done' ? '✓ Envoyée'
                     : f.status === 'error' ? `✗ ${f.error ?? 'Erreur'}`
@@ -852,7 +852,7 @@ export default function PhotographePage() {
             {pendingCount === 0 && !uploading && doneCount === 0 && null}
 
             <div className="flex items-center justify-between">
-              <p className="text-sm text-mid">
+              <p className="text-sm text-gris-mid">
                 {doneCount} / {uploadFiles.length} envoyée{uploadFiles.length > 1 ? 's' : ''}
               </p>
               {pendingCount > 0 && !uploading && (
@@ -860,7 +860,7 @@ export default function PhotographePage() {
                   Envoyer {pendingCount} photo{pendingCount > 1 ? 's' : ''} →
                 </button>
               )}
-              {uploading && <span className="text-action text-sm">Envoi en cours...</span>}
+              {uploading && <span className="text-rouge text-sm">Envoi en cours...</span>}
             </div>
           </>
         )}

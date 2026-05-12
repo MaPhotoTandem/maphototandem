@@ -42,12 +42,12 @@ export default async function GalleriePage({ params }: Props) {
   if (!published) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold mb-4 text-navy">Photos en cours de traitement</h1>
-        <p className="text-mid mb-2">
+        <h1 className="text-2xl font-bold mb-4 text-noir">Photos en cours de traitement</h1>
+        <p className="text-gris-mid mb-2">
           Les photos de l&apos;envolée <strong>{envol}</strong> du{' '}
           <strong>{formatDate(date)}</strong> ne sont pas encore disponibles.
         </p>
-        <p className="text-mid text-sm mb-8">
+        <p className="text-gris-mid text-sm mb-8">
           Elles sont généralement publiées en soirée. Revenez plus tard!
         </p>
         <a href="/tandem" className="btn-secondary">← Retour</a>
@@ -71,12 +71,12 @@ export default async function GalleriePage({ params }: Props) {
   if (photos.length === 0) {
     return (
       <div className="max-w-6xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold mb-4 text-navy">Aucune photo trouvée</h1>
-        <p className="text-mid mb-2">
+        <h1 className="text-2xl font-bold mb-4 text-noir">Aucune photo trouvée</h1>
+        <p className="text-gris-mid mb-2">
           Aucune photo pour l&apos;envolée <strong>{envol}</strong> du{' '}
           <strong>{formatDate(date)}</strong> à {succursaleLabel}.
         </p>
-        <p className="text-mid text-sm mb-8">
+        <p className="text-gris-mid text-sm mb-8">
           Vérifiez la date et le numéro d&apos;envolée, ou revenez plus tard —
           les photos sont généralement disponibles en soirée.
         </p>
@@ -88,23 +88,23 @@ export default async function GalleriePage({ params }: Props) {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="mb-8">
-        <a href="/tandem" className="text-sm text-mid hover:text-action transition-colors mb-4 inline-block">
+        <a href="/tandem" className="text-sm text-gris-mid hover:text-rouge transition-colors mb-4 inline-block">
           ← Retour
         </a>
-        <h1 className="text-2xl font-bold text-navy">
+        <h1 className="text-2xl font-bold text-noir">
           Envolée {envol} — {formatDate(date)}
         </h1>
-        <p className="text-mid mt-1">
+        <p className="text-gris-mid mt-1">
           {succursaleLabel} · Sélectionnez les photos que vous souhaitez acheter.
         </p>
         <div className="mt-3 inline-flex flex-wrap gap-3">
-          <span className="bg-pale-blue text-navy text-sm font-semibold px-3 py-1.5 rounded-lg">
+          <span className="bg-gris-pale text-noir text-sm font-semibold px-3 py-1.5 rounded-lg">
             1re photo : {(FIRST_PHOTO_PRICE_CENTS / 100).toFixed(0)} $
           </span>
-          <span className="bg-pale-blue text-navy text-sm font-semibold px-3 py-1.5 rounded-lg">
+          <span className="bg-gris-pale text-noir text-sm font-semibold px-3 py-1.5 rounded-lg">
             Photos supplémentaires : {(ADDITIONAL_PHOTO_PRICE_CENTS / 100).toFixed(0)} $ chacune
           </span>
-          <span className="bg-gray-100 text-mid text-sm px-3 py-1.5 rounded-lg">
+          <span className="bg-gray-100 text-gris-mid text-sm px-3 py-1.5 rounded-lg">
             + TPS &amp; TVQ
           </span>
         </div>
