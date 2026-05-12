@@ -9,15 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        rouge:  '#D4252B', // CTA, boutons, accents principaux
-        noir:   '#111111', // Titres, nav, texte principal
-        creme:  '#FAF7F2', // Fond pages, cartes
-        dore:   '#9C8060', // Accent secondaire, texte mid-tone
+        rouge:       '#D4252B', // CTA, boutons, accents principaux
+        noir:        '#000000', // Titres, nav, texte principal
+        'gris-chaud': '#F5F4F1', // Fond pages, cartes
+        'gris-mid':  '#6B6B6B', // Texte secondaire
+        'rouge-pale': '#FDECEA', // Fonds accentués légers
         // Anciens noms — garder le temps de migrer les composants
-        navy:      '#111111',
-        action:    '#D4252B',
-        'pale-blue': '#FAF7F2',
-        mid:       '#9C8060',
+        navy:        '#000000',
+        action:      '#D4252B',
+        'pale-blue': '#F5F4F1',
+        mid:         '#6B6B6B',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
