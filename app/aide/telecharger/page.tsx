@@ -52,7 +52,7 @@ const ETAPES: Record<Appareil, { titre: string; etapes: string[]; note?: string 
       'L\'interface de partage iOS s\'ouvre automatiquement avec toutes tes photos.',
       'Appuie sur "Enregistrer l\'image" ou "Enregistrer X images". Toutes tes photos sont sauvegardées dans ta pellicule en une seule fois.',
     ],
-    note: 'Si le bouton "Enregistrer dans Photos" ne fonctionne pas, appuie sur "Réessayer". Si ça ne fonctionne toujours pas, des liens individuels "Photo 1", "Photo 2", etc. apparaissent juste en dessous pour télécharger chaque photo séparément.',
+    note: 'Si le bouton "Enregistrer dans Photos" n\'apparaît pas sur ton téléphone ou ne fonctionne pas, des liens individuels "Photo 1", "Photo 2", etc. sont disponibles juste en dessous. Appuie sur chaque lien, la photo s\'ouvre en plein écran. Appuie longuement sur l\'image et sélectionne "Enregistrer image(s)".',
   },
   android: {
     titre: 'Télécharger sur Android',
