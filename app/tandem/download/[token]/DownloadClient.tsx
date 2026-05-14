@@ -1,18 +1,9 @@
 'use client'
-// Composant client pour la page de téléchargement.
-// Gère : affichage des photos, "Copier le lien", téléchargement ZIP, boutons individuels.
 import { useState } from 'react'
-
-interface DownloadItem {
-  id: string
-  downloadUrl: string
-  displayUrl: string
-  filename: string
-}
 
 interface Props {
   token: string
-  downloads: DownloadItem[]
+  photoCount: number
   date: string
   envol: string
   succursaleLabel: string
@@ -21,14 +12,13 @@ interface Props {
 
 export default function DownloadClient({
   token,
-  downloads,
+  photoCount,
   date,
   envol,
   succursaleLabel,
   expiresAt,
 }: Props) {
   const [copied, setCopied] = useState(false)
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const pageUrl = typeof window !== 'undefined'
     ? window.location.href
@@ -42,8 +32,6 @@ export default function DownloadClient({
   async function handleCopyLink() {
     try {
       await navigator.clipboard.writeText(pageUrl)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 3000)
     } catch {
       const input = document.createElement('input')
       input.value = pageUrl
@@ -51,187 +39,99 @@ export default function DownloadClient({
       input.select()
       document.execCommand('copy')
       document.body.removeChild(input)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 3000)
     }
+    setCopied(true)
+    setTimeout(() => setCopied(false), 3000)
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10 sm:py-14">
+    <div className="min-h-screen bg-gris-pale flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md">
 
-      {/* En-tête */}
-      <div className="text-center mb-8">
-        <div className="w-14 h-14 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <svg className="w-7 h-7 sm:w-8 sm:h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-noir">
-          {downloads.length === 1 ? 'Votre photo est prête !' : 'Vos photos sont prêtes !'}
-        </h1>
-        <p className="text-gris-mid text-sm sm:text-base">
-          Envolée {envol} · {date} · {succursaleLabel}
-        </p>
-      </div>
-
-      {/* Instruction mobile — long press */}
-      <div className="sm:hidden bg-gris-pale border border-rouge/30 rounded-xl px-4 py-3 mb-5 flex gap-3 items-start">
-        <span className="text-xl mt-0.5">💡</span>
-        <p className="text-noir text-sm leading-snug">
-          <strong>Appuyez longuement sur une photo</strong> puis sélectionnez{' '}
-          <strong>«&nbsp;Enregistrer dans Photos&nbsp;»</strong> (iPhone) ou{' '}
-          <strong>«&nbsp;Enregistrer l&apos;image&nbsp;»</strong> (Android).<br />
-          <span className="text-gris-mid">iPhone : vos photos se trouveront dans votre pellicule · Android : dans vos Téléchargements.</span>
-        </p>
-      </div>
-
-      {/* Grille de photos */}
-      <div className={`grid gap-3 mb-6 ${downloads.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
-        {downloads.map((photo, idx) => (
-          <div key={photo.id} className="relative group rounded-xl overflow-hidden bg-gray-100 aspect-[3/2]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={photo.displayUrl}
-              alt={`Photo ${idx + 1}`}
-              className="w-full h-full object-cover"
-              loading={idx === 0 ? 'eager' : 'lazy'}
-            />
-
-            {/* Bouton agrandir — desktop uniquement */}
-            <button
-              onClick={() => setLightboxIndex(idx)}
-              className="hidden sm:flex absolute top-2 right-2 bg-black/60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center"
-              aria-label="Agrandir"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 3h6m0 0v6m0-6l-7 7M9 21H3m0 0v-6m0 6l7-7" />
-              </svg>
-            </button>
-
-            {/* Bouton télécharger individuel — desktop uniquement */}
-            <a
-              href={photo.downloadUrl}
-              download={photo.filename}
-              className="hidden sm:flex absolute bottom-2 right-2 bg-black/60 hover:bg-black/80 text-white text-xs font-medium px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity items-center gap-1.5"
-            >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Télécharger
-            </a>
-          </div>
-        ))}
-      </div>
-
-      {/* Carte actions */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 shadow-sm space-y-5">
-
-        {/* Bouton ZIP */}
-        <a
-          href={`/api/download-zip/${token}`}
-          className="w-full flex items-center justify-center gap-3 bg-rouge text-white rounded-xl px-4 py-5 font-bold text-lg hover:opacity-90 active:opacity-80 transition-opacity shadow-md"
-        >
-          <svg className="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          <span>
-            TÉLÉCHARGER TOUT EN ZIP
-            <span className="block text-sm font-normal opacity-80">
-              {downloads.length} {downloads.length === 1 ? 'photo' : 'photos'} · idéal sur ordinateur
-            </span>
-          </span>
-        </a>
-
-        {/* Avertissement expiration */}
-        <div className="bg-gris-pale border border-rouge rounded-xl px-4 py-3 text-center">
-          <p className="text-noir font-bold text-base">⏰ ATTENTION ⏰</p>
-          <p className="text-noir font-semibold text-sm mt-0.5">
-            Ce lien est valide pendant 72 heures.{' '}
-            <span className="font-normal text-gris-mid">(jusqu&apos;au {expiresFormatted})</span>
-          </p>
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <p className="text-sm text-gris-mid font-medium tracking-wide uppercase">Ma Photo Tandem</p>
         </div>
 
-        <hr className="border-gray-100" />
+        {/* Carte principale */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gris-bordure overflow-hidden">
 
-        {/* Copier le lien */}
-        <div>
-          <p className="text-sm text-gris-mid mb-2">
-            Partagez ce lien avec vos proches pour qu&apos;ils téléchargent les photos aussi :
-          </p>
-          <div className="flex gap-2">
-            <input
-              readOnly
-              value={pageUrl}
-              className="flex-1 text-xs sm:text-sm bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-gray-600 truncate focus:outline-none"
-            />
-            <button
-              onClick={handleCopyLink}
-              className={`flex-shrink-0 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-                copied ? 'bg-green-100 text-green-700' : 'bg-rouge text-white hover:opacity-90'
-              }`}
-            >
-              {copied ? '✓ Copié !' : 'Copier'}
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <p className="text-center text-sm text-gris-mid mt-8">
-        Merci d&apos;avoir choisi l&apos;équipe de Ma Photo Tandem ! 🪂 🫶
-      </p>
-
-      {/* Lightbox desktop */}
-      {lightboxIndex !== null && (
-        <div
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
-          onClick={() => setLightboxIndex(null)}
-        >
-          <button
-            className="absolute top-4 right-4 text-white bg-black/50 p-3 rounded-full"
-            onClick={() => setLightboxIndex(null)}
-            aria-label="Fermer"
-          >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          {/* Bandeau expiration */}
+          <div className="bg-rouge px-5 py-3 flex items-center gap-2.5">
+            <svg className="w-4 h-4 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-          </button>
+            <p className="text-white text-sm font-medium">
+              Lien valide jusqu&apos;au {expiresFormatted}
+            </p>
+          </div>
 
-          {lightboxIndex > 0 && (
-            <button
-              className="absolute left-4 text-white bg-black/50 p-3 rounded-full"
-              onClick={(e) => { e.stopPropagation(); setLightboxIndex(lightboxIndex - 1) }}
-              aria-label="Précédent"
+          {/* Contenu */}
+          <div className="px-6 py-8">
+
+            {/* Titre */}
+            <h1 className="text-2xl font-bold text-noir mb-1">
+              {photoCount === 1 ? 'Votre photo est prête' : `Vos ${photoCount} photos sont prêtes`}
+            </h1>
+            <p className="text-gris-mid text-sm mb-8">
+              Envolée {envol} · {date} · {succursaleLabel}
+            </p>
+
+            {/* Bouton téléchargement */}
+            <a
+              href={`/api/download-zip/${token}`}
+              className="w-full flex items-center justify-center gap-3 bg-rouge hover:bg-gris-mid text-white rounded-xl px-4 py-4 font-bold text-base transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-            </button>
-          )}
+              Télécharger mes photos
+            </a>
 
-          {lightboxIndex < downloads.length - 1 && (
-            <button
-              className="absolute right-4 text-white bg-black/50 p-3 rounded-full"
-              onClick={(e) => { e.stopPropagation(); setLightboxIndex(lightboxIndex + 1) }}
-              aria-label="Suivant"
-            >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          )}
+            <p className="text-center text-xs text-gris-mid mt-3">
+              {photoCount === 1 ? '1 photo' : `${photoCount} photos`} · fichier ZIP
+            </p>
 
-          <div className="max-w-4xl max-h-[90vh] px-16" onClick={(e) => e.stopPropagation()}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={downloads[lightboxIndex].displayUrl}
-              alt={`Photo ${lightboxIndex + 1}`}
-              className="max-w-full max-h-[90vh] object-contain rounded-lg"
-            />
+            {/* Séparateur */}
+            <div className="flex items-center gap-3 my-6">
+              <div className="flex-1 h-px bg-gris-bordure" />
+              <span className="text-xs text-gris-mid">Partager ce lien</span>
+              <div className="flex-1 h-px bg-gris-bordure" />
+            </div>
+
+            {/* Copier le lien */}
+            <p className="text-sm text-gris-mid mb-3">
+              Vos proches peuvent aussi télécharger les photos grâce à ce lien :
+            </p>
+            <div className="flex gap-2">
+              <input
+                readOnly
+                value={pageUrl}
+                className="flex-1 text-xs bg-gris-pale border border-gris-bordure rounded-lg px-3 py-2.5 text-gris-mid truncate focus:outline-none"
+              />
+              <button
+                onClick={handleCopyLink}
+                className={`flex-shrink-0 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                  copied
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-noir text-white hover:bg-gris-mid'
+                }`}
+              >
+                {copied ? '✓ Copié' : 'Copier'}
+              </button>
+            </div>
+
           </div>
         </div>
-      )}
+
+        {/* Pied de page */}
+        <p className="text-center text-xs text-gris-mid mt-6">
+          Parachute Montréal · Rive-Sud (Farnham) &amp; Rive-Nord (St-Esprit)
+        </p>
+
+      </div>
     </div>
   )
 }
