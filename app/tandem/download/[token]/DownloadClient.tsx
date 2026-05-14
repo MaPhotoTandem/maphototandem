@@ -53,6 +53,7 @@ export default function DownloadClient({
 
   async function handleSharePhotos() {
     setShareStatus('loading')
+
     try {
       const files = await Promise.all(
         downloads.map(async (photo, idx) => {
@@ -142,6 +143,14 @@ export default function DownloadClient({
                       </svg>
                       Chargement des photos…
                     </>
+                  ) : shareStatus === 'error' ? (
+                    <>
+                      <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                      Réessayer
+                    </>
                   ) : (
                     <>
                       <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -154,7 +163,7 @@ export default function DownloadClient({
                 </button>
                 {shareStatus === 'error' && (
                   <p className="text-xs text-rouge mt-2 text-center">
-                    Une erreur est survenue. Utilise les liens individuels plus bas pour télécharger tes photos une par une.
+                    Une erreur est survenue. Réessaie, ou utilise les liens individuels plus bas pour télécharger tes photos une par une.
                   </p>
                 )}
                 <p className="text-center text-xs text-gris-mid mt-2">
