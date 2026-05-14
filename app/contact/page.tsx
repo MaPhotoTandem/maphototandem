@@ -39,7 +39,11 @@ export default function ContactPage() {
       <div className="mb-10">
         <h1 className="text-3xl sm:text-4xl font-bold text-noir mb-3">Nous contacter</h1>
         <p className="text-gris-mid text-base">
-          Une question sur tes photos, un lien expiré ou autre chose ? On est là.
+          Une question ? Avant d&apos;écrire, jette un coup d&apos;œil à notre{' '}
+          <a href="/faq" className="text-rouge font-semibold hover:underline">FAQ</a>
+          {' '}ou à notre{' '}
+          <a href="/aide/telecharger" className="text-rouge font-semibold hover:underline">guide de téléchargement</a>.
+          {' '}Ta réponse s&apos;y trouve peut-être ! Sinon, on est là pour toi.
         </p>
       </div>
 
@@ -126,15 +130,11 @@ export default function ContactPage() {
 
         {/* Infos de contact */}
         <div className="md:col-span-2 space-y-6">
-          <div className="bg-rouge-pale border border-rouge rounded-2xl p-6">
-            <h2 className="text-base font-bold text-noir mb-2">Avant d&apos;écrire</h2>
-            <p className="text-sm text-gris-mid mb-4">
-              Savais-tu qu&apos;il y a des outils pour t&apos;aider ? Visite notre{' '}
-              <a href="/faq" className="text-rouge font-semibold hover:underline">FAQ</a>
-              {' '}ou notre{' '}
-              <a href="/aide/telecharger" className="text-rouge font-semibold hover:underline">guide de téléchargement</a>.
-            </p>
+          <div className="bg-gris-pale rounded-2xl p-6">
+            <h2 className="text-base font-bold text-noir mb-2">Délai de réponse</h2>
+            <p className="text-sm text-gris-mid">On répond le plus rapidement possible, généralement entre 24h et 48h. En juillet et en août, les délais peuvent être un peu plus longs en raison de la haute saison.</p>
           </div>
+
           <div className="bg-gris-pale rounded-2xl p-6">
             <h2 className="text-base font-bold text-noir mb-4">Informations</h2>
             <div className="space-y-3 text-sm">
@@ -164,11 +164,6 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="bg-gris-pale rounded-2xl p-6">
-            <h2 className="text-base font-bold text-noir mb-2">Délai de réponse</h2>
-            <p className="text-sm text-gris-mid">On répond le plus rapidement possible, généralement entre 24h et 48h. En juillet et en août, les délais peuvent être un peu plus longs en raison de la haute saison.</p>
           </div>
 
         </div>
