@@ -62,7 +62,7 @@ const ETAPES: Record<Appareil, { titre: string; etapes: string[]; note?: string 
       'L\'interface de partage Android s\'ouvre avec toutes tes photos.',
       'Sélectionne "Enregistrer" ou "Enregistrer dans la galerie". Tes photos sont sauvegardées directement.',
     ],
-    note: 'Si le bouton "Enregistrer dans Photos" n\'apparaît pas sur ton téléphone, des liens individuels "Photo 1", "Photo 2", etc. sont disponibles juste en dessous. Appuie sur chaque lien, la photo s\'ouvre en plein écran. Appuie longuement sur l\'image et sélectionne "Enregistrer dans la galerie" ou "Télécharger l\'image".',
+    note: 'Si le bouton "Enregistrer dans Photos" n\'apparaît pas sur ton téléphone ou ne fonctionne pas, des liens individuels "Photo 1", "Photo 2", etc. sont disponibles juste en dessous. Appuie sur chaque lien, la photo s\'ouvre en plein écran. Appuie longuement sur l\'image et sélectionne "Enregistrer dans la galerie" ou "Télécharger l\'image".',
   },
   mac: {
     titre: 'Télécharger sur Mac',
