@@ -169,7 +169,7 @@ export default function DownloadClient({
                   </p>
                 )}
                 <p className="text-center text-xs text-gris-mid mt-2">
-                  {photoCount === 1 ? '1 photo' : `${photoCount} photos`} · sauvegarde directe dans ta pellicule
+                  Recommandé pour mobile
                 </p>
               </div>
             )}
@@ -187,13 +187,11 @@ export default function DownloadClient({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                   d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              {shareSupported ? 'Télécharger en ZIP (ordinateur)' : 'Télécharger mes photos'}
+              Télécharger en ZIP
             </a>
-            {!shareSupported && (
-              <p className="text-center text-xs text-gris-mid mt-2 mb-2">
-                {photoCount === 1 ? '1 photo' : `${photoCount} photos`} · fichier ZIP
-              </p>
-            )}
+            <p className="text-center text-xs text-gris-mid mt-2 mb-2">
+              Recommandé pour ordinateur
+            </p>
 
             {/* Liens individuels — fallback mobile si Web Share non supporté ou en erreur */}
             {isMobile && (shareSupported === false || shareStatus === 'error') && (
