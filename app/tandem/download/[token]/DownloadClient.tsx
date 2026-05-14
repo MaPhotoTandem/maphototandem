@@ -18,6 +18,138 @@ interface Props {
   expiresAt: string
 }
 
+type Appareil = 'iphone' | 'android' | 'mac' | 'pc'
+
+const GUIDE: Record<Appareil, { label: string; etapes: string[]; note?: string }> = {
+  iphone: {
+    label: 'iPhone',
+    etapes: [
+      'Sur la page de téléchargement, appuie sur le bouton rouge "Enregistrer dans Photos".',
+      'Le téléphone charge tes photos pendant quelques secondes. Le bouton affiche "Chargement des photos…".',
+      "L'interface de partage iOS s'ouvre automatiquement avec toutes tes photos.",
+      'Appuie sur "Enregistrer l\'image" ou "Enregistrer X images". Toutes tes photos sont sauvegardées dans ta pellicule en une seule fois.',
+    ],
+    note: 'Si le bouton "Enregistrer dans Photos" n\'apparaît pas sur ton téléphone ou ne fonctionne pas, des liens individuels "Photo 1", "Photo 2", etc. sont disponibles juste en dessous. Appuie sur chaque lien, la photo s\'ouvre en plein écran. Appuie longuement sur l\'image et sélectionne "Enregistrer image(s)".',
+  },
+  android: {
+    label: 'Android',
+    etapes: [
+      'Sur la page de téléchargement, appuie sur le bouton rouge "Enregistrer dans Photos".',
+      'Le téléphone charge tes photos pendant quelques secondes. Le bouton affiche "Chargement des photos…".',
+      "L'interface de partage Android s'ouvre avec toutes tes photos.",
+      'Sélectionne "Enregistrer" ou "Enregistrer dans la galerie". Tes photos sont sauvegardées directement.',
+    ],
+    note: 'Si le bouton "Enregistrer dans Photos" n\'apparaît pas sur ton téléphone ou ne fonctionne pas, des liens individuels "Photo 1", "Photo 2", etc. sont disponibles juste en dessous. Appuie sur chaque lien, la photo s\'ouvre en plein écran. Appuie longuement sur l\'image et sélectionne "Enregistrer dans la galerie" ou "Télécharger l\'image".',
+  },
+  mac: {
+    label: 'Mac',
+    etapes: [
+      'Sur la page de téléchargement, clique sur le bouton "Télécharger en ZIP".',
+      'Le fichier ZIP se télécharge dans ton dossier Téléchargements.',
+      'Une fois terminé, ouvre ton dossier Téléchargements depuis le Finder ou la barre d\'outils de ton navigateur.',
+      'Double-clique sur le fichier ZIP : macOS l\'extrait automatiquement et crée un dossier avec toutes tes photos.',
+      'Tes photos sont prêtes ! Tu peux les glisser dans l\'app Photos, iCloud Drive, ou n\'importe quel autre endroit.',
+    ],
+  },
+  pc: {
+    label: 'PC Windows',
+    etapes: [
+      'Sur la page de téléchargement, clique sur le bouton "Télécharger en ZIP".',
+      'Le fichier ZIP se télécharge. Une barre de progression apparaît en bas de ton navigateur (Chrome ou Edge) ou dans les notifications.',
+      'Une fois terminé, clique sur le fichier dans la barre du navigateur, ou ouvre l\'Explorateur de fichiers et va dans Téléchargements.',
+      'Fais un clic droit sur le fichier ZIP et sélectionne "Extraire tout".',
+      'Choisis un dossier de destination, par exemple le Bureau, puis clique sur "Extraire".',
+      'Tes photos apparaissent dans le dossier choisi, prêtes à être utilisées.',
+    ],
+    note: 'Sur Windows 11, tu peux aussi double-cliquer sur le fichier ZIP pour l\'ouvrir directement, puis faire glisser tes photos où tu veux.',
+  },
+}
+
+function HelpModal({ onClose }: { onClose: () => void }) {
+  const [actif, setActif] = useState<Appareil>('iphone')
+  const guide = GUIDE[actif]
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-noir/60" onClick={onClose} />
+
+      {/* Contenu */}
+      <div className="relative z-10 bg-white w-full sm:max-w-lg rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+
+        {/* En-tête */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gris-bordure flex-shrink-0">
+          <h2 className="font-bold text-noir text-base">Guide de téléchargement</h2>
+          <button
+            onClick={onClose}
+            className="text-gris-mid hover:text-noir transition-colors p-1"
+            aria-label="Fermer"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Onglets */}
+        <div className="flex gap-2 px-5 pt-4 pb-2 flex-shrink-0 flex-wrap">
+          {(Object.keys(GUIDE) as Appareil[]).map((id) => (
+            <button
+              key={id}
+              onClick={() => setActif(id)}
+              className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors ${
+                actif === id
+                  ? 'bg-rouge text-white'
+                  : 'bg-gris-pale border border-gris-bordure text-gris-mid hover:text-noir'
+              }`}
+            >
+              {GUIDE[id].label}
+            </button>
+          ))}
+        </div>
+
+        {/* Étapes — scrollable */}
+        <div className="overflow-y-auto px-5 py-4 flex-1">
+          <ol className="space-y-4">
+            {guide.etapes.map((etape, i) => (
+              <li key={i} className="flex gap-3">
+                <span className="flex-shrink-0 w-6 h-6 bg-rouge text-white rounded-full flex items-center justify-center text-xs font-bold">
+                  {i + 1}
+                </span>
+                <p className="text-sm text-gris-mid leading-relaxed pt-0.5">{etape}</p>
+              </li>
+            ))}
+          </ol>
+
+          {guide.note && (
+            <div className="mt-5 bg-gris-pale border border-gris-bordure rounded-xl px-4 py-3">
+              <p className="text-sm text-gris-mid leading-relaxed">
+                <span className="font-semibold text-noir">Astuce : </span>
+                {guide.note}
+              </p>
+            </div>
+          )}
+
+          <p className="text-center text-xs text-gris-mid mt-5">
+            Toujours bloqué ?{' '}
+            <a href="/contact" className="text-rouge hover:underline">Contacte-nous</a>.
+          </p>
+        </div>
+
+        {/* Bouton fermer — grand, accessible sur mobile */}
+        <div className="px-5 py-4 border-t border-gris-bordure flex-shrink-0">
+          <button
+            onClick={onClose}
+            className="w-full py-3.5 rounded-xl bg-noir text-white font-bold text-sm hover:bg-gris-mid transition-colors"
+          >
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function DownloadClient({
   token,
   downloads,
@@ -30,6 +162,7 @@ export default function DownloadClient({
   const [shareSupported, setShareSupported] = useState<boolean | null>(null)
   const [shareStatus, setShareStatus] = useState<'idle' | 'loading' | 'error'>('idle')
   const [isMobile, setIsMobile] = useState(false)
+  const [showHelp, setShowHelp] = useState(false)
 
   const photoCount = downloads.length
 
@@ -97,6 +230,7 @@ export default function DownloadClient({
 
   return (
     <div className="min-h-screen bg-gris-pale flex items-center justify-center px-4 py-12">
+      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
       <div className="w-full max-w-md">
 
         {/* Logo */}
@@ -255,11 +389,23 @@ export default function DownloadClient({
         </div>
 
         {/* Pied de page */}
-        <div className="text-center mt-6 space-y-1">
-          <a href="/aide/telecharger" className="text-sm text-gris-mid hover:text-noir underline underline-offset-2 transition-colors">
-            Besoin d&apos;aide pour télécharger ?
-          </a>
-          <p className="text-xs text-gris-mid">
+        <div className="mt-5 space-y-3">
+          <button
+            onClick={() => setShowHelp(true)}
+            className="w-full flex items-center justify-between bg-white border border-gris-bordure hover:border-noir rounded-xl px-5 py-4 transition-colors group"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-xl">📥</span>
+              <div className="text-left">
+                <p className="text-sm font-semibold text-noir">Besoin d&apos;aide pour télécharger ?</p>
+                <p className="text-xs text-gris-mid">Guide iPhone · Android · Mac · PC</p>
+              </div>
+            </div>
+            <svg className="w-4 h-4 text-gris-mid group-hover:text-noir transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          <p className="text-xs text-gris-mid text-center">
             Parachute Montréal · Rive-Sud (Farnham) &amp; Rive-Nord (St-Esprit)
           </p>
         </div>
