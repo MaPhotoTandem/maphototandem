@@ -127,9 +127,14 @@ export default function DownloadClient({
         </div>
 
         {/* Pied de page */}
-        <p className="text-center text-xs text-gris-mid mt-6">
-          Parachute Montréal · Rive-Sud (Farnham) &amp; Rive-Nord (St-Esprit)
-        </p>
+        <div className="text-center mt-6 space-y-1">
+          <a href="/aide/telecharger" className="text-sm text-gris-mid hover:text-noir underline underline-offset-2 transition-colors">
+            Besoin d&apos;aide pour télécharger ?
+          </a>
+          <p className="text-xs text-gris-mid">
+            Parachute Montréal · Rive-Sud (Farnham) &amp; Rive-Nord (St-Esprit)
+          </p>
+        </div>
 
       </div>
     </div>

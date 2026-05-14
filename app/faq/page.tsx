@@ -5,6 +5,10 @@ import HelpBubble from '@/components/HelpBubble'
 
 const FAQ: { q: string; a: React.ReactNode }[] = [
   {
+    q: 'Comment télécharger mes photos sur mon téléphone ou mon ordinateur ?',
+    a: <>Ça dépend de ton appareil. Consulte notre <a href="/aide/telecharger" className="text-rouge hover:underline">guide de téléchargement</a> — tu y trouveras les étapes détaillées pour iPhone, Android, Mac et PC.</>,
+  },
+  {
     q: 'Comment vais-je recevoir mes photos ?',
     a: 'Après ton achat, tu es automatiquement redirigé vers ton lien de téléchargement. Ce lien t\'est également envoyé par courriel afin de pouvoir y accéder à tout moment pendant les 72 heures suivant ton achat.',
   },

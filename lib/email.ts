@@ -144,6 +144,12 @@ export function buildEmailHtml({
           <!-- Pied de page -->
           <tr>
             <td style="background:#F8F8F8;border-top:1px solid #E0E0E0;padding:20px 32px;text-align:center;">
+              <p style="margin:0 0 8px;">
+                <a href="${process.env.NEXT_PUBLIC_BASE_URL ?? 'https://maphototandem.com'}/aide/telecharger"
+                   style="color:#4A4A4A;font-size:12px;text-decoration:underline;">
+                  Besoin d'aide pour télécharger ?
+                </a>
+              </p>
               <p style="color:#888888;font-size:12px;margin:0;line-height:1.6;">
                 Ma Photo Tandem · Parachute Montréal<br />
                 Rive-Sud (Farnham) &amp; Rive-Nord (St-Esprit)
