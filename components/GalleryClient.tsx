@@ -174,8 +174,8 @@ export default function GalleryClient({
 
               {/* Coche de sélection */}
               {isSelected && (
-                <div className="absolute inset-0 bg-gris-mid/15 flex items-start justify-end p-2">
-                  <div className="bg-rouge rounded-full w-7 h-7 flex items-center justify-center shadow">
+                <div className="absolute inset-0 bg-gris-mid/15">
+                  <div className="absolute top-1.5 left-1.5 bg-rouge rounded-full w-7 h-7 flex items-center justify-center shadow">
                     <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
