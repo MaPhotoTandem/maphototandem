@@ -29,6 +29,7 @@ export default function DownloadClient({
   const [copied, setCopied] = useState(false)
   const [shareSupported, setShareSupported] = useState<boolean | null>(null)
   const [shareStatus, setShareStatus] = useState<'idle' | 'loading' | 'error'>('idle')
+  const [isMobile, setIsMobile] = useState(false)
 
   const photoCount = downloads.length
 
@@ -41,11 +42,12 @@ export default function DownloadClient({
     weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit',
   })
 
-  // Vérifier le support du Web Share API avec fichiers au chargement
+  // Détecter mobile et support Web Share au chargement
   useEffect(() => {
+    const mobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 768
+    setIsMobile(mobile)
     const testFile = new File([''], 'test.jpg', { type: 'image/jpeg' })
     setShareSupported(
-      typeof navigator !== 'undefined' &&
       !!navigator.canShare &&
       navigator.canShare({ files: [testFile] })
     )
@@ -127,8 +129,8 @@ export default function DownloadClient({
               Envolée {envol} · {date} · {succursaleLabel}
             </p>
 
-            {/* Bouton Web Share — mobile moderne */}
-            {shareSupported && (
+            {/* Bouton Web Share — mobile moderne uniquement */}
+            {isMobile && shareSupported && (
               <div className="mb-4">
                 <button
                   onClick={handleSharePhotos}
@@ -176,7 +178,7 @@ export default function DownloadClient({
             <a
               href={`/api/download-zip/${token}`}
               className={`w-full flex items-center justify-center gap-3 rounded-xl px-4 py-4 font-bold text-base transition-colors ${
-                shareSupported
+                isMobile && shareSupported
                   ? 'bg-gris-pale border border-gris-bordure text-gris-mid hover:border-noir hover:text-noir text-sm'
                   : 'bg-rouge hover:bg-gris-mid text-white'
               }`}
@@ -193,8 +195,8 @@ export default function DownloadClient({
               </p>
             )}
 
-            {/* Liens individuels — fallback si Web Share non supporté ou en erreur */}
-            {(shareSupported === false || shareStatus === 'error') && (
+            {/* Liens individuels — fallback mobile si Web Share non supporté ou en erreur */}
+            {isMobile && (shareSupported === false || shareStatus === 'error') && (
               <div className="bg-gris-pale border border-gris-bordure rounded-xl p-4 mt-4">
                 <p className="text-xs font-semibold text-noir mb-3 uppercase tracking-wide">
                   Sur téléphone
