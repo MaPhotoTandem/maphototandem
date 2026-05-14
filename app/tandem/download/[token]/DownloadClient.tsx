@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface DownloadItem {
   id: string
@@ -27,6 +27,10 @@ export default function DownloadClient({
   expiresAt,
 }: Props) {
   const [copied, setCopied] = useState(false)
+  const [shareSupported, setShareSupported] = useState<boolean | null>(null)
+  const [shareStatus, setShareStatus] = useState<'idle' | 'loading' | 'error'>('idle')
+
+  const photoCount = downloads.length
 
   const pageUrl = typeof window !== 'undefined'
     ? window.location.href
@@ -37,7 +41,41 @@ export default function DownloadClient({
     weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit',
   })
 
-  const photoCount = downloads.length
+  // Vérifier le support du Web Share API avec fichiers au chargement
+  useEffect(() => {
+    const testFile = new File([''], 'test.jpg', { type: 'image/jpeg' })
+    setShareSupported(
+      typeof navigator !== 'undefined' &&
+      !!navigator.canShare &&
+      navigator.canShare({ files: [testFile] })
+    )
+  }, [])
+
+  async function handleSharePhotos() {
+    setShareStatus('loading')
+    try {
+      const files = await Promise.all(
+        downloads.map(async (photo, idx) => {
+          const response = await fetch(photo.displayUrl)
+          const blob = await response.blob()
+          return new File([blob], `photo-${idx + 1}.jpg`, { type: 'image/jpeg' })
+        })
+      )
+      await navigator.share({
+        files,
+        title: 'Mes photos Ma Photo Tandem',
+      })
+      setShareStatus('idle')
+    } catch (err) {
+      // L'utilisateur a annulé — pas une vraie erreur
+      if (err instanceof Error && err.name === 'AbortError') {
+        setShareStatus('idle')
+      } else {
+        console.error('Erreur Web Share:', err)
+        setShareStatus('error')
+      }
+    }
+  }
 
   async function handleCopyLink() {
     try {
@@ -88,49 +126,92 @@ export default function DownloadClient({
               Envolée {envol} · {date} · {succursaleLabel}
             </p>
 
-            {/* Bouton ZIP — idéal ordinateur */}
+            {/* Bouton Web Share — mobile moderne */}
+            {shareSupported && (
+              <div className="mb-4">
+                <button
+                  onClick={handleSharePhotos}
+                  disabled={shareStatus === 'loading'}
+                  className="w-full flex items-center justify-center gap-3 bg-rouge hover:bg-gris-mid disabled:opacity-60 text-white rounded-xl px-4 py-4 font-bold text-base transition-colors"
+                >
+                  {shareStatus === 'loading' ? (
+                    <>
+                      <svg className="w-5 h-5 animate-spin flex-shrink-0" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                      </svg>
+                      Chargement des photos…
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      Enregistrer dans Photos
+                    </>
+                  )}
+                </button>
+                {shareStatus === 'error' && (
+                  <p className="text-xs text-rouge mt-2 text-center">
+                    Une erreur est survenue. Utilise les liens individuels ci-dessous.
+                  </p>
+                )}
+                <p className="text-center text-xs text-gris-mid mt-2">
+                  {photoCount === 1 ? '1 photo' : `${photoCount} photos`} · sauvegarde directe dans ta pellicule
+                </p>
+              </div>
+            )}
+
+            {/* Bouton ZIP — toujours visible, mis en retrait sur mobile si Web Share dispo */}
             <a
               href={`/api/download-zip/${token}`}
-              className="w-full flex items-center justify-center gap-3 bg-rouge hover:bg-gris-mid text-white rounded-xl px-4 py-4 font-bold text-base transition-colors"
+              className={`w-full flex items-center justify-center gap-3 rounded-xl px-4 py-4 font-bold text-base transition-colors ${
+                shareSupported
+                  ? 'bg-gris-pale border border-gris-bordure text-gris-mid hover:border-noir hover:text-noir text-sm'
+                  : 'bg-rouge hover:bg-gris-mid text-white'
+              }`}
             >
               <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                   d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              Télécharger mes photos
+              {shareSupported ? 'Télécharger en ZIP (ordinateur)' : 'Télécharger mes photos'}
             </a>
-            <p className="text-center text-xs text-gris-mid mt-2 mb-6">
-              {photoCount === 1 ? '1 photo' : `${photoCount} photos`} · fichier ZIP · idéal sur ordinateur
-            </p>
+            {!shareSupported && (
+              <p className="text-center text-xs text-gris-mid mt-2 mb-2">
+                {photoCount === 1 ? '1 photo' : `${photoCount} photos`} · fichier ZIP
+              </p>
+            )}
 
-            {/* Section mobile — liens individuels */}
-            <div className="bg-gris-pale border border-gris-bordure rounded-xl p-4">
-              <p className="text-xs font-semibold text-noir mb-3 uppercase tracking-wide">
-                Sur iPhone ou Android
-              </p>
-              <p className="text-xs text-gris-mid mb-4 leading-relaxed">
-                Appuie sur chaque photo, elle s&apos;ouvre en plein écran. Appuie longuement sur l&apos;image → <strong>Enregistrer dans Photos</strong>.
-              </p>
-              <div className="space-y-2">
-                {downloads.map((photo, idx) => (
-                  <a
-                    key={photo.id}
-                    href={photo.displayUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-between bg-white border border-gris-bordure hover:border-noir rounded-lg px-4 py-3 transition-colors"
-                  >
-                    <span className="text-sm font-medium text-noir">
-                      Photo {idx + 1}
-                    </span>
-                    <svg className="w-4 h-4 text-gris-mid" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </a>
-                ))}
+            {/* Liens individuels — fallback si Web Share non supporté */}
+            {shareSupported === false && (
+              <div className="bg-gris-pale border border-gris-bordure rounded-xl p-4 mt-4">
+                <p className="text-xs font-semibold text-noir mb-3 uppercase tracking-wide">
+                  Sur téléphone
+                </p>
+                <p className="text-xs text-gris-mid mb-4 leading-relaxed">
+                  Appuie sur chaque photo, elle s&apos;ouvre en plein écran. Appuie longuement → <strong>Enregistrer dans Photos</strong>.
+                </p>
+                <div className="space-y-2">
+                  {downloads.map((photo, idx) => (
+                    <a
+                      key={photo.id}
+                      href={photo.displayUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-between bg-white border border-gris-bordure hover:border-noir rounded-lg px-4 py-3 transition-colors"
+                    >
+                      <span className="text-sm font-medium text-noir">Photo {idx + 1}</span>
+                      <svg className="w-4 h-4 text-gris-mid" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Séparateur */}
             <div className="flex items-center gap-3 my-6">

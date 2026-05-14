@@ -47,13 +47,12 @@ const ETAPES: Record<Appareil, { titre: string; etapes: string[]; note?: string 
   iphone: {
     titre: 'Télécharger sur iPhone',
     etapes: [
-      'Sur la page de téléchargement, descends jusqu\'à la section "Sur iPhone ou Android".',
-      'Appuie sur "Photo 1" — la photo s\'ouvre en plein écran dans Safari.',
-      'Appuie longuement sur la photo jusqu\'à ce qu\'un menu apparaisse.',
-      'Sélectionne "Enregistrer dans Photos" — la photo est maintenant dans ta pellicule.',
-      'Reviens en arrière et répète pour chaque photo.',
+      'Sur la page de téléchargement, appuie sur le bouton rouge "Enregistrer dans Photos".',
+      'Le téléphone charge les photos quelques secondes — une barre de chargement apparaît.',
+      'L\'interface de partage iOS s\'ouvre avec toutes tes photos.',
+      'Appuie sur "Enregistrer l\'image" ou "Enregistrer X images" — toutes tes photos sont sauvegardées dans ta pellicule en une seule fois.',
     ],
-    note: 'N\'utilise pas le bouton "Télécharger mes photos" (ZIP) sur iPhone — le format ZIP est difficile à ouvrir sur mobile. Les boutons "Photo 1", "Photo 2", etc. sont faits pour toi.',
+    note: 'N\'utilise pas le bouton ZIP sur iPhone — il est fait pour les ordinateurs. Si le bouton "Enregistrer dans Photos" n\'apparaît pas, utilise les liens individuels "Photo 1", "Photo 2", etc. juste en dessous.',
   },
   android: {
     titre: 'Télécharger sur Android',
