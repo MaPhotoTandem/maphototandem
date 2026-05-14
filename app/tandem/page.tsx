@@ -165,7 +165,7 @@ function FlightFinder({ onClose }: { onClose: () => void }) {
           {noResult && step === 'name' && (
             <div className="pl-11">
               <p className="text-sm text-red-500">
-                Aucune envolée trouvée pour ce prénom. Vérifiez la date, le centre et le prénom. Essayez le nom de famille. Pour de l&apos;aide, contactez-nous à{' '}
+                Aucune envolée trouvée. Vérifiez la date et le centre, puis essayez votre nom de famille ou les variantes les plus communes de votre prénom (ex : Marc / Mark). Pour de l&apos;aide, contactez-nous à{' '}
                 <a
                   href="mailto:maphototandem@parachutemontreal.com"
                   className="underline"
