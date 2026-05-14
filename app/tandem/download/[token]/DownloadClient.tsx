@@ -154,7 +154,7 @@ export default function DownloadClient({
                 </button>
                 {shareStatus === 'error' && (
                   <p className="text-xs text-rouge mt-2 text-center">
-                    Une erreur est survenue. Utilise les liens individuels ci-dessous.
+                    Une erreur est survenue. Utilise les liens individuels plus bas pour télécharger tes photos une par une.
                   </p>
                 )}
                 <p className="text-center text-xs text-gris-mid mt-2">
@@ -184,8 +184,8 @@ export default function DownloadClient({
               </p>
             )}
 
-            {/* Liens individuels — fallback si Web Share non supporté */}
-            {shareSupported === false && (
+            {/* Liens individuels — fallback si Web Share non supporté ou en erreur */}
+            {(shareSupported === false || shareStatus === 'error') && (
               <div className="bg-gris-pale border border-gris-bordure rounded-xl p-4 mt-4">
                 <p className="text-xs font-semibold text-noir mb-3 uppercase tracking-wide">
                   Sur téléphone
