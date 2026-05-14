@@ -330,7 +330,8 @@ export default function HomePage() {
       </form>
 
       <p className="mt-4 text-sm text-gris-mid text-center max-w-sm px-4">
-        Les photos sont disponibles le soir même de votre saut et pendant 30 jours.
+        Les photos sont disponibles le soir même de votre saut et pendant 30 jours. Pour les photos d&apos;il y a plus de 30 jours,{' '}
+        <a href="/contact" className="text-rouge hover:underline">contacte-nous</a> directement.
       </p>
 
       {/* Bouton flottant + menu d'aide */}
