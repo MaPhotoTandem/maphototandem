@@ -47,14 +47,13 @@ const ETAPES: Record<Appareil, { titre: string; etapes: string[]; note?: string 
   iphone: {
     titre: 'Télécharger sur iPhone',
     etapes: [
-      'Sur la page de téléchargement, appuie sur le bouton rouge "Télécharger mes photos".',
-      'Safari te demande si tu veux télécharger le fichier ZIP — appuie sur "Télécharger".',
-      'Une fois le téléchargement terminé, tu verras une petite icône de téléchargement en haut à droite dans Safari. Appuie dessus.',
-      'Appuie sur le fichier ZIP dans la liste — il s\'ouvre automatiquement dans l\'app "Fichiers".',
-      'Dans l\'app Fichiers, le dossier contenant tes photos apparaît. Appuie sur une photo pour l\'ouvrir.',
-      'Appuie longuement sur la photo → "Enregistrer dans Photos". Répète pour chaque photo.',
+      'Sur la page de téléchargement, descends jusqu\'à la section "Sur iPhone ou Android".',
+      'Appuie sur "Photo 1" — la photo s\'ouvre en plein écran dans Safari.',
+      'Appuie longuement sur la photo jusqu\'à ce qu\'un menu apparaisse.',
+      'Sélectionne "Enregistrer dans Photos" — la photo est maintenant dans ta pellicule.',
+      'Reviens en arrière et répète pour chaque photo.',
     ],
-    note: 'Tu peux aussi sélectionner plusieurs photos en même temps en appuyant sur "Sélectionner" en haut à droite de l\'app Fichiers, puis cocher toutes tes photos → Partager → Enregistrer les images.',
+    note: 'N\'utilise pas le bouton "Télécharger mes photos" (ZIP) sur iPhone — le format ZIP est difficile à ouvrir sur mobile. Les boutons "Photo 1", "Photo 2", etc. sont faits pour toi.',
   },
   android: {
     titre: 'Télécharger sur Android',

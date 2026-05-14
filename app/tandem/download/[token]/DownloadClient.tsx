@@ -1,9 +1,17 @@
 'use client'
+
 import { useState } from 'react'
+
+interface DownloadItem {
+  id: string
+  downloadUrl: string
+  displayUrl: string
+  filename: string
+}
 
 interface Props {
   token: string
-  photoCount: number
+  downloads: DownloadItem[]
   date: string
   envol: string
   succursaleLabel: string
@@ -12,7 +20,7 @@ interface Props {
 
 export default function DownloadClient({
   token,
-  photoCount,
+  downloads,
   date,
   envol,
   succursaleLabel,
@@ -28,6 +36,8 @@ export default function DownloadClient({
   const expiresFormatted = expiresDate.toLocaleDateString('fr-CA', {
     weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit',
   })
+
+  const photoCount = downloads.length
 
   async function handleCopyLink() {
     try {
@@ -78,7 +88,7 @@ export default function DownloadClient({
               Envolée {envol} · {date} · {succursaleLabel}
             </p>
 
-            {/* Bouton téléchargement */}
+            {/* Bouton ZIP — idéal ordinateur */}
             <a
               href={`/api/download-zip/${token}`}
               className="w-full flex items-center justify-center gap-3 bg-rouge hover:bg-gris-mid text-white rounded-xl px-4 py-4 font-bold text-base transition-colors"
@@ -89,10 +99,38 @@ export default function DownloadClient({
               </svg>
               Télécharger mes photos
             </a>
-
-            <p className="text-center text-xs text-gris-mid mt-3">
-              {photoCount === 1 ? '1 photo' : `${photoCount} photos`} · fichier ZIP
+            <p className="text-center text-xs text-gris-mid mt-2 mb-6">
+              {photoCount === 1 ? '1 photo' : `${photoCount} photos`} · fichier ZIP · idéal sur ordinateur
             </p>
+
+            {/* Section mobile — liens individuels */}
+            <div className="bg-gris-pale border border-gris-bordure rounded-xl p-4">
+              <p className="text-xs font-semibold text-noir mb-3 uppercase tracking-wide">
+                Sur iPhone ou Android
+              </p>
+              <p className="text-xs text-gris-mid mb-4 leading-relaxed">
+                Appuie sur chaque photo, elle s&apos;ouvre en plein écran. Appuie longuement sur l&apos;image → <strong>Enregistrer dans Photos</strong>.
+              </p>
+              <div className="space-y-2">
+                {downloads.map((photo, idx) => (
+                  <a
+                    key={photo.id}
+                    href={photo.displayUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-between bg-white border border-gris-bordure hover:border-noir rounded-lg px-4 py-3 transition-colors"
+                  >
+                    <span className="text-sm font-medium text-noir">
+                      Photo {idx + 1}
+                    </span>
+                    <svg className="w-4 h-4 text-gris-mid" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            </div>
 
             {/* Séparateur */}
             <div className="flex items-center gap-3 my-6">
