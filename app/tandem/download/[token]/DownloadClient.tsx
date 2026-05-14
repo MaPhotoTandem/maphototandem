@@ -62,8 +62,8 @@ export default function DownloadClient({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p className="text-white text-sm font-medium">
-              Lien valide jusqu&apos;au {expiresFormatted}
+            <p className="text-white text-sm font-bold">
+              Lien valide pendant 72 heures ({expiresFormatted})
             </p>
           </div>
 
@@ -71,10 +71,10 @@ export default function DownloadClient({
           <div className="px-6 py-8">
 
             {/* Titre */}
-            <h1 className="text-2xl font-bold text-noir mb-1">
+            <h1 className="text-2xl font-bold text-noir mb-1 text-center">
               {photoCount === 1 ? 'Votre photo est prête' : `Vos ${photoCount} photos sont prêtes`}
             </h1>
-            <p className="text-gris-mid text-sm mb-8">
+            <p className="text-gris-mid text-sm mb-8 text-center">
               Envolée {envol} · {date} · {succursaleLabel}
             </p>
 
