@@ -48,45 +48,43 @@ const ETAPES: Record<Appareil, { titre: string; etapes: string[]; note?: string 
     titre: 'Télécharger sur iPhone',
     etapes: [
       'Sur la page de téléchargement, appuie sur le bouton rouge "Enregistrer dans Photos".',
-      'Le téléphone charge les photos quelques secondes — une barre de chargement apparaît.',
-      'L\'interface de partage iOS s\'ouvre avec toutes tes photos.',
-      'Appuie sur "Enregistrer l\'image" ou "Enregistrer X images" — toutes tes photos sont sauvegardées dans ta pellicule en une seule fois.',
+      'Le téléphone charge tes photos pendant quelques secondes. Le bouton affiche "Chargement des photos…".',
+      'L\'interface de partage iOS s\'ouvre automatiquement avec toutes tes photos.',
+      'Appuie sur "Enregistrer l\'image" ou "Enregistrer X images". Toutes tes photos sont sauvegardées dans ta pellicule en une seule fois.',
     ],
-    note: 'N\'utilise pas le bouton ZIP sur iPhone — il est fait pour les ordinateurs. Si le bouton "Enregistrer dans Photos" n\'apparaît pas, utilise les liens individuels "Photo 1", "Photo 2", etc. juste en dessous.',
+    note: 'Si le bouton "Enregistrer dans Photos" ne fonctionne pas, appuie sur "Réessayer". Si ça ne fonctionne toujours pas, des liens individuels "Photo 1", "Photo 2", etc. apparaissent juste en dessous pour télécharger chaque photo séparément.',
   },
   android: {
     titre: 'Télécharger sur Android',
     etapes: [
-      'Sur la page de téléchargement, appuie sur le bouton rouge "Télécharger mes photos".',
-      'Le fichier ZIP se télécharge automatiquement. Une notification apparaît en haut de l\'écran quand c\'est terminé.',
-      'Appuie sur la notification "Téléchargement terminé", ou ouvre l\'app "Fichiers" (ou "Mes fichiers" selon ton téléphone).',
-      'Va dans le dossier "Téléchargements" et trouve le fichier ZIP.',
-      'Appuie sur le fichier ZIP pour l\'ouvrir et extraire les photos.',
-      'Tes photos sont maintenant accessibles dans le dossier extrait. Pour les retrouver dans ta Galerie, appuie longuement sur une photo → "Enregistrer" ou "Ajouter à la galerie".',
+      'Sur la page de téléchargement, appuie sur le bouton rouge "Enregistrer dans Photos".',
+      'Le téléphone charge tes photos pendant quelques secondes. Le bouton affiche "Chargement des photos…".',
+      'L\'interface de partage Android s\'ouvre avec toutes tes photos.',
+      'Sélectionne "Enregistrer" ou "Enregistrer dans la galerie". Tes photos sont sauvegardées directement.',
     ],
-    note: 'Le nom de l\'app de fichiers varie selon le fabricant : "Mes fichiers" sur Samsung, "Fichiers" sur Google Pixel, etc.',
+    note: 'Si le bouton "Enregistrer dans Photos" n\'apparaît pas sur ton téléphone, utilise le bouton "Télécharger en ZIP". Le fichier se télécharge dans ton dossier Téléchargements. Ouvre l\'app "Fichiers" ou "Mes fichiers" sur ton téléphone, trouve le fichier ZIP et appuie dessus pour extraire tes photos.',
   },
   mac: {
     titre: 'Télécharger sur Mac',
     etapes: [
-      'Sur la page de téléchargement, clique sur le bouton rouge "Télécharger mes photos".',
-      'Le fichier ZIP se télécharge dans ton dossier "Téléchargements".',
-      'Une fois le téléchargement terminé, clique sur l\'icône de téléchargement dans la barre d\'outils Safari (ou ouvre le Finder → Téléchargements).',
-      'Double-clique sur le fichier ZIP — macOS l\'extrait automatiquement et crée un dossier avec toutes tes photos.',
-      'Tes photos sont prêtes ! Tu peux les glisser dans Photos, iCloud Drive, ou n\'importe quel autre endroit.',
+      'Sur la page de téléchargement, clique sur le bouton "Télécharger en ZIP".',
+      'Le fichier ZIP se télécharge dans ton dossier Téléchargements.',
+      'Une fois terminé, ouvre ton dossier Téléchargements depuis le Finder ou la barre d\'outils de Safari.',
+      'Double-clique sur le fichier ZIP. macOS l\'extrait automatiquement et crée un dossier avec toutes tes photos.',
+      'Tes photos sont prêtes. Tu peux les glisser dans l\'app Photos, iCloud Drive, ou n\'importe quel autre endroit.',
     ],
   },
   pc: {
-    titre: 'Télécharger sur PC (Windows)',
+    titre: 'Télécharger sur PC Windows',
     etapes: [
-      'Sur la page de téléchargement, clique sur le bouton rouge "Télécharger mes photos".',
-      'Le fichier ZIP se télécharge. Tu verras une barre de téléchargement en bas de ton navigateur (Chrome/Edge) ou une notification.',
-      'Une fois terminé, clique sur le fichier téléchargé dans la barre du navigateur, ou ouvre l\'Explorateur de fichiers → Téléchargements.',
-      'Fais un clic droit sur le fichier ZIP → "Extraire tout…"',
-      'Choisis un dossier de destination (par exemple le Bureau) et clique sur "Extraire".',
+      'Sur la page de téléchargement, clique sur le bouton "Télécharger en ZIP".',
+      'Le fichier ZIP se télécharge. Une barre de progression apparaît en bas de ton navigateur (Chrome ou Edge) ou dans les notifications.',
+      'Une fois terminé, clique sur le fichier dans la barre du navigateur, ou ouvre l\'Explorateur de fichiers et va dans Téléchargements.',
+      'Fais un clic droit sur le fichier ZIP et sélectionne "Extraire tout".',
+      'Choisis un dossier de destination, par exemple le Bureau, puis clique sur "Extraire".',
       'Tes photos apparaissent dans le dossier choisi, prêtes à être utilisées.',
     ],
-    note: 'Sur Windows 11, tu peux aussi double-cliquer sur le ZIP pour l\'ouvrir directement, puis faire glisser les photos où tu veux.',
+    note: 'Sur Windows 11, tu peux aussi double-cliquer sur le fichier ZIP pour l\'ouvrir directement, puis faire glisser tes photos où tu veux.',
   },
 }
 
@@ -146,7 +144,7 @@ export default function TelechargerAidePage() {
         {contenu.note && (
           <div className="mt-6 bg-gris-pale border border-gris-bordure rounded-xl px-4 py-3">
             <p className="text-sm text-gris-mid leading-relaxed">
-              <span className="font-semibold text-noir">💡 Astuce — </span>
+              <span className="font-semibold text-noir">💡 Astuce : </span>
               {contenu.note}
             </p>
           </div>
