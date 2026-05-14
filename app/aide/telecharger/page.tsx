@@ -69,9 +69,9 @@ const ETAPES: Record<Appareil, { titre: string; etapes: string[]; note?: string 
     etapes: [
       'Sur la page de téléchargement, clique sur le bouton "Télécharger en ZIP".',
       'Le fichier ZIP se télécharge dans ton dossier Téléchargements.',
-      'Une fois terminé, ouvre ton dossier Téléchargements depuis le Finder ou la barre d\'outils de Safari.',
-      'Double-clique sur le fichier ZIP. macOS l\'extrait automatiquement et crée un dossier avec toutes tes photos.',
-      'Tes photos sont prêtes. Tu peux les glisser dans l\'app Photos, iCloud Drive, ou n\'importe quel autre endroit.',
+      'Une fois terminé, ouvre ton dossier Téléchargements depuis le Finder ou la barre d\'outils de ton navigateur.',
+      'Double-clique sur le fichier ZIP : macOS l\'extrait automatiquement et crée un dossier avec toutes tes photos.',
+      'Tes photos sont prêtes ! Tu peux les glisser dans l\'app Photos, iCloud Drive, ou n\'importe quel autre endroit.',
     ],
   },
   pc: {
@@ -153,7 +153,7 @@ export default function TelechargerAidePage() {
 
       {/* Pied de page */}
       <p className="text-center text-sm text-gris-mid mt-8">
-        Tu as encore besoin d&apos;aide ?{' '}
+        Besoin d&apos;aide ? On est là pour t&apos;aider !{' '}
         <a href="/contact" className="text-rouge hover:underline">Contacte-nous</a>.
       </p>
 
