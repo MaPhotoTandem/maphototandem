@@ -163,11 +163,13 @@ export default function ContactPage() {
           </div>
 
           <div className="bg-gris-pale rounded-2xl p-6">
-            <h2 className="text-base font-bold text-noir mb-2">Questions fréquentes</h2>
-            <p className="text-sm text-gris-mid mb-3">Consulte la FAQ avant d'écrire, ta réponse s'y trouve peut-être !</p>
-            <a href="/faq" className="text-rouge text-sm font-semibold hover:underline">
-              Voir la FAQ →
-            </a>
+            <h2 className="text-base font-bold text-noir mb-2">Avant d&apos;écrire</h2>
+            <p className="text-sm text-gris-mid mb-4">
+              Ta réponse se trouve peut-être dans notre{' '}
+              <a href="/faq" className="text-rouge font-semibold hover:underline">FAQ</a>
+              {' '}ou dans notre{' '}
+              <a href="/aide/telecharger" className="text-rouge font-semibold hover:underline">guide de téléchargement</a>.
+            </p>
           </div>
         </div>
       </div>
